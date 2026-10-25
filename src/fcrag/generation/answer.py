@@ -7,6 +7,7 @@ while the answer is written), then ``token`` events, then ``done`` with the cita
 import time
 from collections.abc import Iterator
 from dataclasses import asdict, dataclass, field
+from datetime import UTC, datetime
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
@@ -20,6 +21,7 @@ from fcrag.generation.citations import check_citations, format_locator
 from fcrag.ingest.extract_params import Vocabulary
 from fcrag.language import detect_language
 from fcrag.llm.client import LLM, Message
+from fcrag.observability import start_trace
 from fcrag.retrieval.rerank import Reranker, rerank
 from fcrag.retrieval.route import ParameterHit, ParameterStore, detect
 from fcrag.retrieval.search import Filters, Hit, hybrid_search
@@ -115,6 +117,7 @@ class AnswerResult:
     prompt_version: str = ""
     model: str = ""
     timings: Timings = field(default_factory=Timings)
+    trace_id: str | None = None
 
 
 class RagService:
@@ -189,45 +192,88 @@ class RagService:
         prompt = load_prompt()
         language = detect_language(question)
         timings = Timings()
-        sources = self.parameter_sources(question) + self.retrieve(question, filters, timings)
-        for n, source in enumerate(sources, 1):
-            source.label = f"S{n}"
-        yield {"type": "sources", "language": language, "sources": [asdict(s) for s in sources]}
+        trace = start_trace(
+            "rag.answer",
+            as_type="chain",
+            input={"question": question},
+            metadata={"filters": asdict(filters), "language": language,
+                      "prompt_version": prompt["version"]},
+        )  # fmt: skip
+        trace_id = getattr(trace, "trace_id", None)
+        try:
+            span = trace.start_observation(name="retrieve", as_type="retriever", input=question)
+            structured = self.parameter_sources(question)
+            sources = structured + self.retrieve(question, filters, timings)
+            for n, source in enumerate(sources, 1):
+                source.label = f"S{n}"
+            span.update(
+                output=[f"[{s.label}] {s.title} v{s.doc_version} {s.location} ({s.score})"
+                        for s in sources],
+                metadata={"timings": asdict(timings), "structured_sources": len(structured)},
+            ).end()  # fmt: skip
+            yield {
+                "type": "sources",
+                "language": language,
+                "trace_id": trace_id,
+                "sources": [asdict(s) for s in sources],
+            }
 
-        if not sources:
-            text = prompt["not_found"][language]
-            yield {"type": "token", "text": text}
-            result = AnswerResult(question, language, text, found=False, timings=timings)
-            yield {"type": "done", "result": asdict(result)}
-            return
-        if self.llm is None:
-            raise RuntimeError(
-                "No LLM configured: set an API key for FCRAG_LLM_MODEL or run a local model"
+            if not sources:
+                text = prompt["not_found"][language]
+                yield {"type": "token", "text": text}
+                result = AnswerResult(
+                    question, language, text, found=False, timings=timings, trace_id=trace_id
+                )
+                trace.update(output=text, metadata={"found": False})
+                yield {"type": "done", "result": asdict(result)}
+                return
+            if self.llm is None:
+                raise RuntimeError(
+                    "No LLM configured: set an API key for FCRAG_LLM_MODEL or run a local model"
+                )
+
+            messages = self.messages(question, language, sources)
+            generation = trace.start_observation(
+                name="generate", as_type="generation", model=self.llm.model, input=messages,
+                metadata={"prompt_version": prompt["version"]},
+            )  # fmt: skip
+            start = time.perf_counter()
+            parts: list[str] = []
+            for token in self.llm.stream(messages):
+                if not parts:
+                    generation.update(completion_start_time=datetime.now(UTC))
+                parts.append(token)
+                yield {"type": "token", "text": token}
+            timings.generate_s = time.perf_counter() - start
+            answer = "".join(parts)
+            generation.update(output=answer).end()
+
+            report = check_citations(answer, len(sources))
+            trace.start_observation(
+                name="check_citations", input=answer, output=asdict(report)
+            ).end()
+            result = AnswerResult(
+                question=question,
+                language=language,
+                answer=answer,
+                found=True,
+                sources=sources,
+                cited=report.cited,
+                invalid_citations=report.invalid,
+                uncited_sentences=report.uncited_sentences,
+                prompt_version=prompt["version"],
+                model=self.llm.model,
+                timings=timings,
+                trace_id=trace_id,
             )
-
-        start = time.perf_counter()
-        parts: list[str] = []
-        for token in self.llm.stream(self.messages(question, language, sources)):
-            parts.append(token)
-            yield {"type": "token", "text": token}
-        timings.generate_s = time.perf_counter() - start
-
-        answer = "".join(parts)
-        report = check_citations(answer, len(sources))
-        result = AnswerResult(
-            question=question,
-            language=language,
-            answer=answer,
-            found=True,
-            sources=sources,
-            cited=report.cited,
-            invalid_citations=report.invalid,
-            uncited_sentences=report.uncited_sentences,
-            prompt_version=prompt["version"],
-            model=self.llm.model,
-            timings=timings,
-        )
-        yield {"type": "done", "result": asdict(result)}
+            trace.update(output=answer, metadata={"found": True, "cited": report.cited,
+                                                  "invalid_citations": report.invalid})  # fmt: skip
+            yield {"type": "done", "result": asdict(result)}
+        except Exception as exc:
+            trace.update(level="ERROR", status_message=f"{type(exc).__name__}: {exc}")
+            raise
+        finally:
+            trace.end()
 
     def answer(self, question: str, filters: Filters | None = None) -> AnswerResult:
         """Non-streaming convenience wrapper, used by the CLI and the evaluation harness."""

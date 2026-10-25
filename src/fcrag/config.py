@@ -4,7 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import SecretStr
+from pydantic import AliasChoices, Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -22,6 +22,14 @@ class Settings(BaseSettings):
     minio_secret_key: SecretStr = SecretStr("")
     minio_bucket: str = "fcrag-raw"
     langfuse_host: str = "http://localhost:3000"
+    langfuse_public_key: str | None = Field(
+        default=None,
+        validation_alias=AliasChoices("FCRAG_LANGFUSE_PUBLIC_KEY", "LANGFUSE_PUBLIC_KEY"),
+    )
+    langfuse_secret_key: SecretStr | None = Field(
+        default=None,
+        validation_alias=AliasChoices("FCRAG_LANGFUSE_SECRET_KEY", "LANGFUSE_SECRET_KEY"),
+    )
 
     llm_model: str = "anthropic/claude-sonnet-5-5"
     local_llm_model: str = "ollama/qwen3:14b"
@@ -54,8 +62,10 @@ class Settings(BaseSettings):
     # Retrieval
     prefetch_limit: int = 50
     rerank_top_k: int = 8
-    rerank_threshold: float = 0.05
-    """Minimum reranker score (0..1) to count as evidence; if none passes, answer 'not found'."""
+    rerank_threshold: float = 0.21
+    """Minimum reranker score (0..1) to count as evidence; if none passes, answer 'not found'.
+    Calibrated on the golden set (2026-10-25): answerable questions scored >= 0.228, six of
+    seven unanswerable ones <= 0.201. Recheck with ``fcrag eval`` when the set grows."""
 
     # API and UI
     api_key: SecretStr | None = None

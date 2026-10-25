@@ -61,6 +61,19 @@ def _eval(args: argparse.Namespace) -> None:
     )  # fmt: skip
     print(json.dumps(summary, indent=2))
     print(f"saved {path}")
+    from fcrag.observability import flush
+
+    flush()
+
+
+def _eval_params(args: argparse.Namespace) -> None:
+    import json
+    from pathlib import Path
+
+    from fcrag.db.session import get_engine
+    from fcrag.eval.parameters import evaluate_parameters
+
+    print(json.dumps(evaluate_parameters(get_engine(), Path(args.facts)), indent=2))
 
 
 def _ingest(args: argparse.Namespace) -> None:
@@ -181,6 +194,10 @@ def main() -> None:
     p.add_argument("--category", action="append")
     p.add_argument("--limit", type=int)
     p.set_defaults(func=_eval)
+
+    p = sub.add_parser("eval-params", help="score extracted parameters against generator facts")
+    p.add_argument("--facts", default="data/generated/facts.jsonl")
+    p.set_defaults(func=_eval_params)
 
     p = sub.add_parser("serve", help="run the API")
     p.add_argument("--host", default="127.0.0.1")

@@ -35,6 +35,8 @@ class ItemResult:
     answerable: bool
     rank: int | None = None
     ndcg10: float = 0.0
+    top_score: float = 0.0
+    """Best reranker score: used to calibrate the not-found threshold."""
     evidence: bool = False
     """At least one chunk passed the rerank threshold."""
     top: list[str] = field(default_factory=list)
@@ -67,7 +69,8 @@ def evaluate_item(
     if item.gold_sources:
         result.rank = metrics.first_hit_rank(relevance)
         result.ndcg10 = metrics.ndcg_at_k(relevance, 10)
-    result.evidence = any((h.rerank_score or 0) >= settings.rerank_threshold for h in ranked)
+    result.top_score = round(max((h.rerank_score or 0.0 for h in ranked), default=0.0), 4)
+    result.evidence = result.top_score >= settings.rerank_threshold
     result.top = [_label(h.payload) for h in ranked[:5]]
 
     if not answers:

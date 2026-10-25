@@ -81,6 +81,7 @@ class FeedbackRequest(BaseModel):
     sources: list[dict[str, Any]] = Field(default_factory=list)
     model: str | None = None
     prompt_version: str | None = None
+    trace_id: str | None = None
 
 
 @app.get("/health")
@@ -157,8 +158,13 @@ def page_image(doc_id: str, version: int, page: int, scale: float = 1.5) -> Resp
 
 @app.post("/feedback", status_code=201)
 def feedback(req: FeedbackRequest) -> dict[str, int]:
+    from fcrag.observability import score
+
     with session_scope() as session:
-        row = Feedback(**req.model_dump())
+        row = Feedback(**req.model_dump(exclude={"trace_id"}))
         session.add(row)
         session.flush()
-        return {"id": row.id}
+        feedback_id = row.id
+    if req.trace_id:  # links the rating to the request's trace in Langfuse
+        score(req.trace_id, "user_feedback", req.rating, req.comment)
+    return {"id": feedback_id}

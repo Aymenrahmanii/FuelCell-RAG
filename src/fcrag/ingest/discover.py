@@ -11,6 +11,8 @@ from fcrag.models import SourceFile
 
 GENERATED_MANIFEST = "manifest.yaml"
 """Written by the data generators next to the files they produce."""
+GENERATOR_METADATA = {GENERATED_MANIFEST, "facts.jsonl"}
+"""Generator bookkeeping, not documents."""
 
 mimetypes.add_type("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", ".xlsx")
 mimetypes.add_type("model/step", ".step")
@@ -55,7 +57,7 @@ def discover(source_dirs: list[Path], sources_manifest: Path) -> list[SourceFile
             continue
         for path in sorted(p for p in directory.rglob("*") if p.is_file()):
             if (
-                path.name == GENERATED_MANIFEST
+                path.name in GENERATOR_METADATA
                 or path.name.startswith(".")
                 or path.suffix == ".part"
             ):

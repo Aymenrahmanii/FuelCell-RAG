@@ -88,6 +88,7 @@ def show_feedback(message: dict[str, Any], key: str) -> None:
                 ],
                 "model": result.get("model"),
                 "prompt_version": result.get("prompt_version"),
+                "trace_id": result.get("trace_id"),
             }
         )
         message["feedback_sent"] = sent
