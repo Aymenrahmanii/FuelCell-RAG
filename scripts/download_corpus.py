@@ -32,6 +32,12 @@ def download(url: str, target: Path) -> None:
     with urllib.request.urlopen(request, timeout=60) as response, tmp.open("wb") as out:
         while block := response.read(1 << 20):
             out.write(block)
+    # Error and bot-check pages often arrive with HTTP 200; never store them as a PDF.
+    with tmp.open("rb") as f:
+        magic = f.read(4)
+    if magic != b"%PDF":
+        tmp.unlink()
+        raise OSError(f"response is not a PDF (starts with {magic!r})")
     tmp.replace(target)
 
 

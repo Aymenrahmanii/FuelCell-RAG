@@ -54,9 +54,16 @@ docs/decisions/   architecture decision records
 
 ## Corpus
 
-Public documents are listed in [`data/sources.yaml`](data/sources.yaml) with their licence, and
-fetched with `uv run python scripts/download_corpus.py` into `data/raw/` (git-ignored). No
-confidential or proprietary material is ever added.
+[`data/sources.yaml`](data/sources.yaml) lists 33 public documents with their licence:
+- DOE Hydrogen Program records and plans
+- Annual Merit Review presentations on cost, durability, heavy-duty trucks and air management
+- NREL field-data reports
+- open-access papers on modelling, degradation and stationary CHP
+
+Fetch them with `uv run python scripts/download_corpus.py` into `data/raw/` (git-ignored). The
+script rejects anything that is not a PDF and verifies every file against
+[`data/sources.lock.yaml`](data/sources.lock.yaml), so a silently changed upstream document is
+caught. No confidential or proprietary material is ever added.
 
 ## Evaluation
 

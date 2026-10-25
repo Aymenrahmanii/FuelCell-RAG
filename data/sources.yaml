@@ -1,28 +1,364 @@
 # Public documents for the corpus. scripts/download_corpus.py fetches each entry into data/raw/.
 # The repo ships this manifest, never the PDFs themselves.
 #
-# Every entry needs a licence. US federal works (DOE, NREL reports) are generally public domain
-# in the US; check the document itself, since some contain third-party material.
-# Open-access papers: record the exact licence (CC BY 4.0, ...).
-#
 # Fields:
 #   id         stable slug, used as doc_id
 #   url        direct link to the PDF
 #   title      document title
-#   publisher  e.g. "US DOE Hydrogen Program", "NREL", journal name
+#   publisher  organisation that publishes the document
 #   year       publication year
-#   licence    e.g. "US Government work (public domain)", "CC BY 4.0"
-#   doc_type   report | datasheet | drawing
+#   licence    how the document may be used; record it exactly
+#   doc_type   report | datasheet | drawing  (fcrag.models.DocType)
+#   format     record | report | presentation | paper | fact_sheet  (drives parser settings)
+#   topics     free tags, used to check corpus coverage
 #
 # Checksums live in data/sources.lock.yaml, written on first download and verified after.
 #
-# Example:
-#   - id: doe-amr-2024-fc-overview
-#     url: https://www.hydrogen.energy.gov/...
-#     title: "Fuel Cell Technologies Overview"
-#     publisher: US DOE Hydrogen Program
-#     year: 2024
-#     licence: US Government work (public domain)
-#     doc_type: report
+# Licence notes:
+# - "US Government work": written by federal staff (DOE program records, DOE plans and plenaries).
+#   Not subject to copyright in the US.
+# - DOE Annual Merit Review (AMR) presentations and NREL reports are written by national labs or
+#   contractors under DOE funding and released publicly. The authors' organisations keep their
+#   copyright; we use them for research only and never redistribute them.
+# - NREL was renamed National Laboratory of the Rockies in 2025; its reports moved to docs.nlr.gov.
+# - MDPI's site blocks scripted downloads, so open-access MDPI papers are taken from the authors'
+#   institutional repository copies.
+#
+# All files have a text layer (verified 2026-10-25). Scanned-page test material is produced by the
+# data generator, by rasterising known pages, so OCR output can be checked against the original.
 
-sources: []
+sources:
+  # --- DOE Hydrogen Program records: short, table-dense, versioned annual series ---
+  - id: doe-rec-11003-stack-durability
+    url: https://www.hydrogen.energy.gov/pdfs/11003_fuel_cell_stack_durability.pdf
+    title: "Program Record 11003: Fuel Cell Stack Durability"
+    publisher: US DOE Hydrogen and Fuel Cells Program
+    year: 2011
+    licence: US Government work
+    doc_type: report
+    format: record
+    topics: [durability, automotive]
+
+  - id: doe-rec-14014-fc-system-cost-2014
+    url: https://www.hydrogen.energy.gov/pdfs/14014_fuel_cell_system_cost_2014.pdf
+    title: "Program Record 14014: Fuel Cell System Cost - 2014"
+    publisher: US DOE Hydrogen and Fuel Cells Program
+    year: 2014
+    licence: US Government work
+    doc_type: report
+    format: record
+    topics: [cost, automotive]
+
+  - id: doe-rec-15015-fc-system-cost-2015
+    url: https://www.hydrogen.energy.gov/pdfs/15015_fuel_cell_system_cost_2015.pdf
+    title: "Program Record 15015: Fuel Cell System Cost - 2015"
+    publisher: US DOE Hydrogen and Fuel Cells Program
+    year: 2015
+    licence: US Government work
+    doc_type: report
+    format: record
+    topics: [cost, automotive]
+
+  - id: doe-rec-16020-fc-system-cost-2016
+    url: https://www.hydrogen.energy.gov/pdfs/16020_fuel_cell_system_cost_2016.pdf
+    title: "Program Record 16020: Fuel Cell System Cost - 2016"
+    publisher: US DOE Hydrogen and Fuel Cells Program
+    year: 2016
+    licence: US Government work
+    doc_type: report
+    format: record
+    topics: [cost, automotive]
+
+  - id: doe-rec-17007-fc-system-cost-2017
+    url: https://www.hydrogen.energy.gov/pdfs/17007_fuel_cell_system_cost_2017.pdf
+    title: "Program Record 17007: Fuel Cell System Cost - 2017"
+    publisher: US DOE Hydrogen and Fuel Cells Program
+    year: 2017
+    licence: US Government work
+    doc_type: report
+    format: record
+    topics: [cost, automotive]
+
+  - id: doe-rec-19006-class8-truck-targets
+    url: https://www.hydrogen.energy.gov/pdfs/19006_hydrogen_class8_long_haul_truck_targets.pdf
+    title: "Program Record 19006: Hydrogen Class 8 Long Haul Truck Targets"
+    publisher: US DOE Hydrogen and Fuel Cells Program
+    year: 2019
+    licence: US Government work
+    doc_type: report
+    format: record
+    topics: [targets, heavy-duty]
+
+  - id: doe-rec-23002-hd-fc-system-cost-2022
+    url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/23002-hd-fuel-cell-system-cost-2022.pdf
+    title: "Program Record 23002: Heavy-Duty Fuel Cell System Cost - 2022"
+    publisher: US DOE Hydrogen Program
+    year: 2023
+    licence: US Government work
+    doc_type: report
+    format: record
+    topics: [cost, heavy-duty]
+
+  - id: doe-rec-26002-hd-fc-system-cost-2024
+    url: https://www.energy.gov/documents/record-26002-heavy-duty-fuel-cell-system-cost-2024
+    title: "Program Record 26002: Heavy-Duty Fuel Cell System Cost - 2024"
+    publisher: US DOE Alternative Fuels and Feedstocks Office
+    year: 2026
+    licence: US Government work
+    doc_type: report
+    format: record
+    topics: [cost, heavy-duty]
+
+  # --- DOE plans, overviews and fact sheets ---
+  - id: doe-myrdd-2016-fuel-cells
+    url: https://www.energy.gov/sites/prod/files/2016/06/f32/fcto_myrdd_fuel_cells.pdf
+    title: "Multi-Year Research, Development, and Demonstration Plan, Section 3.4: Fuel Cells"
+    publisher: US DOE Fuel Cell Technologies Office
+    year: 2016
+    licence: US Government work
+    doc_type: report
+    format: report
+    topics: [targets, automotive, stationary, balance-of-plant]
+
+  - id: doe-fcto-fuel-cells-fact-sheet
+    url: https://www.energy.gov/sites/prod/files/2015/11/f27/fcto_fuel_cells_fact_sheet.pdf
+    title: "Fuel Cells Fact Sheet"
+    publisher: US DOE Fuel Cell Technologies Office
+    year: 2015
+    licence: US Government work
+    doc_type: report
+    format: fact_sheet
+    topics: [fundamentals]
+
+  - id: doe-hydrogen-program-plan-2020
+    url: https://www.hydrogen.energy.gov/pdfs/hydrogen-program-plan-2020.pdf
+    title: "Department of Energy Hydrogen Program Plan"
+    publisher: US DOE Hydrogen Program
+    year: 2020
+    licence: US Government work
+    doc_type: report
+    format: report
+    topics: [strategy, targets]
+
+  - id: doe-fc-transportation-2001-progress
+    url: https://www.energy.gov/sites/default/files/2014/03/f10/156.pdf
+    title: "Fuel Cells for Transportation: 2001 Annual Progress Report"
+    publisher: US DOE Office of Transportation Technologies
+    year: 2001
+    licence: US Government work
+    doc_type: report
+    format: report
+    topics: [automotive, balance-of-plant, historical]
+
+  - id: doe-amr-2024-fuel-cell-technologies
+    url: https://hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/review24/2024-amr-07-fuel-cell-technologies.pdf
+    title: "FY 2024 Merit Review and Peer Evaluation Report: Fuel Cell Technologies"
+    publisher: US DOE Hydrogen Program
+    year: 2024
+    licence: US Government work
+    doc_type: report
+    format: report
+    topics: [heavy-duty, durability, catalysts, membranes]
+
+  - id: doe-amr-2019-plenary-fuel-cells
+    url: https://www.hydrogen.energy.gov/pdfs/review19/plenary_fuel_cell_papageorgopoulos_2019.pdf
+    title: "Fuel Cell Technologies Office: 2019 Annual Merit Review Plenary"
+    publisher: US DOE Fuel Cell Technologies Office
+    year: 2019
+    licence: US Government work
+    doc_type: report
+    format: presentation
+    topics: [targets, strategy]
+
+  - id: doe-amr-2021-plenary-fuel-cells
+    url: https://www.hydrogen.energy.gov/pdfs/review21/plenary8_papageorgopoulos_2021_o.pdf
+    title: "Fuel Cell Technologies Program: 2021 Annual Merit Review Plenary"
+    publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+    year: 2021
+    licence: US Government work
+    doc_type: report
+    format: presentation
+    topics: [targets, heavy-duty, strategy]
+
+  - id: doe-amr-2022-plenary-fuel-cells
+    url: https://www.hydrogen.energy.gov/pdfs/review22/plenary7_papageorgopoulos_2022_o.pdf
+    title: "Fuel Cell Technologies Program: 2022 Annual Merit Review Plenary"
+    publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+    year: 2022
+    licence: US Government work
+    doc_type: report
+    format: presentation
+    topics: [targets, heavy-duty, strategy]
+
+  # --- AMR project presentations: slides, charts, dense parameter tables ---
+  - id: amr-2016-fc081-degradation-status
+    url: https://www.hydrogen.energy.gov/pdfs/review16/fc081_kurtz_2016_o.pdf
+    title: "Fuel Cell Technology Status: Degradation (AMR FC-081)"
+    publisher: National Renewable Energy Laboratory
+    year: 2016
+    licence: Public DOE AMR presentation; author organisation copyright
+    doc_type: report
+    format: presentation
+    topics: [durability, degradation]
+
+  - id: amr-2019-fc017-system-modeling
+    url: https://www.hydrogen.energy.gov/pdfs/review19/fc017_ahluwalia_2019_o.pdf
+    title: "Fuel Cell System Modeling and Analysis (AMR FC017)"
+    publisher: Argonne National Laboratory
+    year: 2019
+    licence: Public DOE AMR presentation; author organisation copyright
+    doc_type: report
+    format: presentation
+    topics: [system-modeling, balance-of-plant, automotive]
+
+  - id: amr-2020-fc163-systems-analysis
+    url: https://www.hydrogen.energy.gov/pdfs/review20/fc163_james_2020_o.pdf
+    title: "Fuel Cell Systems Analysis (AMR FC163, 2020)"
+    publisher: Strategic Analysis Inc.
+    year: 2020
+    licence: Public DOE AMR presentation; author organisation copyright
+    doc_type: report
+    format: presentation
+    topics: [cost, automotive, heavy-duty]
+
+  - id: amr-2021-fc163-systems-analysis
+    url: https://www.hydrogen.energy.gov/pdfs/review21/fc163_james_2021_o.pdf
+    title: "Fuel Cell Systems Analysis (AMR FC163, 2021)"
+    publisher: Strategic Analysis Inc.
+    year: 2021
+    licence: Public DOE AMR presentation; author organisation copyright
+    doc_type: report
+    format: presentation
+    topics: [cost, automotive, heavy-duty]
+
+  - id: amr-2023-fc353-cost-performance
+    url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/review23/fc353_james_2023_o-pdf.pdf
+    title: "Fuel Cell Cost and Performance Analysis (AMR FC353)"
+    publisher: Strategic Analysis Inc.
+    year: 2023
+    licence: Public DOE AMR presentation; author organisation copyright
+    doc_type: report
+    format: presentation
+    topics: [cost, heavy-duty]
+
+  - id: amr-2022-fc339-m2fct
+    url: https://www.hydrogen.energy.gov/pdfs/review22/fc339_weber_borup_2022_o.pdf
+    title: "M2FCT: Million Mile Fuel Cell Truck Consortium (AMR FC339)"
+    publisher: Lawrence Berkeley and Los Alamos National Laboratories
+    year: 2022
+    licence: Public DOE AMR presentation; author organisation copyright
+    doc_type: report
+    format: presentation
+    topics: [heavy-duty, durability, catalysts, membranes]
+
+  - id: amr-2022-fc351-centrifugal-compressor
+    url: https://www.hydrogen.energy.gov/pdfs/review22/fc351_bunce_2022_p.pdf
+    title: "Durable and Efficient Centrifugal Compressor Based Air Management for Heavy-Duty Fuel Cells (AMR FC351)"
+    publisher: MAHLE Powertrain
+    year: 2022
+    licence: Public DOE AMR presentation; author organisation copyright
+    doc_type: report
+    format: presentation
+    topics: [balance-of-plant, compressor, heavy-duty]
+
+  - id: amr-2022-fc352-air-system
+    url: https://www.hydrogen.energy.gov/pdfs/review22/fc352_kruiswyk_2022_p.pdf
+    title: "Leveraging ICE Air System Technology for Fuel Cell System Cost Reduction (AMR FC352)"
+    publisher: Caterpillar Inc.
+    year: 2022
+    licence: Public DOE AMR presentation; author organisation copyright
+    doc_type: report
+    format: presentation
+    topics: [balance-of-plant, compressor, heavy-duty]
+
+  - id: amr-2023-fc349-compressor-expander
+    url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/review23/fc349_agrawal_2023_o-pdf.pdf
+    title: "Foil Bearing Supported Compressor-Expander (AMR FC349)"
+    publisher: R&D Dynamics Corporation
+    year: 2023
+    licence: Public DOE AMR presentation; author organisation copyright
+    doc_type: report
+    format: presentation
+    topics: [balance-of-plant, compressor, heavy-duty]
+
+  - id: doe-truck-workshop-2018-cost-analysis
+    url: https://www.energy.gov/sites/prod/files/2018/08/f54/fcto-truck-workshop-2018-10-james.pdf
+    title: "Fuel Cell Truck System Cost Analysis (FCTO Truck Workshop)"
+    publisher: Strategic Analysis Inc.
+    year: 2018
+    licence: Public DOE workshop presentation; author organisation copyright
+    doc_type: report
+    format: presentation
+    topics: [cost, heavy-duty]
+
+  # --- NREL technical reports: field data, durability, long tables ---
+  - id: nrel-tp-73011-fcev-durability
+    url: https://docs.nlr.gov/docs/fy19osti/73011.pdf
+    title: "Fuel Cell Electric Vehicle Durability and Fuel Cell Performance"
+    publisher: National Renewable Energy Laboratory
+    year: 2019
+    licence: Public NREL technical report; contractor copyright (Alliance for Sustainable Energy)
+    doc_type: report
+    format: report
+    topics: [durability, automotive, field-data]
+
+  - id: nrel-tp-52927-fc-buses-2011
+    url: https://docs.nlr.gov/docs/fy12osti/52927.pdf
+    title: "Fuel Cell Buses in U.S. Transit Fleets: Current Status 2011"
+    publisher: National Renewable Energy Laboratory
+    year: 2011
+    licence: Public NREL technical report; contractor copyright (Alliance for Sustainable Energy)
+    doc_type: report
+    format: report
+    topics: [heavy-duty, bus, field-data]
+
+  - id: nrel-tp-64344-afcb-second-report
+    url: https://docs.nlr.gov/docs/fy15osti/64344.pdf
+    title: "American Fuel Cell Bus Project Evaluation: Second Report"
+    publisher: National Renewable Energy Laboratory
+    year: 2015
+    licence: Public NREL technical report; contractor copyright (Alliance for Sustainable Energy)
+    doc_type: report
+    format: report
+    topics: [heavy-duty, bus, field-data]
+
+  - id: nrel-tp-67209-afcb-third-report
+    url: https://afdc.energy.gov/files/u/publication/fc_bus_project_eval_3rd_rpt.pdf
+    title: "American Fuel Cell Bus Project Evaluation: Third Report"
+    publisher: National Renewable Energy Laboratory
+    year: 2017
+    licence: Public NREL technical report; contractor copyright (Alliance for Sustainable Energy)
+    doc_type: report
+    format: report
+    topics: [heavy-duty, bus, field-data]
+
+  # --- Papers: physics, modelling, degradation, stationary CHP ---
+  - id: arxiv-2404.07508-1d-pem-model
+    url: https://arxiv.org/pdf/2404.07508
+    title: "An advanced 1D physics-based model for PEM hydrogen fuel cells with enhanced overvoltage prediction"
+    publisher: arXiv
+    year: 2024
+    licence: arXiv non-exclusive distribution licence; author copyright
+    doc_type: report
+    format: paper
+    topics: [modelling, electrochemistry]
+
+  - id: arxiv-2511.11180-phm-review
+    url: https://arxiv.org/pdf/2511.11180
+    title: "Prognostics and Health Management in Polymer Electrolyte Fuel Cells: Current Trends, Challenges, and Future Directions"
+    publisher: arXiv
+    year: 2025
+    licence: arXiv non-exclusive distribution licence; author copyright
+    doc_type: report
+    format: paper
+    topics: [degradation, diagnostics]
+
+  - id: energies-2020-13-4104-fc-chp
+    url: https://publications.aston.ac.uk/id/eprint/42350/1/energies_13_04104_v2.pdf
+    title: "Prospects of Fuel Cell Combined Heat and Power Systems (Energies 13(16):4104)"
+    publisher: MDPI Energies (Aston University repository copy)
+    year: 2020
+    licence: CC BY 4.0
+    doc_type: report
+    format: paper
+    topics: [stationary, chp]
