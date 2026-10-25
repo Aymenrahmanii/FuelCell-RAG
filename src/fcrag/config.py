@@ -1,6 +1,7 @@
 """Runtime configuration, read from environment variables prefixed ``FCRAG_`` and ``.env``."""
 
 from functools import lru_cache
+from pathlib import Path
 from typing import Literal
 
 from pydantic import SecretStr
@@ -24,10 +25,43 @@ class Settings(BaseSettings):
 
     llm_model: str = "anthropic/claude-sonnet-5-5"
     local_llm_model: str = "ollama/qwen3:14b"
+    llm_timeout_s: float = 60.0
     embedding_model: str = "BAAI/bge-m3"
+    embedding_batch_size: int = 32
+    embedding_max_tokens: int = 1024
     reranker_model: str = "BAAI/bge-reranker-v2-m3"
     restricted_mode: bool = False
     """When true, every LLM and embedding call goes to local models only."""
+
+    # Ingestion
+    systems_dir: Path = Path("data_gen/systems")
+    synonyms_path: Path = Path("data_gen/synonyms.yaml")
+    source_dirs: list[Path] = [Path("data/raw"), Path("data/generated")]
+    sources_manifest: Path = Path("data/sources.yaml")
+    element_cache_dir: Path | None = Path("data/processed/elements")
+    """Parsed elements cached by file hash; None disables the cache."""
+    pdf_table_mode: Literal["accurate", "fast"] = "accurate"
+    pdf_ocr: bool = False
+    """OCR in Docling. All public PDFs have a text layer; enable for scanned documents."""
+    max_attempts: int = 3
+    chunk_strategy: Literal["section", "fixed"] = "section"
+    chunk_max_tokens: int = 800
+    chunk_min_tokens: int = 80
+    chunk_fixed_tokens: int = 512
+    chunk_overlap_tokens: int = 64
+    contextual_headers: bool = True
+
+    # Retrieval
+    prefetch_limit: int = 50
+    rerank_top_k: int = 8
+    rerank_threshold: float = 0.05
+    """Minimum reranker score (0..1) to count as evidence; if none passes, answer 'not found'."""
+
+    # API and UI
+    api_key: SecretStr | None = None
+    """When set, every API request needs a matching ``X-API-Key`` header."""
+    api_url: str = "http://127.0.0.1:8000"
+    """Where the Streamlit UI finds the API."""
 
     @property
     def active_llm_model(self) -> str:

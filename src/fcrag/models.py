@@ -25,6 +25,14 @@ class SourceFile(BaseModel):
     doc_type: DocType | None = None
     system: str | None = None
     licence: str | None = None
+    title: str | None = None
+    language: str | None = None
+    allowed_groups: list[str] = Field(default_factory=list)
+
+    @property
+    def source_key(self) -> str:
+        """Registry key: one row per (document, version), independent of where the file lives."""
+        return f"{self.doc_id}@v{self.doc_version}"
 
 
 class Element(BaseModel):
@@ -44,24 +52,29 @@ class Element(BaseModel):
 class Parser(Protocol):
     """Interface every file-type parser implements. Adding a format means one new class."""
 
-    supported_types: set[str]
+    supported_types: frozenset[str]
     """MIME types or lower-case extensions (``".xlsx"``) this parser handles."""
 
     def parse(self, file: SourceFile) -> Iterator[Element]: ...
 
 
 class Chunk(BaseModel):
-    """A retrievable unit stored as one Qdrant point."""
+    """A retrievable unit stored as one Qdrant point; all fields but ``embed_text`` are payload."""
 
     chunk_id: str
     doc_id: str
     doc_version: int
+    doc_sha: str
     is_latest: bool
+    title: str | None
     system: str | None
     doc_type: DocType | None
     language: str | None
     kind: ElementKind
     text: str
+    """What the LLM reads and the UI shows."""
+    embed_text: str = Field(exclude=True)
+    """What gets embedded: ``text`` plus the contextual header, if enabled."""
     heading_path: list[str] = Field(default_factory=list)
     locator: dict[str, Any] = Field(default_factory=dict)
     allowed_groups: list[str] = Field(default_factory=list)
@@ -71,11 +84,20 @@ class Parameter(BaseModel):
     """A validated parameter record extracted from a table row or sentence."""
 
     system: str
-    component: str
+    component: str | None
+    """Component ID such as ``A-STK``; None for system-level parameters."""
     parameter: str
+    """Canonical key, e.g. ``coolant_outlet_temperature_max``."""
+    label: str
+    """The label as written in the document."""
     value: float
     unit: str
+    value_norm: float
+    """``value`` converted to ``unit_norm``, the parameter's canonical unit."""
+    unit_norm: str
     condition: str | None = None
     doc_id: str
     doc_version: int
     locator: dict[str, Any]
+    method: Literal["table", "prose", "requirement", "llm"]
+    source_text: str = ""

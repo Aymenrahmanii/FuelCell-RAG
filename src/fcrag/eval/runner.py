@@ -1,0 +1,173 @@
+"""Run the golden set against the live pipeline and record the results.
+
+Retrieval metrics always run. Answer metrics (values, terms, citations, refusals) run when an LLM
+is available. Each run is saved with its configuration, so runs can be compared one variable
+at a time.
+"""
+
+import json
+import time
+from dataclasses import asdict, dataclass, field
+from datetime import UTC, datetime
+from pathlib import Path
+from typing import Any
+
+from fcrag.config import Settings
+from fcrag.eval import metrics
+from fcrag.eval.golden import GoldenItem
+from fcrag.eval.matching import matches
+from fcrag.eval.numbers import value_found
+from fcrag.generation.answer import RagService
+from fcrag.retrieval.search import Filters
+
+CONFIG_FIELDS = (
+    "embedding_model", "reranker_model", "chunk_strategy", "chunk_max_tokens",
+    "chunk_fixed_tokens", "contextual_headers", "prefetch_limit", "rerank_top_k",
+    "rerank_threshold", "llm_model",
+)  # fmt: skip
+
+
+@dataclass
+class ItemResult:
+    id: str
+    category: str
+    language: str
+    answerable: bool
+    rank: int | None = None
+    ndcg10: float = 0.0
+    evidence: bool = False
+    """At least one chunk passed the rerank threshold."""
+    top: list[str] = field(default_factory=list)
+    retrieval_s: float = 0.0
+    answer: str | None = None
+    refused: bool | None = None
+    values_ok: bool | None = None
+    terms_ok: bool | None = None
+    cited_correct: int = 0
+    cited_total: int = 0
+    invalid_citations: int = 0
+    generation_s: float = 0.0
+    error: str | None = None
+
+
+def _label(payload: dict[str, Any]) -> str:
+    loc = payload.get("locator") or {}
+    where = loc.get("req_id") or loc.get("cells") or loc.get("page") or ""
+    return f"{payload.get('doc_id')}@v{payload.get('doc_version')}:{where}"
+
+
+def evaluate_item(
+    service: RagService, item: GoldenItem, settings: Settings, *, answers: bool
+) -> ItemResult:
+    result = ItemResult(item.id, item.category, item.language, item.answerable)
+    start = time.perf_counter()
+    ranked = service.rank(item.question, Filters())
+    result.retrieval_s = time.perf_counter() - start
+    relevance = [any(matches(h.payload, g) for g in item.gold_sources) for h in ranked]
+    if item.gold_sources:
+        result.rank = metrics.first_hit_rank(relevance)
+        result.ndcg10 = metrics.ndcg_at_k(relevance, 10)
+    result.evidence = any((h.rerank_score or 0) >= settings.rerank_threshold for h in ranked)
+    result.top = [_label(h.payload) for h in ranked[:5]]
+
+    if not answers:
+        return result
+    start = time.perf_counter()
+    answer = service.answer(item.question)
+    result.generation_s = time.perf_counter() - start - answer.timings.embed_s
+    result.answer = answer.answer
+    result.refused = not answer.found or metrics.is_refusal(answer.answer)
+    if item.expected_values:
+        result.values_ok = all(
+            value_found(answer.answer, v["value"], v["unit"], item.language)
+            for v in item.expected_values
+        )
+    if item.expected_terms:
+        lowered = answer.answer.lower()
+        result.terms_ok = all(t.lower() in lowered for t in item.expected_terms)
+    cited = [answer.sources[n - 1] for n in answer.cited]
+    result.cited_total = len(cited)
+    result.cited_correct = sum(any(matches(asdict(s), g) for g in item.gold_sources) for s in cited)
+    result.invalid_citations = len(answer.invalid_citations)
+    return result
+
+
+def summarize(results: list[ItemResult]) -> dict[str, Any]:
+    with_gold = [r for r in results if r.answerable and r.category != "unanswerable"]
+    ranks = [r.rank for r in with_gold]
+    summary: dict[str, Any] = {
+        "questions": len(results),
+        "recall@5": metrics.recall_at_k(ranks, 5),
+        "recall@10": metrics.recall_at_k(ranks, 10),
+        "mrr": metrics.mrr(ranks),
+        "ndcg@10": metrics.mean([r.ndcg10 for r in with_gold]),
+        "retrieval_refusal_correct": metrics.mean(
+            [0.0 if r.evidence else 1.0 for r in results if not r.answerable]
+        ),
+        "retrieval_refusal_false": metrics.mean(
+            [0.0 if r.evidence else 1.0 for r in results if r.answerable]
+        ),
+        "retrieval_p50_s": metrics.percentile([r.retrieval_s for r in results], 50),
+        "retrieval_p95_s": metrics.percentile([r.retrieval_s for r in results], 95),
+        "by_category": {},
+    }
+    for category in sorted({r.category for r in results}):
+        rows = [r for r in results if r.category == category]
+        cat_ranks = [r.rank for r in rows if r.answerable]
+        summary["by_category"][category] = {
+            "n": len(rows),
+            "recall@5": metrics.recall_at_k(cat_ranks, 5) if cat_ranks else None,
+        }
+
+    answered = [r for r in results if r.answer is not None]
+    if answered:
+        valued = [r.values_ok for r in answered if r.values_ok is not None]
+        termed = [r.terms_ok for r in answered if r.terms_ok is not None]
+        cited = sum(r.cited_total for r in answered)
+        summary["answers"] = {
+            "value_accuracy": metrics.mean([1.0 if v else 0.0 for v in valued]),
+            "term_accuracy": metrics.mean([1.0 if t else 0.0 for t in termed]),
+            "citation_precision": sum(r.cited_correct for r in answered) / cited if cited else 0.0,
+            "invalid_citations": sum(r.invalid_citations for r in answered),
+            "correct_refusal": metrics.mean(
+                [1.0 if r.refused else 0.0 for r in answered if not r.answerable]
+            ),
+            "false_refusal": metrics.mean(
+                [1.0 if r.refused else 0.0 for r in answered if r.answerable]
+            ),
+            "generation_p95_s": metrics.percentile([r.generation_s for r in answered], 95),
+        }
+    return summary
+
+
+def run(
+    service: RagService,
+    items: list[GoldenItem],
+    settings: Settings,
+    *,
+    name: str,
+    answers: bool,
+    out_dir: Path,
+) -> tuple[dict[str, Any], Path]:
+    results = []
+    for item in items:
+        try:
+            results.append(evaluate_item(service, item, settings, answers=answers))
+        except Exception as exc:  # one broken question must not hide the rest of the run
+            failed = ItemResult(item.id, item.category, item.language, item.answerable)
+            failed.error = f"{type(exc).__name__}: {exc}"
+            results.append(failed)
+    summary = summarize(results)
+    record = {
+        "name": name,
+        "created": datetime.now(UTC).isoformat(timespec="seconds"),
+        "config": {k: getattr(settings, k) for k in CONFIG_FIELDS},
+        "answers": answers,
+        "summary": summary,
+        "results": [asdict(r) for r in results],
+    }
+    out_dir.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now(UTC).strftime("%Y-%m-%d-%H%M")
+    path = out_dir / f"{stamp}-{name}.json"
+    path.write_text(json.dumps(record, indent=2, ensure_ascii=False, default=str), "utf-8")
+    return summary, path

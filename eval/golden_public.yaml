@@ -1,0 +1,142 @@
+# Hand-written golden items: facts from the public corpus and unanswerable questions.
+# Every public answer was checked against the document text on 2026-10-25.
+# fcrag.eval.golden merges these with items derived from the system truths.
+
+items:
+  - id: text-01
+    category: fact_text
+    language: en
+    question: What laboratory durability was reported for automotive fuel cell stacks in 2006?
+    reference_answer: About 2,000 hours in laboratory testing.
+    expected_values: [{value: 2000, unit: h}]
+    gold_docs: [doe-rec-11003-stack-durability]
+
+  - id: text-02
+    category: fact_text
+    language: de
+    question: Wie hat sich die Labor-Lebensdauer von Brennstoffzellenstacks zwischen 2006 und 2011 entwickelt?
+    reference_answer: Sie stieg von etwa 2.000 Stunden (2006) auf 4.000 Stunden (2011).
+    expected_values: [{value: 2000, unit: h}, {value: 4000, unit: h}]
+    gold_docs: [doe-rec-11003-stack-durability]
+
+  - id: text-03
+    category: fact_text
+    language: en
+    question: What fuel cell system lifetime targets does DOE set for Class 8 long-haul trucks?
+    reference_answer: 25,000 hours as the interim target and 30,000 hours as the ultimate target.
+    expected_values: [{value: 25000, unit: h}, {value: 30000, unit: h}]
+    gold_docs: [doe-rec-19006-class8-truck-targets]
+
+  - id: text-04
+    category: fact_text
+    language: en
+    question: What is the projected 2024 cost of a heavy-duty fuel cell system manufactured at 50,000 units per year?
+    reference_answer: About $155/kWnet at 50,000 units per year (about $146/kWnet at 100,000 units per year).
+    expected_terms: ["155"]
+    gold_docs: [doe-rec-26002-hd-fc-system-cost-2024]
+
+  - id: text-05
+    category: fact_text
+    language: de
+    question: Wie stark wurde die Platinbeladung zwischen dem Heavy-Duty-System 2023 und 2024 reduziert?
+    reference_answer: Von 0,45 auf 0,35 mg Pt/cm² (gesamt), bei gleicher Leistung und Lebensdauer.
+    expected_values: [{value: 0.45, unit: mg/cm**2}, {value: 0.35, unit: mg/cm**2}]
+    gold_docs: [doe-rec-26002-hd-fc-system-cost-2024]
+
+  - id: text-06
+    category: fact_text
+    language: en
+    question: What net power does the DOE heavy-duty truck fuel cell system cost analysis assume?
+    reference_answer: A 275 kWnet PEM fuel cell system for a Class 8 long-haul truck.
+    expected_values: [{value: 275, unit: kW}]
+    gold_docs: [doe-rec-23002-hd-fc-system-cost-2022, doe-rec-26002-hd-fc-system-cost-2024]
+
+  - id: text-07
+    category: fact_text
+    language: en
+    question: What was the projected 2017 cost of an automotive fuel cell system at 100,000 units per year?
+    reference_answer: $50/kWnet at 100,000 units per year ($45/kWnet at 500,000 units per year).
+    expected_terms: ["50"]
+    gold_docs: [doe-rec-17007-fc-system-cost-2017]
+
+  - id: text-08
+    category: fact_text
+    language: en
+    question: What average fuel economy did the American Fuel Cell Bus achieve?
+    reference_answer: 5.94 miles per kilogram of hydrogen.
+    expected_terms: ["5.94"]
+    gold_docs: [nrel-tp-64344-afcb-second-report]
+
+  - id: text-09
+    category: fact_text
+    language: en
+    question: What durability do stationary fuel cells need to compete with other distributed generation technologies?
+    reference_answer: Greater than 60,000 hours, according to the DOE multi-year RD&D plan.
+    expected_values: [{value: 60000, unit: h}]
+    gold_docs: [doe-myrdd-2016-fuel-cells]
+
+  - id: text-10
+    category: fact_text
+    language: en
+    question: What is M2FCT?
+    reference_answer: The Million Mile Fuel Cell Truck consortium, a DOE national-laboratory consortium on durable heavy-duty fuel cells.
+    expected_terms: ["Million Mile Fuel Cell Truck"]
+    gold_docs: [amr-2022-fc339-m2fct, doe-amr-2024-fuel-cell-technologies]
+
+  - id: text-11
+    category: fact_text
+    language: de
+    question: Welche Wirkungsgrade sollen Verdichter und Expander des foliengelagerten Verdichter-Expanders erreichen?
+    reference_answer: 75 % Verdichterwirkungsgrad und 70 % Expanderwirkungsgrad bei 285 g/s und einem Druckverhältnis von 2,52.
+    expected_values: [{value: 75, unit: "%"}, {value: 70, unit: "%"}]
+    gold_docs: [amr-2023-fc349-compressor-expander]
+
+  - id: text-12
+    category: fact_text
+    language: en
+    question: What is the main barrier to commercialising fuel cell combined heat and power systems?
+    reference_answer: The high initial capital cost.
+    expected_terms: ["capital cost"]
+    gold_docs: [energies-2020-13-4104-fc-chp]
+
+  - id: none-01
+    category: unanswerable
+    language: en
+    question: What is the warranty period of System A?
+    reference_answer: The documents do not state a warranty period for System A.
+
+  - id: none-02
+    category: unanswerable
+    language: de
+    question: Was kostet der Stack von System B?
+    reference_answer: Die Dokumente enthalten keinen Preis für den Stack von System B.
+
+  - id: none-03
+    category: unanswerable
+    language: en
+    question: Which supplier manufactures the air compressor of System B?
+    reference_answer: The documents describe the compressor but name no supplier.
+
+  - id: none-04
+    category: unanswerable
+    language: en
+    question: What IP protection rating does the System C cabinet have?
+    reference_answer: The documents do not give an IP rating for System C.
+
+  - id: none-05
+    category: unanswerable
+    language: de
+    question: Wie laut ist System A im Betrieb, in dB(A)?
+    reference_answer: Die Dokumente enthalten keine Angaben zum Schallpegel von System A.
+
+  - id: none-06
+    category: unanswerable
+    language: en
+    question: What is the mean time between failures of the System C humidifier?
+    reference_answer: The documents do not state an MTBF for the System C humidifier.
+
+  - id: none-07
+    category: unanswerable
+    language: de
+    question: Welches Unternehmen stellt System C her?
+    reference_answer: Die Dokumente nennen keinen Hersteller von System C.

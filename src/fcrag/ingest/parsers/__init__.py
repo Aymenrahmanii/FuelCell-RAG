@@ -10,6 +10,14 @@ def register(parser: Parser) -> Parser:
     return parser
 
 
+def release_models() -> None:
+    """Let parsers free GPU memory before the embedding phase (see ``Pipeline.run``)."""
+    for parser in _REGISTRY:
+        release = getattr(parser, "release", None)
+        if callable(release):
+            release()
+
+
 def parser_for(file: SourceFile) -> Parser:
     """Return the first registered parser that handles the file's MIME type or extension."""
     extension = file.path.suffix.lower()

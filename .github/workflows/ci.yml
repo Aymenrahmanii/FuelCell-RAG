@@ -22,7 +22,8 @@ jobs:
           enable-cache: true
 
       - name: Install
-        run: uv sync --locked
+        # The ml extra (torch, Docling, FlagEmbedding) is left out: unit tests use fakes
+        run: uv sync --locked --extra ui
 
       - name: Lint
         run: uv run ruff check .

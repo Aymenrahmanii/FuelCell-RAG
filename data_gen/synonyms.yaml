@@ -1,0 +1,14 @@
+# Extra spellings that map to canonical parameter keys, on top of the English and German labels
+# in the system truths. Used by fcrag.ingest.extract_params and query routing.
+synonyms:
+  open_circuit_voltage: [OCV, open-circuit voltage, Ruhespannung]
+  cell_count: [cell count, number of cells, Anzahl Zellen, Zellzahl]
+  rated_net_power: [net power, rated power, Nettoleistung, Nennleistung netto]
+  coolant_outlet_temperature_nominal: [operating temperature, Betriebstemperatur, coolant outlet temperature]
+  coolant_outlet_temperature_max: [max. coolant outlet temperature, maximale Kühlmitteltemperatur]
+  pt_loading_cathode: [cathode Pt loading, Pt-Beladung Kathode, cathode catalyst loading]
+  pt_loading_anode: [anode Pt loading, Pt-Beladung Anode]
+  membrane_thickness: [membrane thickness, Membranstärke]
+  design_lifetime: [lifetime, durability, Lebensdauer]
+  system_efficiency_rated: [rated efficiency, Wirkungsgrad bei Nennlast]
+  h2_consumption_rated: [hydrogen consumption, H2 consumption, H2-Verbrauch]

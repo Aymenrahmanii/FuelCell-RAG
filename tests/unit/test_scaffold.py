@@ -10,7 +10,7 @@ from fcrag.models import Element, SourceFile
 
 class _CsvParser:
     def __init__(self) -> None:
-        self.supported_types = {".csv", "text/csv"}
+        self.supported_types = frozenset({".csv", "text/csv"})
 
     def parse(self, file: SourceFile) -> Iterator[Element]:
         yield Element(kind="table_row", content="x", locator={"row": 1})
