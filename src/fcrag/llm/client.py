@@ -19,7 +19,8 @@ class LiteLLMClient:
 
     def __init__(self, settings: Settings) -> None:
         self.model = settings.active_llm_model
-        self._fallbacks = [] if settings.restricted_mode else [settings.local_llm_model]
+        # Restricted mode never falls back to a hosted model: no document text leaves the machine.
+        self._fallbacks = [] if settings.restricted_mode else list(settings.llm_fallbacks)
         self._timeout = settings.llm_timeout_s
 
     def stream(self, messages: list[Message]) -> Iterator[str]:

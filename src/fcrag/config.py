@@ -31,8 +31,10 @@ class Settings(BaseSettings):
         validation_alias=AliasChoices("FCRAG_LANGFUSE_SECRET_KEY", "LANGFUSE_SECRET_KEY"),
     )
 
-    llm_model: str = "anthropic/claude-sonnet-5-5"
-    local_llm_model: str = "ollama/qwen3:14b"
+    llm_model: str = "groq/openai/gpt-oss-120b"
+    llm_fallbacks: list[str] = ["gemini/gemini-2.5-flash"]
+    """Tried in order when the main model fails (rate limit, outage). LiteLLM model strings."""
+    local_llm_model: str = "ollama/qwen3:4b"
     llm_timeout_s: float = 60.0
     embedding_model: str = "BAAI/bge-m3"
     embedding_batch_size: int = 32

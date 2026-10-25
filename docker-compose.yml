@@ -35,11 +35,14 @@ x-app-env: &app-env
   FCRAG_LANGFUSE_HOST: http://langfuse-web:3000
   LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
   LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
-  FCRAG_LLM_MODEL: ${FCRAG_LLM_MODEL:-anthropic/claude-sonnet-5-5}
-  FCRAG_LOCAL_LLM_MODEL: ${FCRAG_LOCAL_LLM_MODEL:-ollama/qwen3:14b}
+  FCRAG_LLM_MODEL: ${FCRAG_LLM_MODEL:-groq/openai/gpt-oss-120b}
+  FCRAG_LLM_FALLBACKS: ${FCRAG_LLM_FALLBACKS:-["gemini/gemini-2.5-flash"]}
+  FCRAG_LOCAL_LLM_MODEL: ${FCRAG_LOCAL_LLM_MODEL:-ollama/qwen3:4b}
   FCRAG_RESTRICTED_MODE: ${FCRAG_RESTRICTED_MODE:-false}
   FCRAG_API_KEY: ${FCRAG_API_KEY:-}
-  ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+  GROQ_API_KEY: ${GROQ_API_KEY:-}
+  GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+  OLLAMA_API_BASE: ${OLLAMA_API_BASE:-http://host.docker.internal:11434}
 
 x-app-ml: &app-ml
   build: { context: ., dockerfile: docker/app.Dockerfile, target: ml }

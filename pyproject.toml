@@ -33,6 +33,9 @@ ml = [
     "docling>=2.60",
     "flagembedding>=1.3",
     "torch>=2.9",
+    # Must come from the same index as torch: a PyPI torchvision built for another torch
+    # fails at import ("operator torchvision::nms does not exist")
+    "torchvision>=0.24",
 ]
 ui = [
     "streamlit>=1.40",
@@ -63,6 +66,10 @@ dev = [
 [tool.uv]
 # CUDA build on Windows dev machines, CPU build on Linux (CI, containers)
 sources.torch = [
+    { index = "pytorch-cu128", marker = "sys_platform == 'win32'" },
+    { index = "pytorch-cpu", marker = "sys_platform == 'linux'" },
+]
+sources.torchvision = [
     { index = "pytorch-cu128", marker = "sys_platform == 'win32'" },
     { index = "pytorch-cpu", marker = "sys_platform == 'linux'" },
 ]

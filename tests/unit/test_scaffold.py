@@ -31,4 +31,4 @@ def test_parser_routing_by_extension_and_mime(monkeypatch: pytest.MonkeyPatch) -
 
 def test_restricted_mode_switches_to_local_llm() -> None:
     assert Settings(restricted_mode=True, _env_file=None).active_llm_model.startswith("ollama/")
-    assert Settings(_env_file=None).active_llm_model.startswith("anthropic/")
+    assert Settings(_env_file=None).active_llm_model.startswith("groq/")
