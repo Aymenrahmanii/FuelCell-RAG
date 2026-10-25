@@ -199,3 +199,27 @@ class Pipeline:
             row.error, row.duration_s = error, seconds
             outcome: Outcome = "quarantined" if row.status == "quarantined" else "failed"
         return IngestResult(sf.source_key, outcome, seconds=seconds, error=error)
+
+
+def ingest_all(
+    settings: Settings, *, force: bool = False, only: str | None = None, limit: int | None = None
+) -> dict[str, int]:
+    """Discover and ingest everything under ``settings.source_dirs``; used by CLI and worker."""
+    import fnmatch
+
+    from fcrag.db.session import get_engine
+    from fcrag.embedding import get_embedder
+    from fcrag.ingest.discover import discover
+
+    files = discover(settings.source_dirs, settings.sources_manifest)
+    if only:
+        files = [f for f in files if fnmatch.fnmatch(f.doc_id, only)]
+    if limit:
+        files = files[:limit]
+    cache = ElementCache(settings.element_cache_dir) if settings.element_cache_dir else None
+    pipeline = Pipeline(settings, get_embedder(), index.get_client(), get_engine(), cache)
+    counts: dict[str, int] = {"chunks": 0}
+    for result in pipeline.run(files, force=force):
+        counts[result.outcome] = counts.get(result.outcome, 0) + 1
+        counts["chunks"] += result.chunks
+    return counts

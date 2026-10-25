@@ -32,4 +32,19 @@ st.dataframe(
     hide_index=True,
     use_container_width=True,
 )  # fmt: skip
-st.caption("Re-ingest with `uv run fcrag ingest` (only new or changed files are processed).")
+st.subheader("Re-ingest")
+st.caption("Only new or changed files are processed; unchanged files are skipped by content hash.")
+left, right = st.columns([1, 3])
+if left.button("Re-ingest now"):
+    try:
+        st.session_state["ingest_job"] = client.start_ingest()
+    except Exception as exc:
+        st.error(f"Could not queue the job (is the worker's Redis reachable?): {exc}")
+job_id = st.session_state.get("ingest_job")
+if job_id:
+    status = client.ingest_status(job_id)
+    right.write(f"Job `{job_id}`: **{status['status']}**")
+    if "result" in status:
+        right.json(status["result"])
+    if right.button("Refresh status"):
+        st.rerun()

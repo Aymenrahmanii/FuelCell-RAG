@@ -53,6 +53,46 @@ def page_image(doc_id: str, version: int, page: int) -> bytes | None:
     return response.content if response.status_code == 200 else None
 
 
+def parameter_keys() -> list[dict[str, str]]:
+    response = httpx.get(_url("/parameters/keys"), headers=_headers(), timeout=30)
+    response.raise_for_status()
+    keys: list[dict[str, str]] = response.json()
+    return keys
+
+
+def compare(systems: list[str], keys: list[str]) -> dict[str, Any]:
+    response = httpx.post(
+        _url("/parameters/compare"), json={"systems": systems, "keys": keys},
+        headers=_headers(), timeout=30,
+    )  # fmt: skip
+    response.raise_for_status()
+    table: dict[str, Any] = response.json()
+    return table
+
+
+def check_requirement(text: str, system: str | None) -> dict[str, Any]:
+    response = httpx.post(
+        _url("/requirements/check"), json={"text": text, "system": system},
+        headers=_headers(), timeout=120,
+    )  # fmt: skip
+    response.raise_for_status()
+    result: dict[str, Any] = response.json()
+    return result
+
+
+def start_ingest(force: bool = False) -> str:
+    response = httpx.post(_url("/ingest"), json={"force": force}, headers=_headers(), timeout=10)
+    response.raise_for_status()
+    return str(response.json()["job_id"])
+
+
+def ingest_status(job_id: str) -> dict[str, Any]:
+    response = httpx.get(_url(f"/ingest/{job_id}"), headers=_headers(), timeout=10)
+    response.raise_for_status()
+    status: dict[str, Any] = response.json()
+    return status
+
+
 def send_feedback(payload: dict[str, Any]) -> bool:
     response = httpx.post(_url("/feedback"), json=payload, headers=_headers(), timeout=10)
     return response.status_code == 201

@@ -156,6 +156,96 @@ def page_image(doc_id: str, version: int, page: int, scale: float = 1.5) -> Resp
     return Response(buffer.getvalue(), media_type="image/png")
 
 
+class CompareRequest(BaseModel):
+    systems: list[str] = Field(min_length=1)
+    keys: list[str] = Field(min_length=1)
+
+
+class CheckRequest(BaseModel):
+    text: str = Field(min_length=5, max_length=4000)
+    system: str | None = None
+
+
+@app.get("/parameters/keys")
+def parameter_keys(service: Service) -> list[dict[str, str]]:
+    """Every known parameter with its English and German label and canonical unit."""
+    vocab = service.vocabulary
+    if vocab is None:
+        return []
+    seen: dict[str, dict[str, str]] = {}
+    for system in vocab.systems.values():
+        params = list(system.parameters) + [p for c in system.components for p in c.parameters]
+        for p in params:
+            seen.setdefault(p.key, {"key": p.key, "label_en": p.label_en,
+                                    "label_de": p.label_de, "unit": p.unit})  # fmt: skip
+    return sorted(seen.values(), key=lambda p: p["label_en"])
+
+
+@app.post("/parameters/compare")
+def parameters_compare(req: CompareRequest, service: Service) -> dict[str, Any]:
+    from fcrag.apps.compare import compare
+
+    if service.params is None:
+        raise HTTPException(status_code=503, detail="parameter store not configured")
+    table = compare(service.params, req.systems, req.keys)
+    return {key: {s: asdict(cell) for s, cell in row.items()} for key, row in table.items()}
+
+
+@app.post("/requirements/check")
+def requirements_check(req: CheckRequest, service: Service, groups: Groups) -> dict[str, Any]:
+    """Similar and linked requirements, plus stated values that conflict with the documents."""
+    from fcrag.apps.checker import check_requirement
+
+    if service.params is None or service.vocabulary is None:
+        raise HTTPException(status_code=503, detail="parameter store not configured")
+    system, checks = check_requirement(req.text, req.system, service.vocabulary, service.params)
+    filters = Filters(systems=[system] if system else [], doc_types=["requirements"], groups=groups)
+    similar = []
+    linked: list[str] = []
+    for hit in service.rank(req.text, filters)[:5]:
+        meta = hit.payload.get("meta") or {}
+        similar.append(
+            {
+                "req_id": meta.get("req_id") or (hit.payload.get("locator") or {}).get("req_id"),
+                "doc_id": hit.payload.get("doc_id"),
+                "text": hit.text,
+                "score": round(hit.rerank_score or 0.0, 4),
+                "status": meta.get("status"),
+                "parent": meta.get("parent"),
+                "links": meta.get("links", []),
+            }
+        )
+        for ref in [meta.get("parent"), *meta.get("links", [])]:
+            if ref and ref not in linked:
+                linked.append(ref)
+    return {
+        "system": system,
+        "parameters": [asdict(c) for c in checks],
+        "similar": similar,
+        "linked": linked,
+    }
+
+
+class IngestRequest(BaseModel):
+    force: bool = False
+    only: str | None = Field(default=None, description="glob on doc_id, e.g. 'ds-*'")
+
+
+@app.post("/ingest", status_code=202)
+def ingest(req: IngestRequest) -> dict[str, str]:
+    """Queue a re-ingestion; only new or changed files are processed unless ``force``."""
+    from fcrag.ingest.worker import enqueue_ingest
+
+    return {"job_id": enqueue_ingest(force=req.force, only=req.only)}
+
+
+@app.get("/ingest/{job_id}")
+def ingest_status(job_id: str) -> dict[str, Any]:
+    from fcrag.ingest.worker import job_status
+
+    return job_status(job_id)
+
+
 @app.post("/feedback", status_code=201)
 def feedback(req: FeedbackRequest) -> dict[str, int]:
     from fcrag.observability import score

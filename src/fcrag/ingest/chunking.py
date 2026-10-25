@@ -14,7 +14,7 @@ English and German technical text and keeps this module free of model dependenci
 
 import math
 import uuid
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from fcrag.models import Chunk, Element, SourceFile
@@ -49,6 +49,7 @@ class _Draft:
     heading_path: list[str]
     pages: list[int]
     locator: dict[str, Any]
+    meta: dict[str, Any] = field(default_factory=dict)
 
     @property
     def text(self) -> str:
@@ -57,6 +58,16 @@ class _Draft:
     @property
     def tokens(self) -> int:
         return estimate_tokens(self.text)
+
+
+REQUIREMENT_META = ("req_id", "parent", "links", "status", "type", "verification")
+
+
+def _meta(element: Element) -> dict[str, Any]:
+    """Structured fields worth keeping in the payload: requirement trace links and status."""
+    if element.kind != "requirement" or not element.data:
+        return {}
+    return {k: element.data[k] for k in REQUIREMENT_META if element.data.get(k)}
 
 
 def _page(element: Element) -> int | None:
@@ -120,7 +131,14 @@ def _section_drafts(elements: list[Element], cfg: ChunkingConfig) -> list[_Draft
         if el.kind in STANDALONE_KINDS:
             flush()
             drafts.append(
-                _Draft(el.kind, [el.content], el.heading_path, [page] if page else [], el.locator)
+                _Draft(
+                    el.kind,
+                    [el.content],
+                    el.heading_path,
+                    [page] if page else [],
+                    el.locator,
+                    _meta(el),
+                )
             )
             continue
 
@@ -166,7 +184,14 @@ def _fixed_drafts(elements: list[Element], cfg: ChunkingConfig) -> list[_Draft]:
             flush_run()
             page = _page(el)
             drafts.append(
-                _Draft(el.kind, [el.content], el.heading_path, [page] if page else [], el.locator)
+                _Draft(
+                    el.kind,
+                    [el.content],
+                    el.heading_path,
+                    [page] if page else [],
+                    el.locator,
+                    _meta(el),
+                )
             )
         else:
             run.append(el)
@@ -186,7 +211,9 @@ def build_chunks(
     drafts: list[_Draft] = []
     for d in raw:
         pieces = _split_long(d.text, cfg.max_tokens, cfg.overlap_tokens)
-        drafts.extend(_Draft(d.kind, [p], d.heading_path, d.pages, d.locator) for p in pieces)
+        drafts.extend(
+            _Draft(d.kind, [p], d.heading_path, d.pages, d.locator, d.meta) for p in pieces
+        )
 
     title = source.title or source.doc_id
     chunks = []
@@ -208,6 +235,7 @@ def build_chunks(
                 embed_text=f"{header}\n\n{d.text}" if cfg.contextual_headers else d.text,
                 heading_path=d.heading_path,
                 locator=_merge_locator(d),
+                meta=d.meta,
                 allowed_groups=source.allowed_groups,
             )
         )

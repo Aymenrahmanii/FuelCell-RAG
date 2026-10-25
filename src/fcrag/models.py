@@ -77,6 +77,8 @@ class Chunk(BaseModel):
     """What gets embedded: ``text`` plus the contextual header, if enabled."""
     heading_path: list[str] = Field(default_factory=list)
     locator: dict[str, Any] = Field(default_factory=dict)
+    meta: dict[str, Any] = Field(default_factory=dict)
+    """Structured extras, e.g. a requirement's parent, links and status."""
     allowed_groups: list[str] = Field(default_factory=list)
 
 

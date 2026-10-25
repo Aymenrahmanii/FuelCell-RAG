@@ -24,6 +24,7 @@ dependencies = [
     "python-docx>=1.1",
     "defusedxml>=0.7",
     "langfuse>=3",
+    "rq>=2.0",
 ]
 
 [project.optional-dependencies]

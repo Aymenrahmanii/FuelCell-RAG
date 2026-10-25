@@ -9,13 +9,12 @@ from collections.abc import Iterator
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 from functools import lru_cache
-from pathlib import Path
 from typing import Any
 
 import yaml
 from qdrant_client import QdrantClient
 
-from fcrag.config import Settings
+from fcrag.config import Settings, get_settings
 from fcrag.embedding import Embedder
 from fcrag.generation.citations import check_citations, format_locator
 from fcrag.ingest.extract_params import Vocabulary
@@ -27,14 +26,14 @@ from fcrag.retrieval.route import ParameterHit, ParameterStore, detect
 from fcrag.retrieval.search import Filters, Hit, hybrid_search
 from fcrag.units import display_unit
 
-PROMPTS_DIR = Path(__file__).resolve().parents[3] / "prompts"
 LANGUAGE_NAMES = {"en": "English", "de": "German"}
 QUERY_MAX_TOKENS = 256
 
 
 @lru_cache
 def load_prompt(name: str = "answer") -> dict[str, Any]:
-    prompt: dict[str, Any] = yaml.safe_load((PROMPTS_DIR / f"{name}.yaml").read_text("utf-8"))
+    path = get_settings().prompts_dir / f"{name}.yaml"
+    prompt: dict[str, Any] = yaml.safe_load(path.read_text("utf-8"))
     return prompt
 
 

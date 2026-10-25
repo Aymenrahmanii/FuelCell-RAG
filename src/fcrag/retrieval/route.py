@@ -59,15 +59,20 @@ class ParameterHit:
 
 
 class ParameterStore(Protocol):
-    def lookup(self, systems: list[str], keys: list[str]) -> list[ParameterHit]: ...
+    def lookup(
+        self, systems: list[str], keys: list[str], *, limit: int | None = ...
+    ) -> list[ParameterHit]: ...
 
 
 class SqlParameterStore:
     def __init__(self, engine: Engine) -> None:
         self.engine = engine
 
-    def lookup(self, systems: list[str], keys: list[str]) -> list[ParameterHit]:
-        """Records for these systems and keys, every document version, newest first."""
+    def lookup(
+        self, systems: list[str], keys: list[str], *, limit: int | None = MAX_RECORDS
+    ) -> list[ParameterHit]:
+        """Records for these systems and keys, every document version, newest first.
+        ``limit`` is per system; None returns everything."""
         with session_scope(self.engine) as session:
             rows = session.execute(
                 select(ParameterRecord, Document.title)
@@ -95,4 +100,4 @@ class SqlParameterStore:
                     record, title or record.doc_id, record.doc_version == latest[record.doc_id]
                 )
             )
-        return hits[: MAX_RECORDS * max(1, len(systems))]
+        return hits if limit is None else hits[: limit * max(1, len(systems))]

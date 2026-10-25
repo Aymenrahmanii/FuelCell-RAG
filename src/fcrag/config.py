@@ -59,7 +59,8 @@ class Settings(BaseSettings):
     chunk_overlap_tokens: int = 64
     contextual_headers: bool = True
 
-    # Retrieval
+    # Retrieval and generation
+    prompts_dir: Path = Path("prompts")
     prefetch_limit: int = 50
     rerank_top_k: int = 8
     rerank_threshold: float = 0.21

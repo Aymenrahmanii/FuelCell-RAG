@@ -1,7 +1,6 @@
 """Command line: ``fcrag db-upgrade | ingest | search | ask | serve``."""
 
 import argparse
-import fnmatch
 import logging
 import sys
 from typing import TYPE_CHECKING
@@ -77,30 +76,18 @@ def _eval_params(args: argparse.Namespace) -> None:
 
 
 def _ingest(args: argparse.Namespace) -> None:
-    from fcrag.db.session import get_engine
-    from fcrag.embedding import get_embedder
-    from fcrag.ingest.discover import discover
-    from fcrag.ingest.index import get_client
-    from fcrag.ingest.pipeline import Pipeline
+    from fcrag.ingest.pipeline import ingest_all
 
-    s = get_settings()
-    files = discover(s.source_dirs, s.sources_manifest)
-    if args.only:
-        files = [f for f in files if fnmatch.fnmatch(f.doc_id, args.only)]
-    if args.limit:
-        files = files[: args.limit]
-    from fcrag.ingest.cache import ElementCache
-
-    cache = ElementCache(s.element_cache_dir) if s.element_cache_dir else None
-    pipeline = Pipeline(s, get_embedder(), get_client(), get_engine(), cache)
-    results = pipeline.run(files, force=args.force)
-    counts: dict[str, int] = {}
-    for r in results:
-        counts[r.outcome] = counts.get(r.outcome, 0) + 1
-    chunks = sum(r.chunks for r in results)
-    print(f"done: {counts}, {chunks} chunks indexed this run")
+    counts = ingest_all(get_settings(), force=args.force, only=args.only, limit=args.limit)
+    print(f"done: {counts}")
     if counts.get("failed") or counts.get("quarantined"):
         sys.exit(1)
+
+
+def _worker(_: argparse.Namespace) -> None:
+    from fcrag.ingest.worker import run_worker
+
+    run_worker()
 
 
 def _service() -> "RagService":
@@ -198,6 +185,9 @@ def main() -> None:
     p = sub.add_parser("eval-params", help="score extracted parameters against generator facts")
     p.add_argument("--facts", default="data/generated/facts.jsonl")
     p.set_defaults(func=_eval_params)
+
+    p = sub.add_parser("worker", help="run the background ingestion worker (Redis queue)")
+    p.set_defaults(func=_worker)
 
     p = sub.add_parser("serve", help="run the API")
     p.add_argument("--host", default="127.0.0.1")

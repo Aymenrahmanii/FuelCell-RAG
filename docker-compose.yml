@@ -1,8 +1,10 @@
-# Local stack for FuelCell-RAG. Start with: docker compose up -d
+# Local stack for FuelCell-RAG.
+#   Infrastructure only (run the app with uv on the host): docker compose up -d
+#   Everything, app included:                             docker compose --profile app up -d --build
 # Dev defaults below match .env.example; override them in .env.
 #
 # Host ports: Qdrant 6333/6334, Postgres 5432, Redis 6379, MinIO 9000 (API) / 9001 (console),
-# Langfuse 3000. ClickHouse stays internal.
+# Langfuse 3000, API 8000, UI 8501. ClickHouse stays internal.
 
 x-langfuse-env: &langfuse-env
   DATABASE_URL: postgresql://${POSTGRES_USER:-fcrag}:${POSTGRES_PASSWORD:-CHANGEME-postgres}@postgres:5432/langfuse
@@ -25,7 +27,72 @@ x-langfuse-env: &langfuse-env
   REDIS_PORT: "6379"
   REDIS_AUTH: ${REDIS_PASSWORD:-CHANGEME-redis}
 
+x-app-env: &app-env
+  FCRAG_ENV: dev
+  FCRAG_QDRANT_URL: http://qdrant:6333
+  FCRAG_POSTGRES_DSN: postgresql+psycopg://${POSTGRES_USER:-fcrag}:${POSTGRES_PASSWORD:-CHANGEME-postgres}@postgres:5432/${POSTGRES_DB:-fcrag}
+  FCRAG_REDIS_URL: redis://:${REDIS_PASSWORD:-CHANGEME-redis}@redis:6379/0
+  FCRAG_LANGFUSE_HOST: http://langfuse-web:3000
+  LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+  LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+  FCRAG_LLM_MODEL: ${FCRAG_LLM_MODEL:-anthropic/claude-sonnet-5-5}
+  FCRAG_LOCAL_LLM_MODEL: ${FCRAG_LOCAL_LLM_MODEL:-ollama/qwen3:14b}
+  FCRAG_RESTRICTED_MODE: ${FCRAG_RESTRICTED_MODE:-false}
+  FCRAG_API_KEY: ${FCRAG_API_KEY:-}
+  ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+
+x-app-ml: &app-ml
+  build: { context: ., dockerfile: docker/app.Dockerfile, target: ml }
+  image: fcrag-ml:local
+  restart: unless-stopped
+  profiles: [app]
+  environment: *app-env
+  volumes:
+    - ./data:/app/data
+    - models:/models
+
 services:
+  migrate:
+    <<: *app-ml
+    restart: "no"
+    command: ["fcrag", "db-upgrade"]
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  api:
+    <<: *app-ml
+    ports: ["8000:8000"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      qdrant: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  worker:
+    <<: *app-ml
+    command: ["fcrag", "worker"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      qdrant: { condition: service_healthy }
+      redis: { condition: service_healthy }
+
+  ui:
+    build: { context: ., dockerfile: docker/app.Dockerfile, target: ui }
+    image: fcrag-ui:local
+    restart: unless-stopped
+    profiles: [app]
+    environment:
+      FCRAG_API_URL: http://api:8000
+      FCRAG_API_KEY: ${FCRAG_API_KEY:-}
+    ports: ["8501:8501"]
+    depends_on:
+      api: { condition: service_healthy }
+
   qdrant:
     image: qdrant/qdrant:v1.20.0
     restart: unless-stopped
@@ -125,6 +192,7 @@ services:
       NEXTAUTH_SECRET: ${LANGFUSE_NEXTAUTH_SECRET:-CHANGEME-nextauth}
 
 volumes:
+  models:
   qdrant_data:
   postgres_data:
   redis_data:
