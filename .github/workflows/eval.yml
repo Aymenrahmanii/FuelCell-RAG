@@ -66,10 +66,14 @@ jobs:
             echo "::error title=generate::$(tail -c 800 err.log | tr '\n' ' ')"; exit 1; }
 
       - name: Ingest
-        run: uv run fcrag ingest --only "ps-*" --only "req-*" --only "cad-*"
+        run: |
+          uv run fcrag ingest --only "ps-*" --only "req-*" --only "cad-*" 2> err.log || {
+            echo "::error title=ingest::$(grep -v '%|' err.log | tail -c 900 | tr '\n' ' ')"; exit 1; }
 
       - name: Evaluate and gate
-        run: uv run fcrag eval --name ci --gate eval/gate.yaml
+        run: |
+          uv run fcrag eval --name ci --gate eval/gate.yaml 2> err.log || {
+            echo "::error title=eval::$(grep -v '%|' err.log | tail -c 900 | tr '\n' ' ')"; exit 1; }
 
       - name: Upload run
         if: always()
