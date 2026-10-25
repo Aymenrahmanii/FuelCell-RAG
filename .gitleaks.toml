@@ -1,0 +1,9 @@
+# Default gitleaks rules, plus one allowlist: lower-case snake_case identifiers such as
+# "h2_consumption_rated_per_module" (parameter keys in the truth files and question sets)
+# trip the generic-api-key rule but are never secrets.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "snake_case identifiers"
+regexes = ['''^[a-z][a-z0-9]*(_[a-z0-9]+)+$''']

@@ -1,0 +1,91 @@
+# System A: 80 kW net PEM fuel cell system for a passenger car.
+# Fictional. Values are internally consistent (V = N * V_cell, P = V * I, H2 flow = I * N / 2F).
+system: System A
+code: A
+application: Passenger car
+description: >-
+  Single-stack 80 kW net automotive PEM fuel cell system with an electric turbo compressor,
+  membrane humidifier and hydrogen recirculation blower. Optimised for power density and
+  sub-zero cold start.
+
+parameters:
+  - {key: rated_net_power, label_en: Rated net power, label_de: Nenn-Nettoleistung, value: 80, unit: kW}
+  - {key: system_efficiency_rated, label_en: System efficiency at rated power, label_de: Systemwirkungsgrad bei Nennleistung, value: 44, unit: "%", condition: "rated net power, LHV"}
+  - {key: system_efficiency_peak, label_en: Peak system efficiency, label_de: Maximaler Systemwirkungsgrad, value: 60, unit: "%", condition: "25 % of rated net power, LHV"}
+  - {key: h2_consumption_rated, label_en: Hydrogen consumption at rated power, label_de: Wasserstoffverbrauch bei Nennleistung, value: 1.52, unit: g/s, condition: "rated net power, incl. purge losses"}
+  - {key: h2_supply_pressure, label_en: Hydrogen supply pressure, label_de: Wasserstoff-Versorgungsdruck, value: 1200, unit: kPa, condition: "absolute, at system inlet"}
+  - {key: cold_start_temperature, label_en: Minimum cold start temperature, label_de: Minimale Kaltstarttemperatur, value: -30, unit: degC, condition: "unassisted, 50 % power within 30 s"}
+  - {key: ambient_temperature_max, label_en: Maximum ambient temperature, label_de: Maximale Umgebungstemperatur, value: 45, unit: degC}
+  - {key: design_lifetime, label_en: Design lifetime, label_de: Auslegungslebensdauer, value: 8000, unit: h, condition: "to 10 % rated power loss, drive-cycle operation"}
+  - {key: system_mass, label_en: System mass, label_de: Systemmasse, value: 115, unit: kg, condition: "dry, without hydrogen storage"}
+
+components:
+  - id: A-STK
+    name: Fuel cell stack
+    type: stack
+    attributes:
+      bipolar_plate_material: "Stainless steel 1.4404 (316L), carbon-coated"
+      membrane_type: "Reinforced PFSA"
+      flow_field: "Parallel-serpentine, counter-flow"
+    parameters:
+      - {key: cell_count, label_en: Number of cells, label_de: Zellenanzahl, value: 300, unit: "-"}
+      - {key: active_area, label_en: Active cell area, label_de: Aktive Zellfläche, value: 300, unit: cm**2}
+      - {key: rated_gross_power, label_en: Rated gross power, label_de: Nenn-Bruttoleistung, value: 95, unit: kW}
+      - {key: rated_current, label_en: Rated current, label_de: Nennstrom, value: 480, unit: A}
+      - {key: rated_current_density, label_en: Rated current density, label_de: Nennstromdichte, value: 1.6, unit: A/cm**2}
+      - {key: cell_voltage_rated, label_en: Cell voltage at rated current, label_de: Zellspannung bei Nennstrom, value: 0.66, unit: V}
+      - {key: stack_voltage_rated, label_en: Stack voltage at rated current, label_de: Stackspannung bei Nennstrom, value: 198, unit: V}
+      - {key: open_circuit_voltage, label_en: Open circuit voltage, label_de: Leerlaufspannung, value: 285, unit: V}
+      - {key: coolant_outlet_temperature_nominal, label_en: Nominal coolant outlet temperature, label_de: Nominale Kühlmittelaustrittstemperatur, value: 80, unit: degC}
+      - {key: coolant_outlet_temperature_max, label_en: Maximum coolant outlet temperature, label_de: Maximale Kühlmittelaustrittstemperatur, value: 95, unit: degC, condition: "short-term, max. 10 min"}
+      - {key: coolant_delta_t_max, label_en: Maximum coolant temperature rise, label_de: Maximale Kühlmittel-Temperaturspreizung, value: 10, unit: K}
+      - {key: cathode_inlet_pressure_rated, label_en: Cathode inlet pressure at rated power, label_de: Kathodeneintrittsdruck bei Nennleistung, value: 250, unit: kPa, condition: absolute}
+      - {key: anode_inlet_pressure_rated, label_en: Anode inlet pressure at rated power, label_de: Anodeneintrittsdruck bei Nennleistung, value: 270, unit: kPa, condition: absolute}
+      - {key: anode_cathode_dp_max, label_en: Maximum anode-cathode differential pressure, label_de: Maximaler Differenzdruck Anode-Kathode, value: 50, unit: kPa}
+      - {key: cathode_stoichiometry, label_en: Cathode stoichiometry, label_de: Kathodenstöchiometrie, value: 1.8, unit: "-", condition: "rated current"}
+      - {key: anode_stoichiometry, label_en: Anode stoichiometry, label_de: Anodenstöchiometrie, value: 1.5, unit: "-", condition: "rated current"}
+      - {key: cathode_inlet_rh, label_en: Cathode inlet relative humidity, label_de: Relative Feuchte am Kathodeneintritt, value: 50, unit: "%", condition: "rated current"}
+      - {key: pt_loading_cathode, label_en: Cathode platinum loading, label_de: Platinbeladung Kathode, value: 0.25, unit: mg/cm**2}
+      - {key: pt_loading_anode, label_en: Anode platinum loading, label_de: Platinbeladung Anode, value: 0.05, unit: mg/cm**2}
+      - {key: membrane_thickness, label_en: Membrane thickness, label_de: Membrandicke, value: 12, unit: um}
+      - {key: stack_mass, label_en: Stack mass, label_de: Stackmasse, value: 45, unit: kg}
+      - {key: stack_volume, label_en: Stack volume, label_de: Stackvolumen, value: 40, unit: L}
+
+  - id: A-CMP
+    name: Electric turbo air compressor
+    type: air_compressor
+    attributes:
+      bearing_type: "Air foil bearings"
+    parameters:
+      - {key: air_mass_flow_max, label_en: Maximum air mass flow, label_de: Maximaler Luftmassenstrom, value: 100, unit: g/s}
+      - {key: pressure_ratio_max, label_en: Maximum pressure ratio, label_de: Maximales Druckverhältnis, value: 2.5, unit: "-"}
+      - {key: electrical_power_rated, label_en: Electrical power at rated point, label_de: Elektrische Leistungsaufnahme im Nennpunkt, value: 12, unit: kW}
+      - {key: speed_max, label_en: Maximum speed, label_de: Maximaldrehzahl, value: 120000, unit: rpm}
+
+  - id: A-HUM
+    name: Membrane humidifier
+    type: humidifier
+    attributes:
+      design: "Hollow-fibre membrane, gas-to-gas"
+    parameters:
+      - key: pressure_drop_dry_side
+        label_en: Dry-side pressure drop
+        label_de: Druckverlust Trockenseite
+        value: 15
+        unit: kPa
+        condition: "rated air flow"
+        superseded:
+          - {doc_version: 1, value: 18, note: "Datasheet v1, before the fibre bundle redesign"}
+
+  - id: A-CLP
+    name: Electric coolant pump
+    type: coolant_pump
+    parameters:
+      - {key: coolant_flow_rated, label_en: Rated coolant flow, label_de: Nenn-Kühlmittelvolumenstrom, value: 150, unit: L/min}
+      - {key: electrical_power_rated, label_en: Rated electrical power, label_de: Elektrische Nennleistung, value: 0.8, unit: kW}
+
+  - id: A-HRB
+    name: Hydrogen recirculation blower
+    type: h2_recirculation
+    parameters:
+      - {key: electrical_power_rated, label_en: Rated electrical power, label_de: Elektrische Nennleistung, value: 0.5, unit: kW}

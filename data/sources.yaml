@@ -1,0 +1,28 @@
+# Public documents for the corpus. scripts/download_corpus.py fetches each entry into data/raw/.
+# The repo ships this manifest, never the PDFs themselves.
+#
+# Every entry needs a licence. US federal works (DOE, NREL reports) are generally public domain
+# in the US; check the document itself, since some contain third-party material.
+# Open-access papers: record the exact licence (CC BY 4.0, ...).
+#
+# Fields:
+#   id         stable slug, used as doc_id
+#   url        direct link to the PDF
+#   title      document title
+#   publisher  e.g. "US DOE Hydrogen Program", "NREL", journal name
+#   year       publication year
+#   licence    e.g. "US Government work (public domain)", "CC BY 4.0"
+#   doc_type   report | datasheet | drawing
+#
+# Checksums live in data/sources.lock.yaml, written on first download and verified after.
+#
+# Example:
+#   - id: doe-amr-2024-fc-overview
+#     url: https://www.hydrogen.energy.gov/...
+#     title: "Fuel Cell Technologies Overview"
+#     publisher: US DOE Hydrogen Program
+#     year: 2024
+#     licence: US Government work (public domain)
+#     doc_type: report
+
+sources: []

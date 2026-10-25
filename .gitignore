@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+
+# Tooling caches
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Corpus: downloaded third-party documents and generated files are never committed
+data/raw/
+data/generated/
+data/processed/
+
+# Eval run outputs (keep the folder, commit summaries deliberately)
+eval/runs/*
+!eval/runs/.gitkeep
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

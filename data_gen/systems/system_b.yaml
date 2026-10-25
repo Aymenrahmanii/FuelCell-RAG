@@ -1,0 +1,95 @@
+# System B: 2 x 150 kW net PEM fuel cell system for a heavy-duty truck.
+# Fictional. Stack and BoP values are per module; system-level values cover both modules.
+# Values are internally consistent (V = N * V_cell, P = V * I, H2 flow = I * N / 2F).
+system: System B
+code: B
+application: Heavy-duty truck
+description: >-
+  Dual-module heavy-duty PEM fuel cell system, 2 x 150 kW net. Each module has its own stack,
+  air compressor, humidifier and recirculation loop. Lower operating temperature and higher
+  catalyst loading trade power density for durability.
+
+parameters:
+  - {key: module_count, label_en: Number of fuel cell modules, label_de: Anzahl Brennstoffzellenmodule, value: 2, unit: "-"}
+  - {key: rated_net_power_per_module, label_en: Rated net power per module, label_de: Nenn-Nettoleistung je Modul, value: 150, unit: kW}
+  - {key: rated_net_power, label_en: Rated net power, label_de: Nenn-Nettoleistung, value: 300, unit: kW, condition: "both modules"}
+  - {key: system_efficiency_rated, label_en: System efficiency at rated power, label_de: Systemwirkungsgrad bei Nennleistung, value: 48, unit: "%", condition: "rated net power, LHV"}
+  - {key: system_efficiency_peak, label_en: Peak system efficiency, label_de: Maximaler Systemwirkungsgrad, value: 58, unit: "%", condition: "30 % of rated net power, LHV"}
+  - {key: h2_consumption_rated_per_module, label_en: Hydrogen consumption at rated power per module, label_de: Wasserstoffverbrauch bei Nennleistung je Modul, value: 2.60, unit: g/s, condition: "rated net power, incl. purge losses"}
+  - {key: h2_consumption_rated, label_en: Hydrogen consumption at rated power, label_de: Wasserstoffverbrauch bei Nennleistung, value: 5.20, unit: g/s, condition: "both modules at rated net power, incl. purge losses"}
+  - {key: h2_supply_pressure, label_en: Hydrogen supply pressure, label_de: Wasserstoff-Versorgungsdruck, value: 1200, unit: kPa, condition: "absolute, at module inlet"}
+  - {key: cold_start_temperature, label_en: Minimum cold start temperature, label_de: Minimale Kaltstarttemperatur, value: -25, unit: degC, condition: "unassisted, 50 % power within 60 s"}
+  - {key: ambient_temperature_max, label_en: Maximum ambient temperature, label_de: Maximale Umgebungstemperatur, value: 50, unit: degC}
+  - key: design_lifetime
+    label_en: Design lifetime
+    label_de: Auslegungslebensdauer
+    value: 25000
+    unit: h
+    condition: "to 10 % rated power loss, long-haul duty cycle"
+    superseded:
+      - {doc_version: 1, value: 20000, note: "System specification v1, before the catalyst loading increase"}
+  - {key: system_mass, label_en: System mass, label_de: Systemmasse, value: 410, unit: kg, condition: "both modules, dry, without hydrogen storage"}
+
+components:
+  - id: B-STK
+    name: Fuel cell stack (per module)
+    type: stack
+    attributes:
+      bipolar_plate_material: "Expanded graphite composite"
+      membrane_type: "Reinforced PFSA with radical scavenger"
+      flow_field: "Parallel channels, counter-flow"
+    parameters:
+      - {key: cell_count, label_en: Number of cells, label_de: Zellenanzahl, value: 440, unit: "-"}
+      - {key: active_area, label_en: Active cell area, label_de: Aktive Zellfläche, value: 400, unit: cm**2}
+      - {key: rated_gross_power, label_en: Rated gross power, label_de: Nenn-Bruttoleistung, value: 172.5, unit: kW}
+      - {key: rated_current, label_en: Rated current, label_de: Nennstrom, value: 560, unit: A}
+      - {key: rated_current_density, label_en: Rated current density, label_de: Nennstromdichte, value: 1.4, unit: A/cm**2}
+      - {key: cell_voltage_rated, label_en: Cell voltage at rated current, label_de: Zellspannung bei Nennstrom, value: 0.70, unit: V}
+      - {key: stack_voltage_rated, label_en: Stack voltage at rated current, label_de: Stackspannung bei Nennstrom, value: 308, unit: V}
+      - {key: open_circuit_voltage, label_en: Open circuit voltage, label_de: Leerlaufspannung, value: 418, unit: V}
+      - {key: coolant_outlet_temperature_nominal, label_en: Nominal coolant outlet temperature, label_de: Nominale Kühlmittelaustrittstemperatur, value: 75, unit: degC}
+      - {key: coolant_outlet_temperature_max, label_en: Maximum coolant outlet temperature, label_de: Maximale Kühlmittelaustrittstemperatur, value: 85, unit: degC, condition: "continuous"}
+      - {key: coolant_delta_t_max, label_en: Maximum coolant temperature rise, label_de: Maximale Kühlmittel-Temperaturspreizung, value: 8, unit: K}
+      - {key: cathode_inlet_pressure_rated, label_en: Cathode inlet pressure at rated power, label_de: Kathodeneintrittsdruck bei Nennleistung, value: 220, unit: kPa, condition: absolute}
+      - {key: anode_inlet_pressure_rated, label_en: Anode inlet pressure at rated power, label_de: Anodeneintrittsdruck bei Nennleistung, value: 240, unit: kPa, condition: absolute}
+      - {key: anode_cathode_dp_max, label_en: Maximum anode-cathode differential pressure, label_de: Maximaler Differenzdruck Anode-Kathode, value: 40, unit: kPa}
+      - {key: cathode_stoichiometry, label_en: Cathode stoichiometry, label_de: Kathodenstöchiometrie, value: 2.0, unit: "-", condition: "rated current"}
+      - {key: anode_stoichiometry, label_en: Anode stoichiometry, label_de: Anodenstöchiometrie, value: 1.6, unit: "-", condition: "rated current"}
+      - {key: cathode_inlet_rh, label_en: Cathode inlet relative humidity, label_de: Relative Feuchte am Kathodeneintritt, value: 60, unit: "%", condition: "rated current"}
+      - {key: pt_loading_cathode, label_en: Cathode platinum loading, label_de: Platinbeladung Kathode, value: 0.40, unit: mg/cm**2}
+      - {key: pt_loading_anode, label_en: Anode platinum loading, label_de: Platinbeladung Anode, value: 0.10, unit: mg/cm**2}
+      - {key: membrane_thickness, label_en: Membrane thickness, label_de: Membrandicke, value: 18, unit: um}
+      - {key: stack_mass, label_en: Stack mass, label_de: Stackmasse, value: 68, unit: kg}
+      - {key: stack_volume, label_en: Stack volume, label_de: Stackvolumen, value: 62, unit: L}
+
+  - id: B-CMP
+    name: Electric turbo air compressor (per module)
+    type: air_compressor
+    attributes:
+      bearing_type: "Air foil bearings"
+    parameters:
+      - {key: air_mass_flow_max, label_en: Maximum air mass flow, label_de: Maximaler Luftmassenstrom, value: 190, unit: g/s}
+      - {key: pressure_ratio_max, label_en: Maximum pressure ratio, label_de: Maximales Druckverhältnis, value: 2.3, unit: "-"}
+      - {key: electrical_power_rated, label_en: Electrical power at rated point, label_de: Elektrische Leistungsaufnahme im Nennpunkt, value: 18, unit: kW}
+      - {key: speed_max, label_en: Maximum speed, label_de: Maximaldrehzahl, value: 100000, unit: rpm}
+
+  - id: B-HUM
+    name: Membrane humidifier (per module)
+    type: humidifier
+    attributes:
+      design: "Hollow-fibre membrane, gas-to-gas"
+    parameters:
+      - {key: pressure_drop_dry_side, label_en: Dry-side pressure drop, label_de: Druckverlust Trockenseite, value: 20, unit: kPa, condition: "rated air flow"}
+
+  - id: B-CLP
+    name: Electric coolant pump (per module)
+    type: coolant_pump
+    parameters:
+      - {key: coolant_flow_rated, label_en: Rated coolant flow, label_de: Nenn-Kühlmittelvolumenstrom, value: 280, unit: L/min}
+      - {key: electrical_power_rated, label_en: Rated electrical power, label_de: Elektrische Nennleistung, value: 1.6, unit: kW}
+
+  - id: B-HRB
+    name: Hydrogen recirculation blower (per module)
+    type: h2_recirculation
+    parameters:
+      - {key: electrical_power_rated, label_en: Rated electrical power, label_de: Elektrische Nennleistung, value: 0.9, unit: kW}

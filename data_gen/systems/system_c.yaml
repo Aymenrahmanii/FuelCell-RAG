@@ -1,0 +1,93 @@
+# System C: 100 kW net stationary PEM fuel cell system (combined heat and power / backup).
+# Fictional. Values are internally consistent (V = N * V_cell, P = V * I, H2 flow = I * N / 2F).
+system: System C
+code: C
+application: Stationary combined heat and power
+description: >-
+  Near-ambient-pressure 100 kW net stationary PEM fuel cell system with an air blower instead of
+  a compressor. Low current density, thicker membrane and heat recovery are chosen for
+  efficiency and a long service life.
+
+parameters:
+  - {key: rated_net_power, label_en: Rated net electrical power, label_de: Elektrische Nenn-Nettoleistung, value: 100, unit: kW}
+  - key: system_efficiency_rated
+    label_en: Electrical efficiency at rated power
+    label_de: Elektrischer Wirkungsgrad bei Nennleistung
+    value: 52
+    unit: "%"
+    condition: "rated net power, LHV"
+    superseded:
+      - {doc_version: 1, value: 50, note: "Datasheet v1, before the blower efficiency upgrade"}
+  - {key: system_efficiency_peak, label_en: Peak electrical efficiency, label_de: Maximaler elektrischer Wirkungsgrad, value: 57, unit: "%", condition: "40 % of rated net power, LHV"}
+  - {key: thermal_output_rated, label_en: Recoverable heat output at rated power, label_de: Nutzbare Wärmeleistung bei Nennleistung, value: 64, unit: kW}
+  - {key: total_chp_efficiency, label_en: Total CHP efficiency, label_de: Gesamtwirkungsgrad KWK, value: 85, unit: "%", condition: "rated net power, LHV"}
+  - {key: heat_recovery_outlet_temperature, label_en: Heat recovery water outlet temperature, label_de: Vorlauftemperatur Wärmeauskopplung, value: 60, unit: degC}
+  - {key: h2_consumption_rated, label_en: Hydrogen consumption at rated power, label_de: Wasserstoffverbrauch bei Nennleistung, value: 1.60, unit: g/s, condition: "rated net power, incl. purge losses"}
+  - {key: h2_supply_pressure, label_en: Hydrogen supply pressure, label_de: Wasserstoff-Versorgungsdruck, value: 400, unit: kPa, condition: "absolute, at system inlet"}
+  - {key: ambient_temperature_min, label_en: Minimum ambient temperature, label_de: Minimale Umgebungstemperatur, value: 5, unit: degC, condition: "indoor installation"}
+  - {key: ambient_temperature_max, label_en: Maximum ambient temperature, label_de: Maximale Umgebungstemperatur, value: 40, unit: degC}
+  - {key: design_lifetime, label_en: Design lifetime, label_de: Auslegungslebensdauer, value: 60000, unit: h, condition: "to 10 % rated power loss, continuous operation"}
+  - {key: system_mass, label_en: System mass, label_de: Systemmasse, value: 950, unit: kg, condition: "complete cabinet, dry"}
+
+components:
+  - id: C-STK
+    name: Fuel cell stack
+    type: stack
+    attributes:
+      bipolar_plate_material: "Graphite composite"
+      membrane_type: "PFSA, non-reinforced"
+      flow_field: "Serpentine, co-flow"
+    parameters:
+      - {key: cell_count, label_en: Number of cells, label_de: Zellenanzahl, value: 380, unit: "-"}
+      - {key: active_area, label_en: Active cell area, label_de: Aktive Zellfläche, value: 400, unit: cm**2}
+      - {key: rated_gross_power, label_en: Rated gross power, label_de: Nenn-Bruttoleistung, value: 107.9, unit: kW}
+      - {key: rated_current, label_en: Rated current, label_de: Nennstrom, value: 400, unit: A}
+      - {key: rated_current_density, label_en: Rated current density, label_de: Nennstromdichte, value: 1.0, unit: A/cm**2}
+      - {key: cell_voltage_rated, label_en: Cell voltage at rated current, label_de: Zellspannung bei Nennstrom, value: 0.71, unit: V}
+      - {key: stack_voltage_rated, label_en: Stack voltage at rated current, label_de: Stackspannung bei Nennstrom, value: 269.8, unit: V}
+      - {key: open_circuit_voltage, label_en: Open circuit voltage, label_de: Leerlaufspannung, value: 361, unit: V}
+      - {key: coolant_outlet_temperature_nominal, label_en: Nominal coolant outlet temperature, label_de: Nominale Kühlmittelaustrittstemperatur, value: 68, unit: degC}
+      - {key: coolant_outlet_temperature_max, label_en: Maximum coolant outlet temperature, label_de: Maximale Kühlmittelaustrittstemperatur, value: 75, unit: degC, condition: "continuous"}
+      - {key: coolant_delta_t_max, label_en: Maximum coolant temperature rise, label_de: Maximale Kühlmittel-Temperaturspreizung, value: 6, unit: K}
+      - {key: cathode_inlet_pressure_rated, label_en: Cathode inlet pressure at rated power, label_de: Kathodeneintrittsdruck bei Nennleistung, value: 130, unit: kPa, condition: absolute}
+      - {key: anode_inlet_pressure_rated, label_en: Anode inlet pressure at rated power, label_de: Anodeneintrittsdruck bei Nennleistung, value: 150, unit: kPa, condition: absolute}
+      - {key: anode_cathode_dp_max, label_en: Maximum anode-cathode differential pressure, label_de: Maximaler Differenzdruck Anode-Kathode, value: 30, unit: kPa}
+      - {key: cathode_stoichiometry, label_en: Cathode stoichiometry, label_de: Kathodenstöchiometrie, value: 2.2, unit: "-", condition: "rated current"}
+      - {key: anode_stoichiometry, label_en: Anode stoichiometry, label_de: Anodenstöchiometrie, value: 1.4, unit: "-", condition: "rated current"}
+      - {key: cathode_inlet_rh, label_en: Cathode inlet relative humidity, label_de: Relative Feuchte am Kathodeneintritt, value: 80, unit: "%", condition: "rated current"}
+      - {key: pt_loading_cathode, label_en: Cathode platinum loading, label_de: Platinbeladung Kathode, value: 0.30, unit: mg/cm**2}
+      - {key: pt_loading_anode, label_en: Anode platinum loading, label_de: Platinbeladung Anode, value: 0.05, unit: mg/cm**2}
+      - {key: membrane_thickness, label_en: Membrane thickness, label_de: Membrandicke, value: 25, unit: um}
+      - {key: stack_mass, label_en: Stack mass, label_de: Stackmasse, value: 75, unit: kg}
+      - {key: stack_volume, label_en: Stack volume, label_de: Stackvolumen, value: 70, unit: L}
+
+  - id: C-BLW
+    name: Cathode air blower
+    type: air_blower
+    attributes:
+      design: "Side-channel blower, variable speed"
+    parameters:
+      - {key: air_mass_flow_max, label_en: Maximum air mass flow, label_de: Maximaler Luftmassenstrom, value: 130, unit: g/s}
+      - {key: pressure_ratio_max, label_en: Maximum pressure ratio, label_de: Maximales Druckverhältnis, value: 1.35, unit: "-"}
+      - {key: electrical_power_rated, label_en: Electrical power at rated point, label_de: Elektrische Leistungsaufnahme im Nennpunkt, value: 4.5, unit: kW}
+
+  - id: C-HUM
+    name: Membrane humidifier
+    type: humidifier
+    attributes:
+      design: "Plate-and-frame membrane, gas-to-gas"
+    parameters:
+      - {key: pressure_drop_dry_side, label_en: Dry-side pressure drop, label_de: Druckverlust Trockenseite, value: 8, unit: kPa, condition: "rated air flow"}
+
+  - id: C-CLP
+    name: Electric coolant pump
+    type: coolant_pump
+    parameters:
+      - {key: coolant_flow_rated, label_en: Rated coolant flow, label_de: Nenn-Kühlmittelvolumenstrom, value: 220, unit: L/min}
+      - {key: electrical_power_rated, label_en: Rated electrical power, label_de: Elektrische Nennleistung, value: 1.1, unit: kW}
+
+  - id: C-HRB
+    name: Hydrogen recirculation blower
+    type: h2_recirculation
+    parameters:
+      - {key: electrical_power_rated, label_en: Rated electrical power, label_de: Elektrische Nennleistung, value: 0.4, unit: kW}
