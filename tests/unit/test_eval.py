@@ -87,3 +87,34 @@ def test_golden_set_shape(repo_root: Path) -> None:
             assert item.expected_values or item.expected_terms, item.id
         else:
             assert not item.gold_sources, item.id
+
+
+def test_report_shows_varying_config_only() -> None:
+    from fcrag.eval.report import markdown
+
+    base = {"questions": 2, "recall@5": 0.5, "mrr": 0.4}
+    runs = [
+        {"name": "a", "config": {"chunk_strategy": "fixed", "llm": "x"}, "summary": base},
+        {"name": "b", "config": {"chunk_strategy": "section", "llm": "x"},
+         "summary": {**base, "recall@5": 0.75}},
+    ]  # fmt: skip
+    table = markdown(runs).splitlines()
+    assert table[0].startswith("| Run | Questions | chunk_strategy | Recall@5")
+    assert "llm" not in table[0]
+    assert table[3].startswith("| b | 2 | section | 0.750 |")
+
+
+def test_gate(tmp_path: Path) -> None:
+    from fcrag.eval.gate import check_gate, gate_categories
+
+    gate = tmp_path / "gate.yaml"
+    gate.write_text(
+        "categories: [parameter]\nmin: {recall@5: 0.8}\nmax: {retrieval_refusal_false: 0.05}\n",
+        encoding="utf-8",
+    )
+    assert gate_categories(gate) == ["parameter"]
+    assert check_gate({"recall@5": 0.9, "retrieval_refusal_false": 0.0}, gate) == []
+    assert check_gate({"recall@5": 0.7, "retrieval_refusal_false": 0.1}, gate) == [
+        "recall@5 = 0.7 < 0.8",
+        "retrieval_refusal_false = 0.1 > 0.05",
+    ]

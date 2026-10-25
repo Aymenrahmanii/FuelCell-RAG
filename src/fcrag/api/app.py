@@ -228,7 +228,7 @@ def requirements_check(req: CheckRequest, service: Service, groups: Groups) -> d
 
 class IngestRequest(BaseModel):
     force: bool = False
-    only: str | None = Field(default=None, description="glob on doc_id, e.g. 'ds-*'")
+    only: list[str] | None = Field(default=None, description="globs on doc_id, e.g. ['ds-*']")
 
 
 @app.post("/ingest", status_code=202)

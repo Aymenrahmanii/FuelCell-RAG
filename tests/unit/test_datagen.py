@@ -24,9 +24,10 @@ def test_manifest_lists_every_file(corpus: Path) -> None:
     files = {e["file"] for e in manifest["files"]}
     on_disk = {p.name for p in corpus.iterdir()} - {"manifest.yaml", "facts.jsonl"}
     assert files == on_disk
-    assert {e["doc_type"] for e in manifest["files"]} == {
-        "datasheet", "parameter_sheet", "requirements",
-    }  # fmt: skip
+    doc_types = {e["doc_type"] for e in manifest["files"]}
+    # STEP files ("cad") need the optional CadQuery extra
+    assert {"datasheet", "parameter_sheet", "requirements"} <= doc_types
+    assert doc_types <= {"datasheet", "parameter_sheet", "requirements", "cad"}
     assert all(e["licence"].startswith("Synthetic") for e in manifest["files"])
 
 

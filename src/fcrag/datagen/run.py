@@ -2,11 +2,11 @@
 
 from pathlib import Path
 
-from fcrag.datagen import datasheet, excel, requirements
+from fcrag.datagen import cad, datasheet, excel, requirements
 from fcrag.datagen.common import GeneratedFile, write_manifest
 from fcrag.truth import load_all
 
-GENERATORS = (datasheet.build_all, excel.build_all, requirements.build_all)
+GENERATORS = (datasheet.build_all, excel.build_all, requirements.build_all, cad.build_all)
 
 
 def generate(systems_dir: Path, out_dir: Path) -> list[GeneratedFile]:

@@ -16,13 +16,13 @@ def _redis() -> Redis:
     return Redis.from_url(get_settings().redis_url.get_secret_value())
 
 
-def ingest_job(force: bool = False, only: str | None = None) -> dict[str, int]:
+def ingest_job(force: bool = False, only: list[str] | None = None) -> dict[str, int]:
     from fcrag.ingest.pipeline import ingest_all
 
     return ingest_all(get_settings(), force=force, only=only)
 
 
-def enqueue_ingest(force: bool = False, only: str | None = None) -> str:
+def enqueue_ingest(force: bool = False, only: list[str] | None = None) -> str:
     job = Queue(QUEUE, connection=_redis()).enqueue(
         ingest_job, force=force, only=only, job_timeout=JOB_TIMEOUT_S
     )

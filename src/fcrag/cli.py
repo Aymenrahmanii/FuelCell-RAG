@@ -50,8 +50,13 @@ def _eval(args: argparse.Namespace) -> None:
     from fcrag.eval.runner import run
 
     items = read_golden(Path(args.golden))
-    if args.category:
-        items = [i for i in items if i.category in args.category]
+    categories = list(args.category or [])
+    if args.gate:
+        from fcrag.eval.gate import gate_categories
+
+        categories += gate_categories(Path(args.gate))
+    if categories:
+        items = [i for i in items if i.category in categories]
     if args.limit:
         items = items[: args.limit]
     summary, path = run(
@@ -63,6 +68,26 @@ def _eval(args: argparse.Namespace) -> None:
     from fcrag.observability import flush
 
     flush()
+    if args.gate:
+        from fcrag.eval.gate import check_gate
+
+        failures = check_gate(summary, Path(args.gate))
+        for failure in failures:
+            print(f"GATE FAILED: {failure}")
+        if failures:
+            sys.exit(1)
+        print("gate passed")
+
+
+def _eval_report(args: argparse.Namespace) -> None:
+    from pathlib import Path
+
+    from fcrag.eval.report import load_runs, markdown
+
+    runs = load_runs(Path("eval/runs"))
+    if args.only:
+        runs = [r for r in runs if any(name in r["name"] for name in args.only)]
+    print(markdown(runs))
 
 
 def _eval_params(args: argparse.Namespace) -> None:
@@ -160,7 +185,7 @@ def main() -> None:
 
     p = sub.add_parser("ingest", help="parse and index new or changed files")
     p.add_argument("--force", action="store_true", help="re-index even unchanged files")
-    p.add_argument("--only", help="glob on doc_id, e.g. 'doe-rec-*'")
+    p.add_argument("--only", action="append", help="glob on doc_id, e.g. 'doe-rec-*'; repeatable")
     p.add_argument("--limit", type=int)
     p.set_defaults(func=_ingest)
 
@@ -180,7 +205,12 @@ def main() -> None:
     p.add_argument("--answers", action="store_true", help="also generate answers (needs an LLM)")
     p.add_argument("--category", action="append")
     p.add_argument("--limit", type=int)
+    p.add_argument("--gate", help="thresholds file (eval/gate.yaml); exit 1 if violated")
     p.set_defaults(func=_eval)
+
+    p = sub.add_parser("eval-report", help="print saved runs as a Markdown table")
+    p.add_argument("--only", action="append", help="substring of run names to include")
+    p.set_defaults(func=_eval_report)
 
     p = sub.add_parser("eval-params", help="score extracted parameters against generator facts")
     p.add_argument("--facts", default="data/generated/facts.jsonl")

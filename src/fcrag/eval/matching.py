@@ -21,6 +21,8 @@ def _cells_overlap(a: str, b: str) -> bool:
 def locator_matches(chunk: dict[str, Any], gold: dict[str, Any]) -> bool:
     if "req_id" in gold:
         return bool(chunk.get("req_id") == gold["req_id"])
+    if "part_id" in gold:
+        return bool(chunk.get("part_id") == gold["part_id"])
     if "sheet" in gold:
         return chunk.get("sheet") == gold["sheet"] and (
             "cells" not in gold

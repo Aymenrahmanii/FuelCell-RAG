@@ -1,0 +1,12 @@
+# CI evaluation gate (.github/workflows/eval.yml). The build fails if a metric drops below its
+# minimum (or a "max" metric rises above it). Thresholds sit a few points under the last
+# accepted run, so noise passes but a real regression fails.
+#
+# CI ingests only the generated Excel, requirement and STEP files (no PDF parsing on CPU), so
+# it evaluates the question categories those documents answer.
+categories: [parameter, cross_system, version_conflict, requirement_trace, drawing_step]
+min:
+  recall@5: 0.80
+  mrr: 0.70
+max:
+  retrieval_refusal_false: 0.05

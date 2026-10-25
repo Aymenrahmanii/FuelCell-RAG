@@ -5,6 +5,7 @@ Shared by ingestion (documents) and retrieval (queries), so both always use the 
 
 from dataclasses import dataclass, field
 from functools import lru_cache
+from pathlib import Path
 from typing import Any, Protocol
 
 from fcrag.config import get_settings
@@ -21,6 +22,20 @@ class Embedder(Protocol):
     def embed(self, texts: list[str], *, max_tokens: int | None = None) -> list[Embedding]: ...
 
 
+UNUSED_WEIGHTS = ["onnx/*", "*.onnx", "*.onnx_data", "flax_model.msgpack", "rust_model.ot",
+                  "tf_model.h5"]  # fmt: skip
+
+
+def local_model_path(repo_or_path: str) -> str:
+    """Download only the PyTorch weights. FlagEmbedding fetches the whole repository otherwise,
+    which for bge-m3 adds about 2 GB of ONNX files that are never used."""
+    if Path(repo_or_path).exists():
+        return repo_or_path
+    from huggingface_hub import snapshot_download
+
+    return snapshot_download(repo_or_path, ignore_patterns=UNUSED_WEIGHTS)
+
+
 class BgeM3Embedder:
     def __init__(self, model_name: str, batch_size: int = 32, max_tokens: int = 1024) -> None:
         import torch
@@ -28,7 +43,7 @@ class BgeM3Embedder:
 
         cuda = torch.cuda.is_available()
         self._model: Any = BGEM3FlagModel(
-            model_name, use_fp16=cuda, devices="cuda:0" if cuda else "cpu"
+            local_model_path(model_name), use_fp16=cuda, devices="cuda:0" if cuda else "cpu"
         )
         self._batch_size = batch_size
         self._max_tokens = max_tokens

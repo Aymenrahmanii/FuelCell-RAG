@@ -156,6 +156,23 @@ class _Writer:
             self.fact(ws, stack, param, f"{letter}3:{letter}5")
             ws.column_dimensions[letter].width = 22
 
+    def bom_sheet(self, wb: Workbook) -> None:
+        """Bill of materials: the only place where the cryptic CAD part names are explained."""
+        from fcrag.datagen.cad import stack_parts
+
+        ws = wb.create_sheet("BOM")
+        ws.cell(1, 1, f"{self.system.system} – stack BOM").font = BOLD
+        header = ["Part ID", "Description", "Assembly", "Qty", "Size (mm)"]
+        for col, name in enumerate(header, 1):
+            cell = ws.cell(3, col, name)
+            cell.font, cell.fill = BOLD, FILL
+        for r, part in enumerate(stack_parts(self.system), 4):
+            size = " x ".join(f"{v:g}" for v in part.size_mm)
+            values: list[str | int] = [part.name, part.description, part.assembly or "top level",
+                                       part.count, size]  # fmt: skip
+            for col, value in enumerate(values, 1):
+                ws.cell(r, col, value)
+
     def build(self, path: Path) -> None:
         wb = Workbook()
         ws = wb.active
@@ -177,6 +194,7 @@ class _Writer:
         system_ws = wb.create_sheet(self.t["system"][:31])
         self.table(system_ws, 1, self.system.system, [(None, p) for p in self.system.parameters])
         self.limits_sheet(wb, stack)
+        self.bom_sheet(wb)
         for sheet in wb.worksheets:
             for letter, width in zip("ABCDE", (10, 46, 12, 10, 40), strict=True):
                 sheet.column_dimensions[letter].width = max(

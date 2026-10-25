@@ -269,6 +269,49 @@ class Builder:
         return items
 
 
+def cad_items(systems: dict[str, SystemTruth]) -> list[GoldenItem]:
+    """Questions on the STEP assemblies and the BOM sheets that explain their part names."""
+    from fcrag.datagen.cad import CELL_PITCH_MM
+
+    def part(code: str, part_id: str) -> dict[str, Any]:
+        return {"doc_id": f"cad-stack-{code.lower()}", "locator": {"part_id": part_id}}
+
+    def bom(code: str) -> dict[str, Any]:
+        """The BOM sheet lists every part with its assembly, quantity and size."""
+        return {"doc_id": f"ps-system-{code.lower()}", "locator": {"sheet": "BOM"}}
+
+    cells_b = systems["B"].lookup("cell_count", "B-STK").value
+    block_b = round(cells_b * CELL_PITCH_MM["B"], 1)
+    specs = [
+        ("en", "A", "Which parts make up the end plate assembly EPA-02 of System A?",
+         "EP-02 (end plate, wet side), INS-02 (insulation plate) and CC-02 (current collector).",
+         [], ["EP-02", "INS-02", "CC-02"], [part("A", "EPA-02"), bom("A")]),
+        ("de", "B", "Welche Teile gehören zur Endplattenbaugruppe EPA-01 von System B?",
+         "EP-01, INS-01 und CC-01.", [], ["EP-01", "INS-01", "CC-01"], [part("B", "EPA-01"), bom("B")]),
+        ("en", "C", "How many tie rods hold the System C stack together?",
+         "Four tie rods (TR-01.1 to TR-01.4).", [{"value": 4, "unit": "-"}], [],
+         [{"doc_id": "cad-stack-c"}, bom("C")]),
+        ("en", "A", "What is part EP-02 in the System A stack?",
+         "EP-02 is the end plate on the wet side, part of end plate assembly EPA-02.", [],
+         ["end plate"], [bom("A"),
+                         part("A", "EP-02")]),
+        ("en", "B", "How long is the cell block CB-01 of the System B stack?",
+         f"About {block_b:g} mm along the stack axis.", [{"value": block_b, "unit": "mm"}], [],
+         [part("B", "CB-01"), bom("B")]),
+        ("de", "C", "Welche Unterbaugruppen enthält das Stack-Assembly von System C?",
+         "Die Endplattenbaugruppen EPA-01 und EPA-02.", [], ["EPA-01", "EPA-02"],
+         [part("C", "C-STK-ASM"), part("C", "EPA-01"), part("C", "EPA-02"), bom("C")]),
+    ]  # fmt: skip
+    return [
+        GoldenItem(
+            id=f"cad-{n:02d}", category="drawing_step", language=lang, question=q,
+            reference_answer=ref, systems=[systems[code].system], expected_values=values,
+            expected_terms=terms, gold_sources=gold,
+        )
+        for n, (lang, code, q, ref, values, terms, gold) in enumerate(specs, 1)
+    ]  # fmt: skip
+
+
 def _consistent(f: Fact) -> bool:
     """False for facts that deliberately contradict the truth (conflicting requirements)."""
     from fcrag.datagen.common import convert
@@ -301,7 +344,7 @@ def build_golden(systems_dir: Path, public_path: Path) -> list[GoldenItem]:
     public = load_public(public_path)
     derived = (
         builder.parameter_items() + builder.cross_system_items() + builder.version_items()
-        + builder.trace_items() + builder.cross_doc_items()
+        + builder.trace_items() + builder.cross_doc_items() + cad_items(systems)
     )  # fmt: skip
     return (
         [i for i in public if i.category == "fact_text"]

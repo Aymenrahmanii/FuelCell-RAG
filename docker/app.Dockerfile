@@ -24,11 +24,12 @@ EXPOSE 8000
 CMD ["fcrag", "serve", "--host", "0.0.0.0", "--port", "8000"]
 
 FROM base AS ui
+# The UI only talks HTTP to the API: install its few dependencies, pinned to the lockfile,
+# instead of the whole package with its retrieval stack.
 COPY pyproject.toml uv.lock README.md ./
-RUN uv sync --locked --no-dev --no-install-project --extra ui
+RUN uv export --locked --no-dev --extra ui --no-emit-project --no-hashes -o /tmp/lock.txt     && uv venv /app/.venv     && VIRTUAL_ENV=/app/.venv uv pip install -c /tmp/lock.txt streamlit httpx pydantic-settings pyyaml
 COPY src ./src
-RUN uv sync --locked --no-dev --extra ui
-ENV PATH="/app/.venv/bin:$PATH"
+ENV PATH="/app/.venv/bin:$PATH" PYTHONPATH=/app/src
 USER app
 EXPOSE 8501
 CMD ["streamlit", "run", "src/fcrag/ui/chat.py", "--server.address=0.0.0.0", "--server.port=8501"]

@@ -14,7 +14,8 @@ from sqlalchemy import Engine, delete, func, select
 
 import fcrag.ingest.parsers.excel
 import fcrag.ingest.parsers.pdf
-import fcrag.ingest.parsers.requirements  # noqa: F401  (importing registers the parsers)
+import fcrag.ingest.parsers.requirements
+import fcrag.ingest.parsers.step  # noqa: F401  (importing registers the parsers)
 from fcrag.config import Settings
 from fcrag.db.models import Document, ParameterRecord
 from fcrag.db.session import session_scope
@@ -132,7 +133,8 @@ class Pipeline:
                 session.add(row)
             elif row.sha256 != sf.sha256:
                 row.attempts = 0  # new content gets fresh retries
-            row.doc_id, row.doc_version, row.path = sf.doc_id, sf.doc_version, str(sf.path)
+            row.doc_id, row.doc_version = sf.doc_id, sf.doc_version
+            row.path = sf.path.as_posix()  # portable between Windows hosts and Linux containers
             row.sha256, row.mime_type, row.title = sf.sha256, sf.mime_type, sf.title
             row.doc_type, row.system, row.licence = sf.doc_type, sf.system, sf.licence
             done = row.status == "indexed" and row.indexed_sha256 == sf.sha256
@@ -202,7 +204,11 @@ class Pipeline:
 
 
 def ingest_all(
-    settings: Settings, *, force: bool = False, only: str | None = None, limit: int | None = None
+    settings: Settings,
+    *,
+    force: bool = False,
+    only: list[str] | None = None,
+    limit: int | None = None,
 ) -> dict[str, int]:
     """Discover and ingest everything under ``settings.source_dirs``; used by CLI and worker."""
     import fnmatch
@@ -212,8 +218,8 @@ def ingest_all(
     from fcrag.ingest.discover import discover
 
     files = discover(settings.source_dirs, settings.sources_manifest)
-    if only:
-        files = [f for f in files if fnmatch.fnmatch(f.doc_id, only)]
+    if only:  # globs on doc_id, e.g. ["ps-*", "req-*"]
+        files = [f for f in files if any(fnmatch.fnmatch(f.doc_id, g) for g in only)]
     if limit:
         files = files[:limit]
     cache = ElementCache(settings.element_cache_dir) if settings.element_cache_dir else None

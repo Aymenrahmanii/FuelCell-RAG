@@ -37,6 +37,10 @@ ml = [
 ui = [
     "streamlit>=1.40",
 ]
+# STEP generation and geometry (bounding boxes, volumes); without it STEP parsing reads the tree only
+cad = [
+    "cadquery>=2.5",
+]
 
 [project.scripts]
 fcrag = "fcrag.cli:main"
@@ -100,6 +104,8 @@ python_version = "3.12"
 strict = true
 plugins = ["pydantic.mypy"]
 files = ["src", "tests", "scripts"]
+# Locust drives the load test from outside the package; it is not type-checked
+exclude = ["tests/load/"]
 
 [[tool.mypy.overrides]]
 module = ["pint.*", "FlagEmbedding.*", "lingua.*", "pypdfium2.*"]
@@ -112,7 +118,7 @@ implicit_reexport = true
 
 [[tool.mypy.overrides]]
 # The ml extra is not installed in CI; locally these are type-checked normally
-module = ["torch.*", "docling.*", "docling_core.*"]
+module = ["torch.*", "docling.*", "docling_core.*", "cadquery.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

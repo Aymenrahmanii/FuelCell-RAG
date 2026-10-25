@@ -10,7 +10,7 @@ UNITS = {
     "cm²": "cm**2", "cm2": "cm**2", "L/min": "L/min", "l/min": "L/min", "g/s": "g/s",
     "°C": "degC", "kPa": "kPa", "bar": "bar", "kW": "kW", "W": "W", "kWh": "kWh",
     "µm": "um", "μm": "um", "um": "um", "kg": "kg", "rpm": "rpm", "min⁻¹": "rpm",
-    "%": "%", "h": "h", "V": "V", "A": "A", "K": "K", "L": "L",
+    "%": "%", "h": "h", "V": "V", "A": "A", "K": "K", "L": "L", "mm": "mm",
     "–": "-", "-": "-",
 }  # fmt: skip
 
