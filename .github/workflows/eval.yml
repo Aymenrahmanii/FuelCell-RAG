@@ -54,11 +54,19 @@ jobs:
       - name: Install (CPU torch)
         run: uv sync --locked --extra ml --extra cad
 
-      - name: Build corpus and index
+      # Each step reports its error as an annotation, readable without opening the logs.
+      - name: Migrate
         run: |
-          uv run fcrag db-upgrade
-          uv run fcrag generate
-          uv run fcrag ingest --only "ps-*" --only "req-*" --only "cad-*"
+          uv run fcrag db-upgrade 2> err.log || {
+            echo "::error title=migrate::$(tail -c 800 err.log | tr '\n' ' ')"; exit 1; }
+
+      - name: Generate corpus
+        run: |
+          uv run fcrag generate 2> err.log || {
+            echo "::error title=generate::$(tail -c 800 err.log | tr '\n' ' ')"; exit 1; }
+
+      - name: Ingest
+        run: uv run fcrag ingest --only "ps-*" --only "req-*" --only "cad-*"
 
       - name: Evaluate and gate
         run: uv run fcrag eval --name ci --gate eval/gate.yaml

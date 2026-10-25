@@ -2,6 +2,7 @@
 
 import argparse
 import logging
+import os
 import sys
 from typing import TYPE_CHECKING
 
@@ -74,6 +75,8 @@ def _eval(args: argparse.Namespace) -> None:
         failures = check_gate(summary, Path(args.gate))
         for failure in failures:
             print(f"GATE FAILED: {failure}")
+            if os.environ.get("GITHUB_ACTIONS"):
+                print(f"::error title=eval gate::{failure}")
         if failures:
             sys.exit(1)
         print("gate passed")

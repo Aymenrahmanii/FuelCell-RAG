@@ -5,6 +5,7 @@ fails is retried on the next run and quarantined after ``max_attempts`` failures
 """
 
 import logging
+import os
 import time
 from dataclasses import dataclass
 from typing import Literal
@@ -108,6 +109,8 @@ class Pipeline:
                 f": {result.error}" if result.error else "",
             )  # fmt: skip
             results.append(result)
+            if result.error and os.environ.get("GITHUB_ACTIONS"):
+                print(f"::error title=ingest {result.source_key}::{result.error[:800]}")
         return results
 
     def _parse(self, sf: SourceFile) -> list[Element] | Exception:
