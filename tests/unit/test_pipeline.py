@@ -199,3 +199,13 @@ def test_parameter_questions_get_exact_records_first(
     assert "B-STK" in first.text and "85 °C" in first.text
     assert (second.kind, second.doc_version, second.is_latest) == ("parameter", 1, False)
     assert [s.label for s in result.sources] == [f"S{i}" for i in range(1, len(result.sources) + 1)]
+
+
+def test_requirement_questions_are_detected() -> None:
+    from fcrag.generation.answer import REQUIREMENT_WORDS
+
+    assert REQUIREMENT_WORDS.search("Stimmt die Anforderung zum Druck mit der Liste überein?")
+    assert REQUIREMENT_WORDS.search("Which requirements refine REQ-A-0001?")
+    assert REQUIREMENT_WORDS.search("What is the parent of REQ-C-0031?")
+    assert not REQUIREMENT_WORDS.search("What is the rated net power of System A?")
+    assert not REQUIREMENT_WORDS.search("Is it required to purge?")  # no whole-word match

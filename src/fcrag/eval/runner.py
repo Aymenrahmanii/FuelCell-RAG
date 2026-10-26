@@ -19,6 +19,7 @@ from fcrag.eval.golden import GoldenItem
 from fcrag.eval.matching import matches
 from fcrag.eval.numbers import value_found
 from fcrag.generation.answer import RagService
+from fcrag.generation.citations import normalise_citations
 from fcrag.retrieval.search import Filters
 
 CONFIG_FIELDS = (
@@ -96,7 +97,7 @@ def evaluate_item(
             for v in item.expected_values
         )
     if item.expected_terms:
-        lowered = answer.answer.lower()
+        lowered = normalise_citations(answer.answer).lower()
         result.terms_ok = all(t.lower() in lowered for t in item.expected_terms)
     cited = [answer.sources[n - 1] for n in answer.cited]
     result.cited_total = len(cited)

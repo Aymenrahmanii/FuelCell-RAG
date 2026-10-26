@@ -33,7 +33,7 @@ class Settings(BaseSettings):
     )
 
     llm_model: str = "groq/openai/gpt-oss-120b"
-    llm_fallbacks: list[str] = ["gemini/gemini-2.5-flash"]
+    llm_fallbacks: list[str] = ["gemini/gemini-3.5-flash"]
     """Tried in order when the main model fails (rate limit, outage). LiteLLM model strings."""
     local_llm_model: str = "ollama/qwen3:4b"
     llm_timeout_s: float = 60.0

@@ -32,3 +32,10 @@ def test_fullwidth_citations_are_normalised() -> None:
     assert normalise_citations(answer) == "It is 85 °C[S1][S2] and[S3], see [S4]."
     assert check_citations(answer, n_sources=3).cited == [1, 2, 3]
     assert check_citations(answer, n_sources=3).invalid == [4]
+
+
+def test_line_span_citations_and_typography() -> None:
+    from fcrag.generation.citations import normalise_citations
+
+    answer = "REQ\u2011A\u20110013 refines it\u00a0【S2†L1-L3】【S4†L1】."
+    assert normalise_citations(answer) == "REQ-A-0013 refines it [S2][S4]."

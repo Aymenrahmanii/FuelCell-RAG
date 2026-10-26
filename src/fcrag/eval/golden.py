@@ -263,7 +263,8 @@ class Builder:
                     expected_values=[{"value": p.value, "unit": p.unit},
                                      {"value": req.stated_value, "unit": p.unit}],
                     expected_terms=[req.req_id],
-                    gold_sources=[conflict, *self.sources(code, comp, key)],
+                    # the conflicting requirement is the evidence that matters
+                    gold_sources=[conflict],
                 )
             )  # fmt: skip
         return items

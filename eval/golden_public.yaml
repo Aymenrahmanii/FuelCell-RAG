@@ -62,8 +62,8 @@ items:
   - id: text-08
     category: fact_text
     language: en
-    question: What average fuel economy did the American Fuel Cell Bus achieve?
-    reference_answer: 5.94 miles per kilogram of hydrogen.
+    question: What average fuel economy did the American Fuel Cell Bus achieve in the second evaluation report?
+    reference_answer: 5.94 miles per kilogram of hydrogen (the third report gives 5.42 mi/kg for a later period).
     expected_terms: ["5.94"]
     gold_docs: [nrel-tp-64344-afcb-second-report]
 

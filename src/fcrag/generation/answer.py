@@ -4,9 +4,10 @@ The service yields events so the API can stream them: ``sources`` first (the UI 
 while the answer is written), then ``token`` events, then ``done`` with the citation report.
 """
 
+import re
 import time
 from collections.abc import Iterator
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 from datetime import UTC, datetime
 from functools import lru_cache
 from typing import Any
@@ -15,7 +16,7 @@ import yaml
 from qdrant_client import QdrantClient
 
 from fcrag.config import Settings, get_settings
-from fcrag.embedding import Embedder
+from fcrag.embedding import Embedder, Embedding
 from fcrag.generation.citations import check_citations, format_locator, normalise_citations
 from fcrag.ingest.extract_params import Vocabulary
 from fcrag.language import detect_language
@@ -28,6 +29,10 @@ from fcrag.units import display_unit
 
 LANGUAGE_NAMES = {"en": "English", "de": "German"}
 QUERY_MAX_TOKENS = 256
+REQUIREMENT_WORDS = re.compile(
+    r"\b(requirements?|anforderung\w*|lastenheft|specification)\b|\bREQ-", re.IGNORECASE
+)
+EXTRA_REQUIREMENT_HITS = 3
 
 
 @lru_cache
@@ -161,12 +166,22 @@ class RagService:
             return []
         return [Source.from_parameter(h) for h in self.params.lookup(route.systems, route.keys)]
 
-    def rank(self, question: str, filters: Filters, timings: Timings | None = None) -> list[Hit]:
-        """All hybrid-search candidates, reranked, best first (no cut-off, no threshold)."""
+    def rank(
+        self,
+        question: str,
+        filters: Filters,
+        timings: Timings | None = None,
+        *,
+        query: Embedding | None = None,
+        limit: int | None = None,
+    ) -> list[Hit]:
+        """All hybrid-search candidates, reranked, best first (no cut-off, no threshold).
+        Search and rerank times add up in ``timings`` across calls."""
         t = timings or Timings()
-        start = time.perf_counter()
-        query = self.embedder.embed([question], max_tokens=QUERY_MAX_TOKENS)[0]
-        t.embed_s = time.perf_counter() - start
+        if query is None:
+            start = time.perf_counter()
+            query = self.embedder.embed([question], max_tokens=QUERY_MAX_TOKENS)[0]
+            t.embed_s += time.perf_counter() - start
 
         start = time.perf_counter()
         hits = hybrid_search(
@@ -174,23 +189,44 @@ class RagService:
             self.settings.qdrant_collection,
             query,
             filters,
-            prefetch_limit=self.settings.prefetch_limit,
-            limit=self.settings.prefetch_limit,
+            prefetch_limit=limit or self.settings.prefetch_limit,
+            limit=limit or self.settings.prefetch_limit,
         )
-        t.search_s = time.perf_counter() - start
+        t.search_s += time.perf_counter() - start
 
         start = time.perf_counter()
         ranked = rerank(self.reranker, question, hits, top_k=len(hits), threshold=0.0)
-        t.rerank_s = time.perf_counter() - start
+        t.rerank_s += time.perf_counter() - start
         return ranked
 
     def retrieve(
         self, question: str, filters: Filters, timings: Timings | None = None
     ) -> list[Source]:
-        """The evidence the LLM gets: the best ``rerank_top_k`` hits above the threshold."""
-        ranked = self.rank(question, filters, timings)
-        kept = [h for h in ranked if (h.rerank_score or 0.0) >= self.settings.rerank_threshold]
-        return [Source.from_hit(i, h) for i, h in enumerate(kept[: self.settings.rerank_top_k], 1)]
+        """The evidence the LLM gets: the best ``rerank_top_k`` hits above the threshold.
+
+        A question about requirements also gets the best requirement chunks: without them,
+        "does the requirement agree with the parameter sheet?" retrieves only the sheet, and the
+        model answers about a requirement it never saw.
+        """
+        t = timings or Timings()
+        start = time.perf_counter()
+        query = self.embedder.embed([question], max_tokens=QUERY_MAX_TOKENS)[0]
+        t.embed_s += time.perf_counter() - start
+
+        threshold = self.settings.rerank_threshold
+        ranked = self.rank(question, filters, t, query=query)
+        kept = [h for h in ranked if (h.rerank_score or 0.0) >= threshold]
+        kept = kept[: self.settings.rerank_top_k]
+        if REQUIREMENT_WORDS.search(question) and "requirements" not in filters.doc_types:
+            req_filters = replace(filters, doc_types=["requirements"])
+            present = {h.chunk_id for h in kept}
+            extra = [
+                h
+                for h in self.rank(question, req_filters, t, query=query, limit=20)
+                if h.chunk_id not in present and (h.rerank_score or 0.0) >= threshold
+            ]
+            kept += extra[:EXTRA_REQUIREMENT_HITS]
+        return [Source.from_hit(i, h) for i, h in enumerate(kept, 1)]
 
     def messages(self, question: str, language: str, sources: list[Source]) -> list[Message]:
         prompt = load_prompt()
