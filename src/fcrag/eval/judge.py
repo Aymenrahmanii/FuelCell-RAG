@@ -67,20 +67,37 @@ def parse_verdict(reply: str) -> tuple[bool | None, str]:
     return (supported if isinstance(supported, bool) else None), str(data.get("reason", ""))
 
 
-def litellm_judge(model: str) -> Callable[[str], str]:
+def litellm_judge(model: str, attempts: int = 5) -> Callable[[str], str]:
+    """Judge callable with exponential backoff (free tiers answer bursts with HTTP 429)."""
+
     def ask(prompt: str) -> str:
         import litellm
 
-        response: Any = litellm.completion(
-            model=model,
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0,
-            num_retries=3,
-            timeout=60,
-        )
-        return str(response.choices[0].message.content or "")
+        for attempt in range(attempts):
+            try:
+                response: Any = litellm.completion(
+                    model=model,
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=0,
+                    timeout=60,
+                )
+                return str(response.choices[0].message.content or "")
+            except Exception:
+                if attempt == attempts - 1:
+                    raise
+                time.sleep(min(60, 5 * 2**attempt))
+        raise AssertionError("unreachable")
 
     return ask
+
+
+def _header(source: dict[str, Any]) -> str:
+    """Same version labels the generator saw, so claims about versions can be checked."""
+    version = ""
+    if "doc_version" in source:
+        status = "latest" if source.get("is_latest", True) else "superseded"
+        version = f", v{source['doc_version']} ({status})"
+    return f"[{source['label']}] {source['title']}{version}, {source['location']}"
 
 
 def judge_run(
@@ -95,9 +112,7 @@ def judge_run(
             cited = [by_label[f"S{n}"] for n in numbers if f"S{n}" in by_label]
             if not cited:
                 continue  # invalid citations are counted separately by the runner
-            sources = "\n\n".join(
-                f"[{s['label']}] {s['title']}, {s['location']}\n{s['text']}" for s in cited
-            )
+            sources = "\n\n".join(f"{_header(s)}\n{s['text']}" for s in cited)
             reply = ask(PROMPT.format(statement=statement, sources=sources))
             supported, reason = parse_verdict(reply)
             judgements.append(

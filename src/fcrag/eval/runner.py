@@ -87,7 +87,14 @@ def evaluate_item(
     result.answer = answer.answer
     result.model = answer.model
     result.sources = [
-        {"label": s.label, "title": s.title, "location": s.location, "text": s.text[:2000]}
+        {
+            "label": s.label,
+            "title": s.title,
+            "doc_version": s.doc_version,
+            "is_latest": s.is_latest,
+            "location": s.location,
+            "text": s.text,  # full chunk: a truncated source makes the judge miss evidence
+        }
         for s in answer.sources
     ]
     result.refused = not answer.found or metrics.is_refusal(answer.answer)

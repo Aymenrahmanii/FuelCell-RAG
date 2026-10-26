@@ -30,7 +30,8 @@ def test_judge_run_and_scores(tmp_path: Path) -> None:
     run = {
         "results": [
             {"id": "q1", "answer": "A is 85 °C [S1]. B is 3 kW [S2].", "refused": False,
-             "sources": [{"label": "S1", "title": "DS", "location": "p. 1", "text": "A: 85 °C"},
+             "sources": [{"label": "S1", "title": "DS", "doc_version": 2, "is_latest": True,
+                          "location": "p. 1", "text": "A: 85 °C"},
                          {"label": "S2", "title": "DS", "location": "p. 2", "text": "B: 4 kW"}]},
             {"id": "q2", "answer": "Not in the documents.", "refused": True, "sources": []},
         ]
@@ -44,6 +45,7 @@ def test_judge_run_and_scores(tmp_path: Path) -> None:
 
     judgements = judge_run(run, fake_judge)
     assert [(j.question_id, j.supported) for j in judgements] == [("q1", True), ("q1", False)]
+    assert "[S1] DS, v2 (latest), p. 1\nA: 85 °C" in prompts[0]
     assert "[S2] DS, p. 2\nB: 4 kW" in prompts[1]
     assert faithfulness(judgements)["faithfulness"] == 0.5
 
