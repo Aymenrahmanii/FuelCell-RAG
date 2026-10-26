@@ -16,7 +16,7 @@ from qdrant_client import QdrantClient
 
 from fcrag.config import Settings, get_settings
 from fcrag.embedding import Embedder
-from fcrag.generation.citations import check_citations, format_locator
+from fcrag.generation.citations import check_citations, format_locator, normalise_citations
 from fcrag.ingest.extract_params import Vocabulary
 from fcrag.language import detect_language
 from fcrag.llm.client import LLM, Message
@@ -93,6 +93,20 @@ class Source:
         version = f"v{self.doc_version}" + (" (latest)" if self.is_latest else " (superseded)")
         where = f", {self.location}" if self.location else ""
         return f"[{self.label}] {self.title}, {version}{where}\n{self.text}"
+
+
+def dedupe(sources: list[Source]) -> list[Source]:
+    """Drop later sources pointing at the same place (a parameter record and the chunk it was
+    extracted from); the first, usually the structured record, is kept."""
+    seen: set[tuple[str, int, str]] = set()
+    unique = []
+    for source in sources:
+        key = (source.doc_id, source.doc_version, source.location)
+        if source.location and key in seen:
+            continue
+        seen.add(key)
+        unique.append(source)
+    return unique
 
 
 @dataclass
@@ -202,7 +216,7 @@ class RagService:
         try:
             span = trace.start_observation(name="retrieve", as_type="retriever", input=question)
             structured = self.parameter_sources(question)
-            sources = structured + self.retrieve(question, filters, timings)
+            sources = dedupe(structured + self.retrieve(question, filters, timings))
             for n, source in enumerate(sources, 1):
                 source.label = f"S{n}"
             span.update(
@@ -244,8 +258,8 @@ class RagService:
                 parts.append(token)
                 yield {"type": "token", "text": token}
             timings.generate_s = time.perf_counter() - start
-            answer = "".join(parts)
-            generation.update(output=answer).end()
+            answer = normalise_citations("".join(parts))
+            generation.update(output=answer, model=self.llm.model).end()  # fallback may differ
 
             report = check_citations(answer, len(sources))
             trace.start_observation(

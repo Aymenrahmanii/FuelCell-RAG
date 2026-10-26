@@ -62,7 +62,7 @@ def _eval(args: argparse.Namespace) -> None:
         items = items[: args.limit]
     summary, path = run(
         _service(), items, get_settings(), name=args.name, answers=args.answers,
-        out_dir=Path("eval/runs"),
+        out_dir=Path("eval/runs"), pause_s=args.pause,
     )  # fmt: skip
     print(json.dumps(summary, indent=2))
     print(f"saved {path}")
@@ -80,6 +80,35 @@ def _eval(args: argparse.Namespace) -> None:
         if failures:
             sys.exit(1)
         print("gate passed")
+
+
+def _eval_judge(args: argparse.Namespace) -> None:
+    import json
+    from pathlib import Path
+
+    from fcrag.eval.judge import faithfulness, judge_run, litellm_judge, write_judgements
+
+    get_settings()  # loads provider keys from .env
+    path = Path(args.run)
+    run = json.loads(path.read_text(encoding="utf-8"))
+    judgements = judge_run(run, litellm_judge(args.model), pause_s=args.pause)
+    out = path.with_suffix(".judgements.jsonl")
+    write_judgements(judgements, out)
+    summary = faithfulness(judgements) | {"judge_model": args.model}
+    run["summary"].setdefault("answers", {})["faithfulness"] = summary["faithfulness"]
+    run["summary"]["judge"] = summary
+    path.write_text(json.dumps(run, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(json.dumps(summary, indent=2))
+    print(f"judgements: {out} (fill in 'human' for a sample, then run fcrag judge-agreement)")
+
+
+def _judge_agreement(args: argparse.Namespace) -> None:
+    import json
+    from pathlib import Path
+
+    from fcrag.eval.judge import agreement
+
+    print(json.dumps(agreement(Path(args.judgements)), indent=2))
 
 
 def _eval_report(args: argparse.Namespace) -> None:
@@ -209,7 +238,19 @@ def main() -> None:
     p.add_argument("--category", action="append")
     p.add_argument("--limit", type=int)
     p.add_argument("--gate", help="thresholds file (eval/gate.yaml); exit 1 if violated")
+    p.add_argument("--pause", type=float, default=0.0, help="seconds between answered questions")
     p.set_defaults(func=_eval)
+
+    p = sub.add_parser("eval-judge", help="LLM-judge faithfulness of a saved run's answers")
+    p.add_argument("run", help="eval/runs/<run>.json from fcrag eval --answers")
+    p.add_argument("--model", default="groq/qwen/qwen3.8-27b",
+                   help="judge model; use a different family from the generator")  # fmt: skip
+    p.add_argument("--pause", type=float, default=2.0, help="seconds between judge calls")
+    p.set_defaults(func=_eval_judge)
+
+    p = sub.add_parser("judge-agreement", help="judge vs human labels in a judgements file")
+    p.add_argument("judgements")
+    p.set_defaults(func=_judge_agreement)
 
     p = sub.add_parser("eval-report", help="print saved runs as a Markdown table")
     p.add_argument("--only", action="append", help="substring of run names to include")

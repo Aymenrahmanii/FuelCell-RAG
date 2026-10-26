@@ -23,3 +23,12 @@ def test_locators() -> None:
     assert format_locator({"req_id": "REQ-0142"}) == "REQ-0142"
     assert format_locator({"part_id": "BPP-02"}) == "part BPP-02"
     assert format_locator({}) == ""
+
+
+def test_fullwidth_citations_are_normalised() -> None:
+    from fcrag.generation.citations import normalise_citations
+
+    answer = "It is 85 °C【S1】【S2】 and［S3］, see [ S4 ]."
+    assert normalise_citations(answer) == "It is 85 °C[S1][S2] and[S3], see [S4]."
+    assert check_citations(answer, n_sources=3).cited == [1, 2, 3]
+    assert check_citations(answer, n_sources=3).invalid == [4]

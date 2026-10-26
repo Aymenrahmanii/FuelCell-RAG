@@ -5,6 +5,15 @@ from dataclasses import dataclass, field
 from typing import Any
 
 CITATION = re.compile(r"\[S(\d+)\]")
+# Some models (gpt-oss) write full-width brackets: 【S1】, ［S1］
+VARIANT_CITATION = re.compile(r"[【［\[]\s*S\s*(\d+)\s*[】］\]]")
+
+
+def normalise_citations(answer: str) -> str:
+    """Rewrite citation variants as [S1], so checks, display and copying see one format."""
+    return VARIANT_CITATION.sub(lambda m: f"[S{m.group(1)}]", answer)
+
+
 SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-ZÄÖÜ0-9])")
 
 
@@ -42,6 +51,7 @@ class CitationReport:
 
 
 def check_citations(answer: str, n_sources: int) -> CitationReport:
+    answer = normalise_citations(answer)
     report = CitationReport()
     for match in CITATION.finditer(answer):
         n = int(match.group(1))

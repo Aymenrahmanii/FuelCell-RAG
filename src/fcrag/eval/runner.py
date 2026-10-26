@@ -7,6 +7,7 @@ at a time.
 
 import json
 import time
+from collections import Counter
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -49,6 +50,10 @@ class ItemResult:
     cited_total: int = 0
     invalid_citations: int = 0
     generation_s: float = 0.0
+    model: str | None = None
+    """The model that answered (a fallback model if the main one failed)."""
+    sources: list[dict[str, Any]] = field(default_factory=list)
+    """Label, location and text of every source the answer was given, for the judge."""
     error: str | None = None
 
 
@@ -79,6 +84,11 @@ def evaluate_item(
     answer = service.answer(item.question)
     result.generation_s = time.perf_counter() - start - answer.timings.embed_s
     result.answer = answer.answer
+    result.model = answer.model
+    result.sources = [
+        {"label": s.label, "title": s.title, "location": s.location, "text": s.text[:2000]}
+        for s in answer.sources
+    ]
     result.refused = not answer.found or metrics.is_refusal(answer.answer)
     if item.expected_values:
         result.values_ok = all(
@@ -139,6 +149,7 @@ def summarize(results: list[ItemResult]) -> dict[str, Any]:
                 [1.0 if r.refused else 0.0 for r in answered if r.answerable]
             ),
             "generation_p95_s": metrics.percentile([r.generation_s for r in answered], 95),
+            "models": dict(Counter(r.model or "none" for r in answered)),
         }
     return summary
 
@@ -151,9 +162,13 @@ def run(
     name: str,
     answers: bool,
     out_dir: Path,
+    pause_s: float = 0.0,
 ) -> tuple[dict[str, Any], Path]:
+    """``pause_s`` waits between answered questions, to stay under a free tier's rate limit."""
     results = []
-    for item in items:
+    for n, item in enumerate(items):
+        if answers and pause_s and n:
+            time.sleep(pause_s)
         try:
             results.append(evaluate_item(service, item, settings, answers=answers))
         except Exception as exc:  # one broken question must not hide the rest of the run

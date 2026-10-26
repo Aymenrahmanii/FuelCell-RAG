@@ -151,7 +151,10 @@ def main() -> None:
         st.error(state["error"])
         messages.append({"role": "assistant", "content": f"⚠️ {state['error']}"})
     else:
-        messages.append({"role": "assistant", "content": str(text), "result": state.get("result")})
+        result = state.get("result")
+        # Show the stored answer: citations are normalised there ([S1] instead of 【S1】)
+        content = result["answer"] if result else str(text)
+        messages.append({"role": "assistant", "content": content, "result": result})
     st.rerun()
 
 

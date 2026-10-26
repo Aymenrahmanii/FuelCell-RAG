@@ -100,7 +100,8 @@ src = ["src", "tests"]
 select = ["E", "F", "W", "I", "N", "UP", "B", "SIM", "RUF", "PTH", "TCH"]
 # En dashes are deliberate typography in generated engineering documents
 # The number parser must recognise minus signs and no-break spaces in answers
-allowed-confusables = ["–", "−", " ", " "]
+# Citation parsing must recognise full-width brackets some models emit
+allowed-confusables = ["–", "−", " ", " ", "［", "］"]
 
 [tool.ruff.lint.per-file-ignores]
 # Question tables read better unwrapped

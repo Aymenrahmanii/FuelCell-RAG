@@ -4,6 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
+from dotenv import load_dotenv
 from pydantic import AliasChoices, Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -83,4 +84,7 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
+    # Provider SDKs (LiteLLM: GROQ_API_KEY, GEMINI_API_KEY, ...) read os.environ, not Settings.
+    # Variables already set, e.g. by Docker, take precedence over the file.
+    load_dotenv(".env", override=False)
     return Settings()

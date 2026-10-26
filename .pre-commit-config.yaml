@@ -14,22 +14,23 @@ repos:
     hooks:
       - id: gitleaks
 
-  # ruff and mypy run from the project environment, so hooks and CI use the same locked versions
+  # ruff and mypy run from the project environment, so hooks and CI use the same locked versions.
+  # --no-sync: a hook must never reinstall packages (e.g. while the app is running)
   - repo: local
     hooks:
       - id: ruff
         name: ruff
-        entry: uv run ruff check --fix
+        entry: uv run --no-sync ruff check --fix
         language: system
         types: [python]
       - id: ruff-format
         name: ruff format
-        entry: uv run ruff format
+        entry: uv run --no-sync ruff format
         language: system
         types: [python]
       - id: mypy
         name: mypy
-        entry: uv run mypy
+        entry: uv run --no-sync mypy
         language: system
         types: [python]
         pass_filenames: false

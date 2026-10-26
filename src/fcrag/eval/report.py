@@ -14,6 +14,7 @@ COLUMNS = [
     ("retrieval_p95_s", "Retrieval p95 (s)"),
 ]
 ANSWER_COLUMNS = [
+    ("faithfulness", "Faithfulness (judge)"),
     ("value_accuracy", "Value accuracy"),
     ("citation_precision", "Citation precision"),
     ("correct_refusal", "Correct refusals (answers)"),
