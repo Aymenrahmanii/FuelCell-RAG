@@ -82,7 +82,11 @@ def evaluate_item(
     if not answers:
         return result
     start = time.perf_counter()
-    answer = service.answer(item.question)
+    try:
+        answer = service.answer(item.question)
+    except Exception as exc:  # keep the retrieval metrics; answer metrics skip this question
+        result.error = f"{type(exc).__name__}: {exc}"[:500]
+        return result
     result.generation_s = time.perf_counter() - start - answer.timings.embed_s
     result.answer = answer.answer
     result.model = answer.model
@@ -141,6 +145,8 @@ def summarize(results: list[ItemResult]) -> dict[str, Any]:
         }
 
     answered = [r for r in results if r.answer is not None]
+    failed = sum(1 for r in results if r.error)
+    summary["errors"] = failed
     if answered:
         valued = [r.values_ok for r in answered if r.values_ok is not None]
         termed = [r.terms_ok for r in answered if r.terms_ok is not None]

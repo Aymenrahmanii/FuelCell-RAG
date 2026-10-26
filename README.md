@@ -17,24 +17,32 @@ where each value appears, which gives exact gold labels for evaluation.
 ## Results
 
 Measured on the 60-question golden set (21 German) and the 51-document corpus
-(33 public PDFs and 18 generated files, about 5,000 chunks).
+(33 public PDFs and 18 generated files, about 5,000 chunks). Answers by `openai/gpt-oss-120b`
+on Groq's free tier, judged by `qwen/qwen3.8-27b` (a different model family).
 
 | Metric | Result | Target |
 |---|---|---|
-| Retrieval recall@5 | **0.962** | ≥ 0.85 |
-| Retrieval recall@10 / MRR | 0.981 / 0.884 | – |
-| Parameter extraction, recall / precision (610 facts, Docling included) | **99.5 % / 99.5 %** | ≥ 85 % |
-| Unanswerable questions refused at retrieval level / false refusals | 0.857 / 0.0 | ≥ 0.90 (answer level) |
+| Retrieval recall@5 / recall@10 / MRR | **0.925** / 0.943 / 0.840 | ≥ 0.85 |
+| Value accuracy (stated value and unit match the truth, any unit) | **0.947** | ≥ 0.85 |
+| Correct "not in the documents" answers / false refusals | **7 of 7** / 1 of 53 | ≥ 0.90 |
+| Citation precision (cited source is a gold source) | **0.899** | ≥ 0.90 |
+| Faithfulness (LLM judge, claim level) | 0.87 (lower bound, see below) | ≥ 0.90 |
+| Invalid citations (source numbers that do not exist) | 0 | 0 |
+| Parameter extraction recall / precision (610 facts, through Docling) | **99.5 % / 99.5 %** | – |
 | Ingestion throughput (laptop RTX 3050, 6 GB) | ~1,150 PDF pages/h | ≥ 1,000 |
-| Retrieval latency p50 / p95 (embed, hybrid search, rerank 50) | 1.5 s / 2.8 s | end-to-end p95 < 6 s |
-| Answer metrics (faithfulness, value accuracy, citation precision) | pending | see below |
+| Retrieval p50 / p95 · generation p95 | 1.4 s / 2.9 s · 4.9 s | end-to-end p95 < 6 s |
 
 Recall per category: parameter, cross-system, version conflict, requirement trace and
-drawing/STEP 1.00; public-document facts 0.92; cross-document 0.88.
+drawing/STEP 1.00; public-document facts 0.92; cross-document 0.63. Cross-document is
+measured strictly: a conflict question only counts as found when the conflicting requirement
+is retrieved, which plain ranking often misses. The answer pipeline adds the best requirement
+chunks to such questions, and all three conflict questions are answered correctly.
 
-Answer-level metrics need an LLM. Set `ANTHROPIC_API_KEY` (or run a local model through
-Ollama) and run `fcrag eval --answers`. Latency was measured with the GPU otherwise idle; under
-a busy GPU (games, other ML jobs) the reranker slows down several-fold.
+The faithfulness judge of this run saw sources truncated at 2,000 characters and without
+version labels; most of its 9 "unsupported" verdicts traced back to that, not to the model.
+Both are fixed, and judge decisions are exported for human calibration
+(`fcrag judge-agreement`) before the number is final. Free tiers allow roughly one full
+answer evaluation per day (Groq caps tokens per day), so reruns are paced accordingly.
 
 ## Architecture
 
@@ -86,7 +94,7 @@ Requirements: Python 3.12, [uv](https://docs.astral.sh/uv/), Docker. A CUDA GPU 
 
 ```bash
 uv sync --all-extras          # ml (torch, Docling, FlagEmbedding), ui, cad
-cp .env.example .env          # replace every CHANGEME; add ANTHROPIC_API_KEY for answers
+cp .env.example .env          # replace every CHANGEME; add a free GROQ_API_KEY for answers
 docker compose up -d          # Qdrant, Postgres, Redis, MinIO, Langfuse
 uv run fcrag db-upgrade       # create the tables
 
@@ -155,6 +163,11 @@ request.
   the question; the gold labels were incomplete, not the retrieval.
 - **Cross-lingual retrieval is the weakest spot.** A German question about an English slide
   deck ranks German requirement documents first. Query translation is the next experiment.
+- **Evaluate the evaluation.** The first answer run reported term accuracy 0.26: gpt-oss writes
+  non-breaking hyphens (REQ‑A‑0013) and citations like 【S2†L1-L3】. After normalising both,
+  0.91. A judge that sees truncated sources reports hallucinations that are not there.
+- **A good answer can hide a retrieval gap.** "Does the requirement agree with the sheet?"
+  retrieved only the sheet, and the model said "yes" about a requirement it never saw.
 
 ## Repository layout
 

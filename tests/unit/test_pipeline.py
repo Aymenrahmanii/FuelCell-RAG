@@ -209,3 +209,30 @@ def test_requirement_questions_are_detected() -> None:
     assert REQUIREMENT_WORDS.search("What is the parent of REQ-C-0031?")
     assert not REQUIREMENT_WORDS.search("What is the rated net power of System A?")
     assert not REQUIREMENT_WORDS.search("Is it required to purge?")  # no whole-word match
+
+
+def test_eval_keeps_retrieval_metrics_when_the_llm_fails(
+    pipeline: Pipeline, settings: Settings, client: QdrantClient, tmp_path: Path
+) -> None:
+    from collections.abc import Iterator as It
+
+    from fcrag.eval.golden import GoldenItem
+    from fcrag.eval.runner import evaluate_item, summarize
+
+    class RateLimited:
+        model = "fake/limited"
+
+        def stream(self, messages: list[dict[str, str]]) -> It[str]:
+            raise RuntimeError("rate limit")
+
+    pipeline.run([source(tmp_path / "v1.txt", DATASHEET_V1)])
+    service = RagService(settings, FakeEmbedder(), OverlapReranker(), client, RateLimited())
+    item = GoldenItem(
+        id="q", category="parameter", language="en", reference_answer="90 °C",
+        question="What is the maximum coolant outlet temperature of System B?",
+        gold_sources=[{"doc_id": "ds-stack-b"}],
+    )  # fmt: skip
+    result = evaluate_item(service, item, settings, answers=True)
+    assert result.rank == 1 and result.answer is None and "rate limit" in (result.error or "")
+    summary = summarize([result])
+    assert summary["recall@5"] == 1.0 and summary["errors"] == 1 and "answers" not in summary
