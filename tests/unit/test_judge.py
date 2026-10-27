@@ -55,7 +55,8 @@ def test_judge_run_and_scores(tmp_path: Path) -> None:
     rows[0]["human"], rows[1]["human"] = True, True  # the human disagrees on the second
     path.write_text("\n".join(json.dumps(r) for r in rows), encoding="utf-8")
     assert agreement(path) == {
-        "labelled": 2, "agreement": 0.5, "judge_too_lenient": 0, "judge_too_strict": 1,
+        "labeller": "human", "labelled": 2, "agreement": 0.5,
+        "judge_too_lenient": 0, "judge_too_strict": 1,
     }  # fmt: skip
 
 
