@@ -118,3 +118,29 @@ def test_gate(tmp_path: Path) -> None:
         "recall@5 = 0.7 < 0.8",
         "retrieval_refusal_false = 0.1 > 0.05",
     ]
+
+
+def test_number_words_and_first_sentence_refusals() -> None:
+    assert value_found("Held together by four tie rods [S3].", 4, "-", "en")
+    assert value_found("Es gibt vier Zugstangen.", 4, "-", "de")
+    assert not value_found("Only one rod.", 1, "-", "en")  # "one" is not a number word here
+    answer = "The requirement is REQ-C-0001 (100 kW). The sheet does not contain a row for it."
+    assert not metrics.is_refusal(answer)
+    assert metrics.is_refusal("The provided sources do not specify a warranty. They list 8000 h.")
+
+
+def test_rescore_uses_current_scoring(repo_root: Path) -> None:
+    from fcrag.eval.golden import GoldenItem
+    from fcrag.eval.runner import rescore
+
+    item = GoldenItem(
+        id="q", category="parameter", language="en", question="How many tie rods?",
+        reference_answer="4", expected_values=[{"value": 4, "unit": "-"}],
+        gold_sources=[{"doc_id": "d"}],
+    )  # fmt: skip
+    old = {"summary": {"questions": 1}, "results": [
+        {"id": "q", "category": "parameter", "language": "en", "answerable": True, "rank": 1,
+         "answer": "Four tie rods [S1].", "refused": False, "values_ok": False}]}  # fmt: skip
+    new = rescore(old, [item])
+    assert new["results"][0]["values_ok"] is True
+    assert new["summary"]["answers"]["value_accuracy"] == 1.0

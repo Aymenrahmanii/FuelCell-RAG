@@ -16,6 +16,16 @@ NUMBER = re.compile(
 )
 
 
+# Spelled-out counts. "one", "ein" and "eine" are left out: they are mostly pronouns and articles.
+NUMBER_WORDS = {
+    "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9,
+    "ten": 10, "eleven": 11, "twelve": 12,
+    "zwei": 2, "drei": 3, "vier": 4, "fünf": 5, "sechs": 6, "sieben": 7, "acht": 8,
+    "neun": 9, "zehn": 10, "elf": 11, "zwölf": 12,
+}  # fmt: skip
+WORD = re.compile(r"\b(" + "|".join(NUMBER_WORDS) + r")\b", re.IGNORECASE)
+
+
 @dataclass(frozen=True)
 class Quantity:
     value: float
@@ -43,10 +53,11 @@ def parse_number(text: str, language: str) -> float:
 
 
 def extract_quantities(text: str, language: str) -> list[Quantity]:
-    return [
+    found = [
         Quantity(parse_number(m.group("num"), language), UNITS.get(m.group("unit") or ""))
         for m in NUMBER.finditer(text)
     ]
+    return found + [Quantity(float(NUMBER_WORDS[w.lower()]), None) for w in WORD.findall(text)]
 
 
 def value_found(text: str, value: float, unit: str, language: str, rel_tol: float = 0.005) -> bool:

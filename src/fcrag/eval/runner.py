@@ -18,7 +18,7 @@ from fcrag.eval import metrics
 from fcrag.eval.golden import GoldenItem
 from fcrag.eval.matching import matches
 from fcrag.eval.numbers import value_found
-from fcrag.generation.answer import RagService
+from fcrag.generation.answer import RagService, load_prompt
 from fcrag.generation.citations import normalise_citations
 from fcrag.retrieval.search import Filters
 
@@ -166,6 +166,41 @@ def summarize(results: list[ItemResult]) -> dict[str, Any]:
             "models": dict(Counter(r.model or "none" for r in answered)),
         }
     return summary
+
+
+def rescore(run_data: dict[str, Any], items: list[GoldenItem]) -> dict[str, Any]:
+    """Recompute answer metrics of a saved run from its stored answers, with the current
+    scoring code. Needs no LLM, so metric fixes do not cost free-tier quota."""
+    by_id = {i.id: i for i in items}
+    not_found = {t for t in load_prompt()["not_found"].values()}
+    results = []
+    for raw in run_data["results"]:
+        r = ItemResult(**{k: v for k, v in raw.items() if k in ItemResult.__dataclass_fields__})
+        item = by_id.get(r.id)
+        if item is not None and r.answer is not None:
+            text = normalise_citations(r.answer)
+            r.refused = r.answer in not_found or metrics.is_refusal(text)
+            expected = item.expected_values
+            r.values_ok = (
+                all(value_found(text, v["value"], v["unit"], item.language) for v in expected)
+                if expected
+                else None
+            )
+            r.terms_ok = (
+                all(t.lower() in text.lower() for t in item.expected_terms)
+                if item.expected_terms else None
+            )  # fmt: skip
+        results.append(r)
+    out = dict(run_data)
+    out["summary"] = summarize(results) | {
+        k: v for k, v in run_data["summary"].items() if k == "judge"
+    }
+    if "judge" in run_data["summary"] and "answers" in out["summary"]:
+        out["summary"]["answers"]["faithfulness"] = run_data["summary"]["answers"].get(
+            "faithfulness"
+        )
+    out["results"] = [asdict(r) for r in results]
+    return out
 
 
 def run(

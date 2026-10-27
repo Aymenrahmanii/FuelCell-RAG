@@ -25,12 +25,12 @@ on Groq's free tier, judged by `qwen/qwen3.8-27b` (a different model family).
 | Retrieval recall@5 / recall@10 / MRR | **0.925** / 0.943 / 0.840 | ≥ 0.85 |
 | Value accuracy (stated value and unit match the truth, any unit) | **0.947** | ≥ 0.85 |
 | Correct "not in the documents" answers / false refusals | **7 of 7** / 1 of 53 | ≥ 0.90 |
-| Citation precision (cited source is a gold source) | **0.899** | ≥ 0.90 |
-| Faithfulness (LLM judge, claim level) | 0.87 (lower bound, see below) | ≥ 0.90 |
+| Citation precision (cited source is a gold source) | **0.914** | ≥ 0.90 |
+| Faithfulness (LLM judge, claim level, 67 claims) | **0.931** (judge calibration pending) | ≥ 0.90 |
 | Invalid citations (source numbers that do not exist) | 0 | 0 |
 | Parameter extraction recall / precision (610 facts, through Docling) | **99.5 % / 99.5 %** | – |
 | Ingestion throughput (laptop RTX 3050, 6 GB) | ~1,150 PDF pages/h | ≥ 1,000 |
-| Retrieval p50 / p95 · generation p95 | 1.4 s / 2.9 s · 4.9 s | end-to-end p95 < 6 s |
+| Retrieval p50 / p95 · generation p95 | 1.4 s / 2.8 s · 4.8 s | end-to-end p95 < 6 s |
 
 Recall per category: parameter, cross-system, version conflict, requirement trace and
 drawing/STEP 1.00; public-document facts 0.92; cross-document 0.63. Cross-document is
@@ -38,11 +38,23 @@ measured strictly: a conflict question only counts as found when the conflicting
 is retrieved, which plain ranking often misses. The answer pipeline adds the best requirement
 chunks to such questions, and all three conflict questions are answered correctly.
 
-The faithfulness judge of this run saw sources truncated at 2,000 characters and without
-version labels; most of its 9 "unsupported" verdicts traced back to that, not to the model.
-Both are fixed, and judge decisions are exported for human calibration
-(`fcrag judge-agreement`) before the number is final. Free tiers allow roughly one full
-answer evaluation per day (Groq caps tokens per day), so reruns are paced accordingly.
+Where it still fails (all visible in `eval/runs/`): a German question about an English slide
+deck (text-11) is refused because the German requirement documents outrank the English deck;
+a three-system comparison picks up an unrelated current-density value from a public report.
+
+How the answers are judged: `qwen/qwen3.8-27b` (a different model family from the answering
+`openai/gpt-oss-120b`) checks every cited sentence against the sources it cites. Its verdicts
+are exported, and `fcrag judge-label` walks a person through a random sample of 50 with the
+judge's verdict hidden; `fcrag judge-agreement` then reports how often judge and human agree.
+The faithfulness figure should be read together with that agreement rate.
+
+Answer metrics can be recomputed from a saved run without any LLM call
+(`fcrag eval-rescore`), so metric fixes cost no API quota. Free tiers allow roughly one full
+answer evaluation per day (Groq caps tokens per day), so reruns are paced
+(`fcrag eval --pause`). Prompt v3, which asks the model to name requirement IDs, raised ID
+accuracy on requirement questions from 0.86 to 1.00 (14 questions); the headline numbers above
+are from the full run with prompt v2. Latency was measured with the GPU otherwise idle; under a
+busy GPU (games, other ML jobs) the reranker slows down several-fold.
 
 ## Architecture
 
@@ -166,6 +178,9 @@ request.
 - **Evaluate the evaluation.** The first answer run reported term accuracy 0.26: gpt-oss writes
   non-breaking hyphens (REQ‑A‑0013) and citations like 【S2†L1-L3】. After normalising both,
   0.91. A judge that sees truncated sources reports hallucinations that are not there.
+- **Score the scorer.** "Four tie rods" failed a value check that only read digits, and a
+  correct answer was counted as a refusal because a later sentence said a table "does not
+  contain" a row. Both fixed and re-scored offline from the stored answers.
 - **A good answer can hide a retrieval gap.** "Does the requirement agree with the sheet?"
   retrieved only the sheet, and the model said "yes" about a requirement it never saw.
 

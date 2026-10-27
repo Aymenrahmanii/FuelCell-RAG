@@ -57,3 +57,36 @@ def test_judge_run_and_scores(tmp_path: Path) -> None:
     assert agreement(path) == {
         "labelled": 2, "agreement": 0.5, "judge_too_lenient": 0, "judge_too_strict": 1,
     }  # fmt: skip
+
+
+def test_interactive_labelling_hides_verdict_and_resumes(tmp_path: Path) -> None:
+    from fcrag.eval.judge import label_interactively
+
+    rows = [
+        {"question_id": "q1", "statement": "A is 85 °C.", "cited": ["S1"], "supported": True,
+         "reason": "SECRET-REASON", "human": None},
+        {"question_id": "q1", "statement": "B is 3 kW.", "cited": ["S2"], "supported": False,
+         "reason": "SECRET-REASON", "human": None},
+    ]  # fmt: skip
+    path = tmp_path / "j.jsonl"
+    path.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
+    run = {"results": [{"id": "q1", "sources": [
+        {"label": "S1", "title": "DS", "location": "p. 1", "text": "A: 85 °C"},
+        {"label": "S2", "title": "DS", "location": "p. 2", "text": "B: 4 kW"}]}]}  # fmt: skip
+    shown: list[str] = []
+    replies = iter(["maybe", "y", "q"])  # invalid input is asked again; q stops the session
+
+    done = label_interactively(path, run, ask=lambda _: next(replies), show=shown.append)
+
+    text = "\n".join(shown)
+    assert done == 1
+    assert "SECRET-REASON" not in text
+    assert "A: 85 °C" in text or "B: 4 kW" in text
+    saved = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    assert sum(r["human"] is not None for r in saved) == 1
+    # a second session only asks about the remaining claim
+    again = label_interactively(path, run, ask=lambda _: "n", show=lambda _: None)
+    assert again == 1
+    assert all(
+        json.loads(line)["human"] is not None for line in path.read_text("utf-8").splitlines()
+    )

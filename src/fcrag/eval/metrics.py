@@ -36,7 +36,10 @@ def ndcg_at_k(relevance: Sequence[bool], k: int = 10) -> float:
 
 
 def is_refusal(answer: str) -> bool:
-    return bool(REFUSAL.search(answer))
+    """True if the answer opens by saying the documents lack the information. A later remark
+    such as "the parameter list has no row for X" does not make a correct answer a refusal."""
+    first = re.split(r"(?<=[.!?])\s+", answer.strip(), maxsplit=1)[0]
+    return bool(REFUSAL.search(first))
 
 
 def percentile(values: Sequence[float], q: float) -> float:

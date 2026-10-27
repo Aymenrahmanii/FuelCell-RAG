@@ -156,3 +156,53 @@ def agreement(path: Path) -> dict[str, Any]:
         "judge_too_lenient": sum(r["supported"] and not r["human"] for r in labelled),
         "judge_too_strict": sum(r["human"] and not r["supported"] for r in labelled),
     }
+
+
+def label_interactively(
+    judgements_path: Path,
+    run: dict[str, Any],
+    *,
+    sample: int = 50,
+    seed: int = 7,
+    ask: Callable[[str], str] = input,
+    show: Callable[[str], None] = print,
+) -> int:
+    """Ask a person whether each sampled claim is supported; save after every answer.
+
+    The judge's verdict is hidden while labelling so it cannot bias the label. Resumable:
+    claims that already have a human label are skipped. Returns the number labelled this call.
+    """
+    import random
+
+    rows = [json.loads(line) for line in judgements_path.open(encoding="utf-8") if line.strip()]
+    order = list(range(len(rows)))
+    random.Random(seed).shuffle(order)
+    chosen = order[:sample]
+    sources = {r["id"]: {s["label"]: s for s in r.get("sources", [])} for r in run["results"]}
+    todo = [i for i in chosen if rows[i].get("human") is None]
+    done = 0
+    for n, i in enumerate(todo, 1):
+        row = rows[i]
+        position = len(chosen) - len(todo) + n
+        show(f"\n{'=' * 78}\n[{position}/{len(chosen)}]  question {row['question_id']}")
+        show(f"\nCLAIM:\n  {row['statement'].strip()}\n\nCITED SOURCES:")
+        for label in row["cited"]:
+            source = sources.get(row["question_id"], {}).get(label)
+            if source:
+                show(f"\n  {_header(source)}\n  " + source["text"].strip().replace("\n", "\n  "))
+        while True:
+            answer = ask(
+                "\nIs EVERY fact in the claim supported by these sources? [y/n/s=skip/q=quit] "
+            )
+            answer = answer.strip().lower()
+            if answer in {"y", "n", "s", "q"}:
+                break
+        if answer == "q":
+            break
+        if answer == "s":
+            continue
+        row["human"] = answer == "y"
+        done += 1
+        with judgements_path.open("w", encoding="utf-8") as f:
+            f.writelines(json.dumps(r, ensure_ascii=False) + "\n" for r in rows)
+    return done

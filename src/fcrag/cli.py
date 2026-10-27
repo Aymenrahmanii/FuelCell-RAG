@@ -102,6 +102,19 @@ def _eval_judge(args: argparse.Namespace) -> None:
     print(f"judgements: {out} (fill in 'human' for a sample, then run fcrag judge-agreement)")
 
 
+def _judge_label(args: argparse.Namespace) -> None:
+    import json
+    from pathlib import Path
+
+    from fcrag.eval.judge import agreement, label_interactively
+
+    path = Path(args.judgements)
+    run = json.loads(Path(args.run).read_text(encoding="utf-8"))
+    done = label_interactively(path, run, sample=args.sample)
+    print(f"\nlabelled {done} this session")
+    print(json.dumps(agreement(path), indent=2))
+
+
 def _judge_agreement(args: argparse.Namespace) -> None:
     import json
     from pathlib import Path
@@ -109,6 +122,20 @@ def _judge_agreement(args: argparse.Namespace) -> None:
     from fcrag.eval.judge import agreement
 
     print(json.dumps(agreement(Path(args.judgements)), indent=2))
+
+
+def _eval_rescore(args: argparse.Namespace) -> None:
+    import json
+    from pathlib import Path
+
+    from fcrag.eval.golden import read_golden
+    from fcrag.eval.runner import rescore
+
+    path = Path(args.run)
+    run = rescore(json.loads(path.read_text(encoding="utf-8")),
+                  read_golden(Path("eval/golden_set.jsonl")))  # fmt: skip
+    path.write_text(json.dumps(run, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
+    print(json.dumps(run["summary"].get("answers", {}), indent=2))
 
 
 def _eval_report(args: argparse.Namespace) -> None:
@@ -248,9 +275,19 @@ def main() -> None:
     p.add_argument("--pause", type=float, default=2.0, help="seconds between judge calls")
     p.set_defaults(func=_eval_judge)
 
+    p = sub.add_parser("judge-label", help="label judge decisions by hand (interactive)")
+    p.add_argument("judgements", help="the .judgements.jsonl next to the run")
+    p.add_argument("run", help="the run .json the judgements came from")
+    p.add_argument("--sample", type=int, default=50)
+    p.set_defaults(func=_judge_label)
+
     p = sub.add_parser("judge-agreement", help="judge vs human labels in a judgements file")
     p.add_argument("judgements")
     p.set_defaults(func=_judge_agreement)
+
+    p = sub.add_parser("eval-rescore", help="re-score a saved run's answers (no LLM calls)")
+    p.add_argument("run")
+    p.set_defaults(func=_eval_rescore)
 
     p = sub.add_parser("eval-report", help="print saved runs as a Markdown table")
     p.add_argument("--only", action="append", help="substring of run names to include")
