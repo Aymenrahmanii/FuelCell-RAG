@@ -26,7 +26,7 @@ on Groq's free tier, judged by `qwen/qwen3.8-27b` (a different model family).
 | Value accuracy (stated value and unit match the truth, any unit) | **0.947** | ≥ 0.85 |
 | Correct "not in the documents" answers / false refusals | **7 of 7** / 1 of 53 | ≥ 0.90 |
 | Citation precision (cited source is a gold source) | **0.914** | ≥ 0.90 |
-| Faithfulness (LLM judge, claim level, 67 claims) | **0.931** (judge calibration pending) | ≥ 0.90 |
+| Faithfulness, 67 claims (judge / second-opinion labels) | 0.931 / **0.877** | ≥ 0.90 |
 | Invalid citations (source numbers that do not exist) | 0 | 0 |
 | Parameter extraction recall / precision (610 facts, through Docling) | **99.5 % / 99.5 %** | – |
 | Ingestion throughput (laptop RTX 3050, 6 GB) | ~1,150 PDF pages/h | ≥ 1,000 |
@@ -47,6 +47,15 @@ How the answers are judged: `qwen/qwen3.8-27b` (a different model family from th
 are exported, and `fcrag judge-label` walks a person through a random sample of 50 with the
 judge's verdict hidden; `fcrag judge-agreement` then reports how often judge and human agree.
 The faithfulness figure should be read together with that agreement rate.
+
+Calibration so far: a second LLM (Claude, a third model family) labelled all 67 claims without
+seeing the judge's verdicts, using the same strict standard: every fact in a claim must be in
+the sources *that claim cites*. The judge agreed on 63 of 67 (94 %) and was never stricter; it
+passed 4 claims whose cited sources lack part of the claim (a superlative needing a source
+that was not cited, a "latest value" backed only by superseded documents, part descriptions
+missing from the cited STEP tree). With those corrected, faithfulness is **0.877**, slightly
+under the 0.90 target, so the judged 0.931 is an upper bound. These are LLM labels, not human
+ones; a person's labels (`fcrag judge-label`) remain the reference.
 
 Answer metrics can be recomputed from a saved run without any LLM call
 (`fcrag eval-rescore`), so metric fixes cost no API quota. Free tiers allow roughly one full

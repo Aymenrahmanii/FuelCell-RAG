@@ -90,3 +90,17 @@ def test_interactive_labelling_hides_verdict_and_resumes(tmp_path: Path) -> None
     assert all(
         json.loads(line)["human"] is not None for line in path.read_text("utf-8").splitlines()
     )
+
+
+def test_agreement_with_a_named_labeller(tmp_path: Path) -> None:
+    rows = [
+        {"supported": True, "claude": True, "human": None},
+        {"supported": True, "claude": False, "human": None},
+        {"supported": False, "claude": False, "human": None},
+    ]
+    path = tmp_path / "j.jsonl"
+    path.write_text("\n".join(json.dumps(r) for r in rows), encoding="utf-8")
+    result = agreement(path, "claude")
+    assert result["labeller"] == "claude" and result["labelled"] == 3
+    assert result["judge_too_lenient"] == 1 and round(result["agreement"], 3) == 0.667
+    assert agreement(path)["labelled"] == 0  # no human labels yet

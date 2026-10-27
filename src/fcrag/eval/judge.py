@@ -145,16 +145,18 @@ def write_judgements(judgements: list[Judgement], path: Path) -> None:
             f.write(json.dumps(asdict(j), ensure_ascii=False) + "\n")
 
 
-def agreement(path: Path) -> dict[str, Any]:
-    """Judge vs human labels, over the judgements a person has labelled."""
+def agreement(path: Path, field: str = "human") -> dict[str, Any]:
+    """Judge vs the labels in ``field``: ``human`` for a person's labels, or another labeller's
+    name (for example ``claude`` for a second LLM; never mix the two up when reporting)."""
     rows = [json.loads(line) for line in path.open(encoding="utf-8") if line.strip()]
-    labelled = [r for r in rows if r.get("human") is not None and r.get("supported") is not None]
-    agree = sum(r["human"] == r["supported"] for r in labelled)
+    labelled = [r for r in rows if r.get(field) is not None and r.get("supported") is not None]
+    agree = sum(r[field] == r["supported"] for r in labelled)
     return {
+        "labeller": field,
         "labelled": len(labelled),
         "agreement": agree / len(labelled) if labelled else None,
-        "judge_too_lenient": sum(r["supported"] and not r["human"] for r in labelled),
-        "judge_too_strict": sum(r["human"] and not r["supported"] for r in labelled),
+        "judge_too_lenient": sum(r["supported"] and not r[field] for r in labelled),
+        "judge_too_strict": sum(r[field] and not r["supported"] for r in labelled),
     }
 
 

@@ -121,7 +121,7 @@ def _judge_agreement(args: argparse.Namespace) -> None:
 
     from fcrag.eval.judge import agreement
 
-    print(json.dumps(agreement(Path(args.judgements)), indent=2))
+    print(json.dumps(agreement(Path(args.judgements), args.field), indent=2))
 
 
 def _eval_rescore(args: argparse.Namespace) -> None:
@@ -283,6 +283,7 @@ def main() -> None:
 
     p = sub.add_parser("judge-agreement", help="judge vs human labels in a judgements file")
     p.add_argument("judgements")
+    p.add_argument("--field", default="human", help="label field: human (default) or claude")
     p.set_defaults(func=_judge_agreement)
 
     p = sub.add_parser("eval-rescore", help="re-score a saved run's answers (no LLM calls)")
