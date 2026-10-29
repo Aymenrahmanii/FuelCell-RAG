@@ -1,4 +1,6 @@
 """System schematics, one per system: components, a line list, a revision block, a title block.
+Each system also has three subsystem schematics (air path, anode loop, coolant loop) that keep
+the system schematic's line numbers, as P&ID sheets of one plant do.
 
 Realism: System A has two revisions (rev B adds a humidifier bypass valve), System B's
 drawing is German, and System C's is a raster PNG with no text layer, so it must be read by
@@ -55,14 +57,19 @@ class Drawing:
     language: str
     raster: bool
     revisions: tuple[Revision, ...]
+    subsystem: str | None = None
+    """``air``, ``anode`` or ``coolant``; None for the whole system."""
+    bypass: bool = False
+    """Shows the humidifier bypass valve without having introduced it (subsystem sheets)."""
 
     @property
     def doc_id(self) -> str:
-        return f"dwg-schematic-{self.code.lower()}"
+        return f"dwg-{self.subsystem or 'schematic'}-{self.code.lower()}"
 
     @property
     def drawing_no(self) -> str:
-        return f"DWG-{self.code}-0001"
+        number = SUBSYSTEMS[self.subsystem].number if self.subsystem else 1
+        return f"DWG-{self.code}-{number:04d}"
 
     @property
     def revision(self) -> str:
@@ -70,7 +77,28 @@ class Drawing:
 
     @property
     def with_bypass(self) -> bool:
-        return any("BPV" in r.description_en for r in self.revisions)
+        return self.bypass or any("BPV" in r.description_en for r in self.revisions)
+
+
+@dataclass(frozen=True)
+class Subsystem:
+    number: int
+    media: frozenset[str]
+    title_en: str
+    title_de: str
+
+
+SUBSYSTEMS = {
+    "air": Subsystem(
+        2, frozenset({"air", "humid", "exhaust"}), "air path schematic", "Schema Luftpfad"
+    ),
+    "anode": Subsystem(
+        3, frozenset({"h2", "recirc", "purge"}), "anode loop schematic", "Schema Anodenkreislauf"
+    ),
+    "coolant": Subsystem(
+        4, frozenset({"coolant"}), "coolant loop schematic", "Schema Kühlkreislauf"
+    ),
+}
 
 
 FIRST_ISSUE = Revision("A", "First issue", "Erstausgabe", "2026-03-02")
@@ -80,6 +108,12 @@ BYPASS = Revision(
     "Befeuchter-Bypassventil {code}-BPV ergänzt (Leitungen L14, L15)",
     "2026-07-14",
 )
+SUBSYSTEM_ISSUE = Revision(
+    "A",
+    "First issue, detail of DWG-{code}-0001",
+    "Erstausgabe, Ausschnitt aus DWG-{code}-0001",
+    "2026-08-03",
+)
 DRAWINGS = {
     "A": [
         Drawing("A", 1, "en", False, (FIRST_ISSUE,)),
@@ -88,6 +122,17 @@ DRAWINGS = {
     "B": [Drawing("B", 1, "de", False, (Revision("A", "", "Erstausgabe", "2026-04-20"),))],
     "C": [Drawing("C", 1, "en", True, (FIRST_ISSUE,))],
 }
+for _code, _language in (("A", "en"), ("B", "de"), ("C", "en")):
+    DRAWINGS[_code] += [
+        Drawing(_code, 1, _language, False, (SUBSYSTEM_ISSUE,), sub, bypass=_code == "A")
+        for sub in SUBSYSTEMS
+    ]
+
+
+def schematic(code: str) -> Drawing:
+    """The current whole-system schematic."""
+    return [d for d in DRAWINGS[code] if d.subsystem is None][-1]
+
 
 NAMES_DE = {
     "stack": "Brennstoffzellenstack",
@@ -143,6 +188,9 @@ def symbols(system: SystemTruth, drawing: Drawing) -> list[Symbol]:
     out += [*EXTERNAL, Symbol("RAD", radiator_en, radiator_de, 235.0, 75.0)]
     if drawing.with_bypass:
         out.append(BYPASS_VALVE)
+    if drawing.subsystem:
+        shown = {tag for ln in lines(system, drawing) for tag in (ln.source, ln.target)}
+        out = [s for s in out if s.suffix in shown]
     return out
 
 
@@ -158,10 +206,19 @@ def lines(system: SystemTruth, drawing: Drawing) -> list[Line]:
     ]  # fmt: skip
     if drawing.with_bypass:
         route += [("air", mover, "BPV"), ("air", "BPV", "STK")]
+    media = SUBSYSTEMS[drawing.subsystem].media if drawing.subsystem else MEDIA.keys()
     return [
         Line(f"L{n:02d}", *MEDIA[medium], source, target)
         for n, (medium, source, target) in enumerate(route, 1)
+        if medium in media  # a subsystem sheet keeps the system's line numbers
     ]
+
+
+def title(system: SystemTruth, drawing: Drawing) -> str:
+    if drawing.subsystem is None:
+        return str(TEXT[drawing.language]["title"].format(system=system.system))
+    sub = SUBSYSTEMS[drawing.subsystem]
+    return f"{system.system} – {sub.title_de if drawing.language == 'de' else sub.title_en}"
 
 
 TEXT: dict[str, dict[str, Any]] = {
@@ -275,7 +332,7 @@ def render_pdf(system: SystemTruth, drawing: Drawing, path: Path) -> None:
     tags = {s.suffix: s for s in symbols(system, drawing)}
     drawn = lines(system, drawing)
     c = Canvas(str(path), pagesize=landscape(A3))
-    c.setTitle(t["title"].format(system=system.system))
+    c.setTitle(title(system, drawing))
     c.rect(10 * mm, 10 * mm, 400 * mm, 277 * mm)
     _draw_lines(c, tags, drawn)
     _draw_symbols(c, tags, system.code, drawing.language)
@@ -304,7 +361,7 @@ def render_pdf(system: SystemTruth, drawing: Drawing, path: Path) -> None:
 
     last = drawing.revisions[-1]
     values = [
-        t["title"].format(system=system.system), drawing.drawing_no, drawing.revision, "1/1",
+        title(system, drawing), drawing.drawing_no, drawing.revision, "1/1",
         last.date, "FC-Design", "FC-Systems",
     ]  # fmt: skip
     _draw_title_block(c, list(zip(t["block"], values, strict=True)))
@@ -328,14 +385,13 @@ def render_png(pdf_path: Path, png_path: Path) -> None:
 
 
 def build_drawing(system: SystemTruth, drawing: Drawing, out_dir: Path) -> GeneratedFile:
-    versioned = len(DRAWINGS[system.code]) > 1
+    versioned = sum(d.doc_id == drawing.doc_id for d in DRAWINGS[system.code]) > 1
     stem = f"{drawing.doc_id}_v{drawing.version}" if versioned else drawing.doc_id
-    title = TEXT[drawing.language]["title"].format(system=system.system)
     out = GeneratedFile(
         file=f"{stem}.png" if drawing.raster else f"{stem}.pdf",
         doc_id=drawing.doc_id,
         doc_version=drawing.version,
-        title=f"{title} (rev {drawing.revision})",
+        title=f"{title(system, drawing)} (rev {drawing.revision})",
         system=system.system,
         doc_type="drawing",
         language=drawing.language,

@@ -8,6 +8,7 @@ import pytest
 import yaml
 
 from fcrag.datagen.common import convert, format_number, value_at_version
+from fcrag.datagen.datasheet import component_versions
 from fcrag.datagen.run import generate
 from fcrag.truth import SystemTruth
 
@@ -58,6 +59,28 @@ def test_old_versions_show_superseded_values(corpus: Path) -> None:
     assert humidifier[("ds-system-a", 1)] == 18
     assert humidifier[("ds-system-a", 2)] == 15
     assert humidifier[("ps-system-a", 2)] == 15
+    supplier = {
+        f["doc_version"]: (f["stated_value"], f["stated_unit"])
+        for f in facts
+        if f["key"] == "pressure_drop_dry_side" and f["doc_id"] == "cds-a-hum"
+    }
+    assert supplier == {1: (0.18, "bar"), 2: (0.15, "bar")}  # the supplier's own unit
+
+
+def test_component_datasheets_state_their_parameters(
+    corpus: Path, systems: dict[str, SystemTruth]
+) -> None:
+    """One supplier datasheet per component, versioned only where its own values changed."""
+    facts = [json.loads(line) for line in (corpus / "facts.jsonl").open(encoding="utf-8")]
+    for system in systems.values():
+        for component in system.components:
+            doc_id = f"cds-{component.id.lower()}"
+            versions = {f["doc_version"] for f in facts if f["doc_id"] == doc_id}
+            assert versions == set(range(1, component_versions(component) + 1)), doc_id
+            for version in versions:
+                stated = [f["key"] for f in facts
+                          if f["doc_id"] == doc_id and f["doc_version"] == version]  # fmt: skip
+                assert Counter(stated) == Counter(p.key for p in component.parameters), doc_id
 
 
 def test_unit_variants_are_exact_conversions(corpus: Path) -> None:

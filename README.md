@@ -18,8 +18,9 @@ where each value appears, which gives exact gold labels for evaluation.
 
 Measured on the 60-question golden set (21 German) and the 51-document corpus
 (33 public PDFs and 18 generated files, about 5,000 chunks). Answers by `openai/gpt-oss-120b`
-on Groq's free tier, judged by `qwen/qwen3.8-27b` (a different model family). The four system
-schematics and five drawing questions added since are not in these figures yet.
+on Groq's free tier, judged by `qwen/qwen3.8-27b` (a different model family). Added since and
+not in these figures yet: 13 schematics, 16 component datasheets and 7 drawing questions. The
+generated corpus is now 47 files (44 without the optional STEP extra).
 
 | Metric | Result | Target |
 |---|---|---|
@@ -123,7 +124,7 @@ docker compose up -d          # Qdrant, Postgres, Redis, MinIO, Langfuse
 uv run fcrag db-upgrade       # create the tables
 
 uv run python scripts/download_corpus.py   # 33 public PDFs, licences in data/sources.yaml
-uv run fcrag generate         # synthetic datasheets, parameter sheets, requirements, STEP
+uv run fcrag generate         # system and component datasheets, parameter sheets, requirements, schematics, STEP
 uv run fcrag ingest           # parse, extract, chunk, embed, index (new or changed files only)
 
 uv run fcrag search "maximum coolant outlet temperature of System B"
@@ -164,7 +165,7 @@ The golden set ([`eval/golden_set.jsonl`](eval/golden_set.jsonl)) covers 8 categ
 | Version conflict | 3 | superseded values in the truth |
 | Requirement trace | 6 | generated requirement trees |
 | Cross-document | 8 | requirements vs parameter sheets, incl. deliberate contradictions |
-| Drawing / STEP | 11 | STEP assemblies, BOM sheets, system schematics (title block, revisions, line list) |
+| Drawing / STEP | 13 | STEP assemblies, BOM sheets, system and subsystem schematics (title block, revisions, line list) |
 | Unanswerable | 7 | hand-written |
 
 Gold sources are recorded by the generators while they write each document, so they stay
