@@ -813,6 +813,7 @@ cad = [
 ml = [
     { name = "docling" },
     { name = "flagembedding" },
+    { name = "onnxruntime" },
     { name = "torch", version = "2.11.0+cu128", source = { registry = "https://download.pytorch.org/whl/cu128" }, marker = "sys_platform == 'win32'" },
     { name = "torch", version = "2.14.1", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'linux' and sys_platform != 'win32'" },
     { name = "torch", version = "2.14.1+cpu", source = { registry = "https://download.pytorch.org/whl/cpu" }, marker = "sys_platform == 'linux'" },
@@ -850,6 +851,7 @@ requires-dist = [
     { name = "langfuse", specifier = ">=3" },
     { name = "lingua-language-detector", specifier = ">=2.0" },
     { name = "litellm", specifier = ">=1.60" },
+    { name = "onnxruntime", marker = "extra == 'ml'", specifier = ">=1.31.1" },
     { name = "openpyxl", specifier = ">=3.1" },
     { name = "pillow", specifier = ">=10.4" },
     { name = "pint", specifier = ">=0.24" },
@@ -925,6 +927,14 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/d1/08/bb721397c76d0750c8f485e6e9d2e9792ae96ae692bf930d95d9d58560bb/flagembedding-1.4.2.tar.gz", hash = "sha256:c9dfd0faac52ae7f87a7ac47bd58fdacdd0ce3ef48a097b8255ddc86df88bb1b", size = 180480, upload-time = "2026-08-24T02:57:21.895Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/6e/4a/eb1a033d744e5a854f0918b2a002fca0d7db72078aa70b5145d5100141c1/flagembedding-1.4.2-py3-none-any.whl", hash = "sha256:35e33a08e8ed5e299eabbe3bc23518eb66a424dd29ee08fb3802bf9aef9e9bf2", size = 250528, upload-time = "2026-08-24T02:57:20.271Z" },
+]
+
+[[package]]
+name = "flatbuffers"
+version = "25.12.19"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e8/2d/d2a548598be01649e2d46231d151a6c56d10b964d94043a335ae56ea2d92/flatbuffers-25.12.19-py2.py3-none-any.whl", hash = "sha256:7634f50c427838bb021c2d66a3d1168e9d199b0607e6329399f04846d42e20b4", size = 26661, upload-time = "2025-12-19T23:16:13.622Z" },
 ]
 
 [[package]]
@@ -1860,6 +1870,24 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/cc/10/1cabf3188a4d9684a06568c7fd76f9536eede625733c8399cf1f5337b83e/omegaconf-2.4.0.tar.gz", hash = "sha256:7e219a70bea371da250285b9c01c7db027bc421722799c2cc4ff14bc4a2a753b", size = 3544508, upload-time = "2026-10-09T12:44:02.326Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/4f/bd/0d9f8247b0819385213d09564eda5c52d3673313c2414d51f72883ec24cd/omegaconf-2.4.0-py3-none-any.whl", hash = "sha256:f141a664c777582405e3cc6e0545ecc79429e79f844995b1a6e71c35946a025c", size = 254152, upload-time = "2026-10-09T12:43:59.764Z" },
+]
+
+[[package]]
+name = "onnxruntime"
+version = "1.31.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "flatbuffers" },
+    { name = "numpy" },
+    { name = "packaging" },
+    { name = "protobuf" },
+]
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/0e/f7/cecc0efeeea83bff2f7789ae1b80f27fa0f0210d6d9d66d1f0031a6b5e47/onnxruntime-1.31.1-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:96dd2564b10ea7153ad9c207e7cd8e5917cb3ba521e0e0a62ac03486fdc8d56c", size = 20882125, upload-time = "2026-10-26T19:26:16.256Z" },
+    { url = "https://files.pythonhosted.org/packages/ba/e4/1ed1a7a5f4702d899091fa2b976d377995250c307326ec8dc9ae6378aa13/onnxruntime-1.31.1-cp312-cp312-manylinux_2_28_aarch64.whl", hash = "sha256:0b9a492176886992e0e875f06bc0367e333f5fff11711a2d642e18b02f3009cc", size = 21420803, upload-time = "2026-10-26T19:26:19.487Z" },
+    { url = "https://files.pythonhosted.org/packages/eb/27/c6a823bac55b2977bea2027c3ec9393a2c1002cb9a09eb40354563e02730/onnxruntime-1.31.1-cp312-cp312-manylinux_2_28_x86_64.whl", hash = "sha256:1f3dea47f2f0e5117c2404cea7d21fd253ae7836a3bf167a501cdfbb2600d536", size = 23760988, upload-time = "2026-10-26T19:26:23.153Z" },
+    { url = "https://files.pythonhosted.org/packages/45/b2/793b4051d8dc6acb379ead9b72050f0ffa283ca49a6904add2e218b83e2e/onnxruntime-1.31.1-cp312-cp312-win_amd64.whl", hash = "sha256:ae8a9a351efda685cc59a66226cdefaa37a126c1d66872ca23a2de9425326130", size = 14888466, upload-time = "2026-10-26T19:26:25.816Z" },
+    { url = "https://files.pythonhosted.org/packages/ed/72/09d635ab4b6137d8ac63d4911a37dad8b1ef15a77d20b65d7ed40fdca012/onnxruntime-1.31.1-cp312-cp312-win_arm64.whl", hash = "sha256:fe8b9ac1ae8e894e12c47ee82e4f6dfc1835768133687257866469fda80d0bf1", size = 14740724, upload-time = "2026-10-26T19:26:28.682Z" },
 ]
 
 [[package]]
