@@ -18,7 +18,7 @@ from fcrag.eval import metrics
 from fcrag.eval.golden import GoldenItem
 from fcrag.eval.matching import matches
 from fcrag.eval.numbers import value_found
-from fcrag.generation.answer import RagService, load_prompt
+from fcrag.generation.answer import RagService, Timings, load_prompt
 from fcrag.generation.citations import normalise_citations
 from fcrag.retrieval.search import Filters
 
@@ -43,6 +43,12 @@ class ItemResult:
     """At least one chunk passed the rerank threshold."""
     top: list[str] = field(default_factory=list)
     retrieval_s: float = 0.0
+    rerank_s: float = 0.0
+    """Part of ``retrieval_s``; on CPU, the cross-encoder dominates."""
+    candidate_chars: int = 0
+    """Text length of all reranked candidates: cross-encoder cost grows with it."""
+    candidate_types: dict[str, int] = field(default_factory=dict)
+    """Reranked candidates per document type."""
     answer: str | None = None
     refused: bool | None = None
     values_ok: bool | None = None
@@ -69,8 +75,12 @@ def evaluate_item(
 ) -> ItemResult:
     result = ItemResult(item.id, item.category, item.language, item.answerable)
     start = time.perf_counter()
-    ranked = service.rank(item.question, Filters())
+    timings = Timings()
+    ranked = service.rank(item.question, Filters(), timings)
     result.retrieval_s = time.perf_counter() - start
+    result.rerank_s = timings.rerank_s
+    result.candidate_chars = sum(len(h.text) for h in ranked)
+    result.candidate_types = dict(Counter(str(h.payload.get("doc_type")) for h in ranked))
     relevance = [any(matches(h.payload, g) for g in item.gold_sources) for h in ranked]
     if item.gold_sources:
         result.rank = metrics.first_hit_rank(relevance)
@@ -134,6 +144,8 @@ def summarize(results: list[ItemResult]) -> dict[str, Any]:
         ),
         "retrieval_p50_s": metrics.percentile([r.retrieval_s for r in results], 50),
         "retrieval_p95_s": metrics.percentile([r.retrieval_s for r in results], 95),
+        "rerank_p50_s": metrics.percentile([r.rerank_s for r in results], 50),
+        "candidate_chars_p50": metrics.percentile([r.candidate_chars for r in results], 50),
         "by_category": {},
     }
     for category in sorted({r.category for r in results}):
