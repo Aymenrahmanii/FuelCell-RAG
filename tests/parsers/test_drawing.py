@@ -15,11 +15,13 @@ from fcrag.models import Element, SourceFile
 from fcrag.truth import SystemTruth
 
 
-def _render(systems: dict[str, SystemTruth], code: str, out: Path, version: int = -1) -> Path:
-    spec = gen.DRAWINGS[code][version]
+def _render(systems: dict[str, SystemTruth], spec: gen.Drawing, out: Path) -> Path:
     path = out / f"{spec.doc_id}_v{spec.version}.pdf"
-    gen.render_pdf(systems[code], spec, path)
+    gen.render_pdf(systems[spec.code], spec, path)
     return path
+
+
+VECTOR = [d for drawings in gen.DRAWINGS.values() for d in drawings if not d.raster]
 
 
 def _source(path: Path, language: str = "en") -> SourceFile:
@@ -47,13 +49,12 @@ def _expected(
     return names, lines
 
 
-@pytest.mark.parametrize(("code", "version"), [("A", 0), ("A", 1), ("B", 0)])
+@pytest.mark.parametrize("spec", VECTOR, ids=lambda d: f"{d.doc_id}_v{d.version}")
 def test_text_layer_reads_the_whole_sheet(
-    systems: dict[str, SystemTruth], tmp_path: Path, code: str, version: int
+    systems: dict[str, SystemTruth], tmp_path: Path, spec: gen.Drawing
 ) -> None:
-    spec = gen.DRAWINGS[code][version]
-    summary, block = _parse(_source(_render(systems, code, tmp_path, version), spec.language))
-    names, lines = _expected(systems[code], spec)
+    summary, block = _parse(_source(_render(systems, spec, tmp_path), spec.language))
+    names, lines = _expected(systems[spec.code], spec)
     assert summary.data is not None and summary.data["text_source"] == "pdf"
     assert {c["tag"]: c["name"] for c in summary.data["components"]} == names
     assert summary.data["lines"] == lines
@@ -65,7 +66,7 @@ def test_text_layer_reads_the_whole_sheet(
 
 
 def test_element_text(systems: dict[str, SystemTruth], tmp_path: Path) -> None:
-    summary, block = _parse(_source(_render(systems, "A", tmp_path)))
+    summary, block = _parse(_source(_render(systems, gen.schematic("A"), tmp_path)))
     assert summary.content.startswith(
         "Drawing DWG-A-0001 rev B, sheet 1/1: System A – fuel cell system schematic."
     )
@@ -80,7 +81,7 @@ def test_element_text(systems: dict[str, SystemTruth], tmp_path: Path) -> None:
 
 
 def test_german_element_text(systems: dict[str, SystemTruth], tmp_path: Path) -> None:
-    summary, block = _parse(_source(_render(systems, "B", tmp_path), "de"))
+    summary, block = _parse(_source(_render(systems, gen.schematic("B"), tmp_path), "de"))
     assert summary.content.startswith("Zeichnung DWG-B-0001 Index A, Blatt 1/1:")
     assert (
         "- L02 Luft von B-CMP (Elektrischer Turboverdichter (je Modul)) nach B-HUM"
@@ -91,7 +92,7 @@ def test_german_element_text(systems: dict[str, SystemTruth], tmp_path: Path) ->
 
 def test_hidden_labels_are_not_names(systems: dict[str, SystemTruth], tmp_path: Path) -> None:
     """Line L03 runs under the bypass valve; its label is covered but still in the text layer."""
-    summary, _ = _parse(_source(_render(systems, "A", tmp_path)))
+    summary, _ = _parse(_source(_render(systems, gen.schematic("A"), tmp_path)))
     assert summary.data is not None
     names = {c["tag"]: c["name"] for c in summary.data["components"]}
     assert names["A-BPV"] == "Humidifier bypass valve"
@@ -103,7 +104,7 @@ def test_image_goes_through_ocr(
     """The raster path, with OCR replaced by the vector text scaled to pixels and shuffled."""
     import pypdfium2 as pdfium
 
-    pdf = pdfium.PdfDocument(str(_render(systems, "C", tmp_path)))
+    pdf = pdfium.PdfDocument(str(_render(systems, gen.schematic("C"), tmp_path)))
     vector = drawing.pdf_segments(pdf[0])
     pdf.close()
     scale = gen.RASTER_DPI / 72
@@ -112,7 +113,7 @@ def test_image_goes_through_ocr(
     random.Random(0).shuffle(boxes)
     monkeypatch.setattr(drawing, "ocr_segments", lambda image: boxes)
 
-    out = gen.build_drawing(systems["C"], gen.DRAWINGS["C"][0], tmp_path)
+    out = gen.build_drawing(systems["C"], gen.schematic("C"), tmp_path)
     assert out.file.endswith(".png") and not (tmp_path / "dwg-schematic-c.pdf").exists()
     sf = SourceFile(
         path=tmp_path / out.file, sha256="0" * 64, mime_type="image/png", doc_id=out.doc_id,
@@ -120,7 +121,7 @@ def test_image_goes_through_ocr(
     )  # fmt: skip
     assert isinstance(parser_for(sf), drawing.DrawingParser)
     summary, _ = _parse(sf)
-    names, lines = _expected(systems["C"], gen.DRAWINGS["C"][0])
+    names, lines = _expected(systems["C"], gen.schematic("C"))
     assert summary.data is not None and summary.data["text_source"] == "ocr"
     assert {c["tag"]: c["name"] for c in summary.data["components"]} == names
     assert summary.data["lines"] == lines
@@ -128,13 +129,13 @@ def test_image_goes_through_ocr(
 
 def test_real_ocr(systems: dict[str, SystemTruth], tmp_path: Path) -> None:
     pytest.importorskip("rapidocr")
-    out = gen.build_drawing(systems["C"], gen.DRAWINGS["C"][0], tmp_path)
+    out = gen.build_drawing(systems["C"], gen.schematic("C"), tmp_path)
     sf = SourceFile(
         path=tmp_path / out.file, sha256="0" * 64, mime_type="image/png", doc_id=out.doc_id,
         doc_type="drawing", language="en",
     )  # fmt: skip
     summary, _ = _parse(sf)
-    _, lines = _expected(systems["C"], gen.DRAWINGS["C"][0])
+    _, lines = _expected(systems["C"], gen.schematic("C"))
     assert summary.data is not None and summary.data["lines"] == lines
 
 
@@ -177,7 +178,7 @@ def test_vision_model_description_is_marked(
 
     monkeypatch.setattr(litellm, "completion", completion)
     monkeypatch.setattr(drawing, "get_settings", lambda: _settings(drawing_vlm=True))
-    elements = _parse(_source(_render(systems, "A", tmp_path)))
+    elements = _parse(_source(_render(systems, gen.schematic("A"), tmp_path)))
     assert len(elements) == 3
     vlm = elements[2]
     assert vlm.data == {"confidence": "low", "model": "gemini/gemini-3.5-flash"}
@@ -203,4 +204,4 @@ def test_restricted_mode_never_sends_drawings_out(
     monkeypatch.setattr(litellm, "completion", completion)
     restricted = _settings(drawing_vlm=True, restricted_mode=True)
     monkeypatch.setattr(drawing, "get_settings", lambda: restricted)
-    assert len(_parse(_source(_render(systems, "A", tmp_path)))) == 2
+    assert len(_parse(_source(_render(systems, gen.schematic("A"), tmp_path)))) == 2

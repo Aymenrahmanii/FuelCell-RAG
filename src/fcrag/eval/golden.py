@@ -314,20 +314,31 @@ def cad_items(systems: dict[str, SystemTruth]) -> list[GoldenItem]:
 
 
 def drawing_items(systems: dict[str, SystemTruth]) -> list[GoldenItem]:
-    """Questions on the system schematics: title block, revision history, line list."""
-    from fcrag.datagen.drawing import DRAWINGS, lines
+    """Questions on the schematics: title block, revision history, line list, subsystem sheets."""
+    from fcrag.datagen.drawing import DRAWINGS, lines, schematic
 
     def line(code: str, line_id: str) -> Any:
-        drawing = DRAWINGS[code][-1]
-        return next(ln for ln in lines(systems[code], drawing) if ln.line_id == line_id)
+        return next(ln for ln in lines(systems[code], schematic(code)) if ln.line_id == line_id)
 
-    def dwg(code: str, version: int | None = None) -> dict[str, Any]:
-        gold: dict[str, Any] = {"doc_id": DRAWINGS[code][-1].doc_id}
+    def dwg(code: str, version: int | None = None, subsystem: str | None = None) -> dict[str, Any]:
+        drawing = next(d for d in DRAWINGS[code][::-1] if d.subsystem == subsystem)
+        gold: dict[str, Any] = {"doc_id": drawing.doc_id}
         if version is not None:
             gold["doc_version"] = version
         return gold
 
-    a = DRAWINGS["A"][-1]
+    def showing(code: str, line_id: str) -> list[dict[str, Any]]:
+        """Every current sheet that lists the line: the schematic and its subsystem sheet."""
+        current = [d for d in DRAWINGS[code] if d.subsystem] + [schematic(code)]
+        return [
+            dwg(code, subsystem=d.subsystem) for d in current
+            if any(ln.line_id == line_id for ln in lines(systems[code], d))
+        ]  # fmt: skip
+
+    def number(code: str, subsystem: str) -> str:
+        return next(d.drawing_no for d in DRAWINGS[code] if d.subsystem == subsystem)
+
+    a = schematic("A")
     l02_b, l08_c, l12_a = line("B", "L02"), line("C", "L08"), line("A", "L12")
     specs = [
         ("en", "A", "What is the drawing number and the current revision of the System A system schematic?",
@@ -338,13 +349,19 @@ def drawing_items(systems: dict[str, SystemTruth]) -> list[GoldenItem]:
          [dwg("A", a.version)]),
         ("de", "B", "Welche Komponente fördert laut Systemschema von System B die Luft zum Befeuchter?",
          f"Der elektrische Turboverdichter B-{l02_b.source} (Leitung {l02_b.line_id}).",
-         [f"B-{l02_b.source}"], [dwg("B")]),
+         [f"B-{l02_b.source}"], showing("B", l02_b.line_id)),
         ("en", "C", "In the System C schematic, which line carries recirculated hydrogen from the blower back to the stack?",
          f"Line {l08_c.line_id}, from C-{l08_c.source} to C-{l08_c.target}.", [l08_c.line_id],
-         [dwg("C")]),
+         showing("C", l08_c.line_id)),
         ("de", "A", f"Wohin führt die Leitung {l12_a.line_id} im Systemschema von System A?",
          f"Vom Stack A-{l12_a.source} zum Kühler A-{l12_a.target} ({l12_a.medium_de}).",
-         [f"A-{l12_a.target}"], [dwg("A")]),
+         [f"A-{l12_a.target}"], showing("A", l12_a.line_id)),
+        ("en", "C", "Which drawing shows the coolant loop of System C?",
+         f"{number('C', 'coolant')}, the System C coolant loop schematic.",
+         [number("C", "coolant")], [dwg("C", subsystem="coolant")]),
+        ("de", "B", "Welche Zeichnungsnummer hat das Schema des Anodenkreislaufs von System B?",
+         f"{number('B', 'anode')} (Schema Anodenkreislauf).", [number("B", "anode")],
+         [dwg("B", subsystem="anode")]),
     ]  # fmt: skip
     return [
         GoldenItem(
