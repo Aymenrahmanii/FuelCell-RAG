@@ -17,7 +17,10 @@ concurrency:
 jobs:
   retrieval:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # About 1 min per question on the CPU runner, almost all of it reranking; the run on
+    # 2026-10-29 took 59.7 min of the former 60. rerank_p50_s and candidate_chars_p50 in the
+    # printed summary show where the time goes.
+    timeout-minutes: 90
     services:
       qdrant:
         image: qdrant/qdrant:v1.20.0

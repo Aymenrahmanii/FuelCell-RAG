@@ -234,5 +234,6 @@ def test_eval_keeps_retrieval_metrics_when_the_llm_fails(
     )  # fmt: skip
     result = evaluate_item(service, item, settings, answers=True)
     assert result.rank == 1 and result.answer is None and "rate limit" in (result.error or "")
+    assert result.candidate_chars > 0 and sum(result.candidate_types.values()) >= 1
     summary = summarize([result])
     assert summary["recall@5"] == 1.0 and summary["errors"] == 1 and "answers" not in summary
