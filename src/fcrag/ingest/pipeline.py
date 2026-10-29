@@ -13,6 +13,7 @@ from typing import Literal
 from qdrant_client import QdrantClient
 from sqlalchemy import Engine, delete, func, select
 
+import fcrag.ingest.parsers.drawing
 import fcrag.ingest.parsers.excel
 import fcrag.ingest.parsers.pdf
 import fcrag.ingest.parsers.requirements

@@ -21,8 +21,11 @@ SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-ZÄÖÜ0-9])")
 
 
 def format_locator(locator: dict[str, Any]) -> str:
-    """Human-readable position: page, sheet and cells, requirement ID or CAD part."""
+    """Human-readable position: page, sheet and cells, requirement ID, CAD part or drawing."""
     parts = []
+    if "drawing_no" in locator:
+        rev = f" rev {locator['revision']}" if "revision" in locator else ""
+        parts.append(f"{locator['drawing_no']}{rev}")
     if "pages" in locator:
         parts.append(f"pp. {locator['pages'][0]}-{locator['pages'][-1]}")
     elif "page" in locator:
@@ -36,6 +39,8 @@ def format_locator(locator: dict[str, Any]) -> str:
         parts.append(str(locator["req_id"]))
     if "part_id" in locator:
         parts.append(f"part {locator['part_id']}")
+    if locator.get("source") == "vision_model":
+        parts.append("vision model description")
     return ", ".join(parts)
 
 

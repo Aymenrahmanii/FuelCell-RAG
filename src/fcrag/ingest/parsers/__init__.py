@@ -19,7 +19,11 @@ def release_models() -> None:
 
 
 def parser_for(file: SourceFile) -> Parser:
-    """Return the first registered parser that handles the file's MIME type or extension."""
+    """Return the parser claiming the file's document type (a PDF registered as a drawing),
+    else the first registered parser that handles its MIME type or extension."""
+    for parser in _REGISTRY:
+        if file.doc_type is not None and file.doc_type in getattr(parser, "doc_types", ()):
+            return parser
     extension = file.path.suffix.lower()
     for parser in _REGISTRY:
         if file.mime_type in parser.supported_types or extension in parser.supported_types:

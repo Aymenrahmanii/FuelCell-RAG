@@ -1,7 +1,8 @@
 name: Eval gate
 
-# Retrieval quality gate: ingest the generated corpus (Excel, requirements, STEP; no PDF
-# parsing on CPU), run the matching golden questions, fail on regression (eval/gate.yaml).
+# Retrieval quality gate: ingest the generated corpus (Excel, requirements, STEP, drawings; no
+# Docling PDF parsing on CPU), run the matching golden questions, fail on regression
+# (eval/gate.yaml).
 on:
   pull_request:
   push:
@@ -54,6 +55,11 @@ jobs:
       - name: Install (CPU torch)
         run: uv sync --locked --extra ml --extra cad
 
+      # OCR engine for the raster drawing. Stopgap until onnxruntime is in the ml extra and
+      # uv.lock (`uv add --optional ml onnxruntime`); `uv run` keeps it (inexact sync).
+      - name: Install OCR engine
+        run: uv pip install onnxruntime==1.30.0
+
       # Each step reports its error as an annotation, readable without opening the logs.
       - name: Migrate
         run: |
@@ -67,7 +73,7 @@ jobs:
 
       - name: Ingest
         run: |
-          uv run fcrag ingest --only "ps-*" --only "req-*" --only "cad-*" 2> err.log || {
+          uv run fcrag ingest --only "ps-*" --only "req-*" --only "cad-*" --only "dwg-*" 2> err.log || {
             echo "::error title=ingest::$(grep -v '%|' err.log | tail -c 900 | tr '\n' ' ')"; exit 1; }
 
       - name: Evaluate and gate

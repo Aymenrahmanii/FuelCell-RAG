@@ -22,6 +22,11 @@ def test_locators() -> None:
     assert format_locator({"page": 3, "row": 2}) == "p. 3, table row 2"
     assert format_locator({"req_id": "REQ-0142"}) == "REQ-0142"
     assert format_locator({"part_id": "BPP-02"}) == "part BPP-02"
+    drawing = {"page": 1, "drawing_no": "DWG-A-0001", "revision": "B"}
+    assert format_locator(drawing) == "DWG-A-0001 rev B, p. 1"
+    assert format_locator({**drawing, "source": "vision_model"}) == (
+        "DWG-A-0001 rev B, p. 1, vision model description"
+    )
     assert format_locator({}) == ""
 
 

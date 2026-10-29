@@ -2,8 +2,8 @@
 # minimum (or a "max" metric rises above it). Thresholds sit a few points under the last
 # accepted run, so noise passes but a real regression fails.
 #
-# CI ingests only the generated Excel, requirement and STEP files (no PDF parsing on CPU), so
-# it evaluates the question categories those documents answer.
+# CI ingests only the generated Excel, requirement, STEP and drawing files (no Docling PDF
+# parsing on CPU), so it evaluates the question categories those documents answer.
 categories: [parameter, cross_system, version_conflict, requirement_trace, drawing_step]
 min:
   recall@5: 0.80

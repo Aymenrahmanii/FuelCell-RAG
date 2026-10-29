@@ -54,6 +54,11 @@ class Settings(BaseSettings):
     pdf_table_mode: Literal["accurate", "fast"] = "accurate"
     pdf_ocr: bool = False
     """OCR in Docling. All public PDFs have a text layer; enable for scanned documents."""
+    drawing_vlm: bool = False
+    """Add a vision model's description of each drawing sheet (marked low confidence)."""
+    vlm_model: str = "gemini/gemini-3.5-flash"
+    local_vlm_model: str | None = None
+    """Vision model for restricted mode, e.g. ``ollama/qwen2.5vl:7b``; None skips the step."""
     max_attempts: int = 3
     chunk_strategy: Literal["section", "fixed"] = "section"
     chunk_max_tokens: int = 800
