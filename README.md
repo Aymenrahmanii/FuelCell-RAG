@@ -18,7 +18,8 @@ where each value appears, which gives exact gold labels for evaluation.
 
 Measured on the 60-question golden set (21 German) and the 51-document corpus
 (33 public PDFs and 18 generated files, about 5,000 chunks). Answers by `openai/gpt-oss-120b`
-on Groq's free tier, judged by `qwen/qwen3.8-27b` (a different model family).
+on Groq's free tier, judged by `qwen/qwen3.8-27b` (a different model family). The four system
+schematics and five drawing questions added since are not in these figures yet.
 
 | Metric | Result | Target |
 |---|---|---|
@@ -97,7 +98,9 @@ flowchart LR
 - **Parsing.** Docling for PDF layout, reading order, headings and tables (one fact per table
   row). openpyxl for messy Excel: merged cells, multi-row headers, several tables per sheet,
   units rows, hidden rows. ReqIF/DOCX/CSV requirements with parent and prose links. STEP
-  assembly trees with bounding boxes and volumes.
+  assembly trees with bounding boxes and volumes. Drawings (PDF or image): the text layer, or
+  RapidOCR for scans, read by position into components, line list, revision history and title
+  block; an optional vision model adds a description marked as low confidence.
 - **Parameters.** Table rows and sentences become records (system, component, key, value,
   unit, condition, source), normalised with pint. Questions naming a system and a parameter
   get these records as exact, citable sources.
@@ -161,7 +164,7 @@ The golden set ([`eval/golden_set.jsonl`](eval/golden_set.jsonl)) covers 8 categ
 | Version conflict | 3 | superseded values in the truth |
 | Requirement trace | 6 | generated requirement trees |
 | Cross-document | 8 | requirements vs parameter sheets, incl. deliberate contradictions |
-| Drawing / STEP | 6 | STEP assemblies and BOM sheets |
+| Drawing / STEP | 11 | STEP assemblies, BOM sheets, system schematics (title block, revisions, line list) |
 | Unanswerable | 7 | hand-written |
 
 Gold sources are recorded by the generators while they write each document, so they stay
@@ -197,7 +200,7 @@ request.
 
 ```
 src/fcrag/
-  ingest/        discover, parsers/ (pdf, excel, requirements, step), chunking, extraction,
+  ingest/        discover, parsers/ (pdf, excel, requirements, step, drawing), chunking, extraction,
                  embedding cache, pipeline, worker
   retrieval/     hybrid search, rerank, parameter routing
   generation/    answer service, prompts, citation checks

@@ -64,8 +64,13 @@ REQUIREMENT_META = ("req_id", "parent", "links", "status", "type", "verification
 
 
 def _meta(element: Element) -> dict[str, Any]:
-    """Structured fields worth keeping in the payload: requirement trace links and status."""
-    if element.kind != "requirement" or not element.data:
+    """Structured fields worth keeping in the payload: requirement trace links and status, and
+    whether a drawing description came from a vision model."""
+    if not element.data:
+        return {}
+    if element.kind == "drawing":
+        return {"confidence": element.data["confidence"]} if "confidence" in element.data else {}
+    if element.kind != "requirement":
         return {}
     return {k: element.data[k] for k in REQUIREMENT_META if element.data.get(k)}
 

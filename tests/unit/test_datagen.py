@@ -26,8 +26,8 @@ def test_manifest_lists_every_file(corpus: Path) -> None:
     assert files == on_disk
     doc_types = {e["doc_type"] for e in manifest["files"]}
     # STEP files ("cad") need the optional CadQuery extra
-    assert {"datasheet", "parameter_sheet", "requirements"} <= doc_types
-    assert doc_types <= {"datasheet", "parameter_sheet", "requirements", "cad"}
+    assert {"datasheet", "parameter_sheet", "requirements", "drawing"} <= doc_types
+    assert doc_types <= {"datasheet", "parameter_sheet", "requirements", "drawing", "cad"}
     assert all(e["licence"].startswith("Synthetic") for e in manifest["files"])
 
 

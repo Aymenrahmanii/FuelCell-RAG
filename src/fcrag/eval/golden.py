@@ -313,6 +313,49 @@ def cad_items(systems: dict[str, SystemTruth]) -> list[GoldenItem]:
     ]  # fmt: skip
 
 
+def drawing_items(systems: dict[str, SystemTruth]) -> list[GoldenItem]:
+    """Questions on the system schematics: title block, revision history, line list."""
+    from fcrag.datagen.drawing import DRAWINGS, lines
+
+    def line(code: str, line_id: str) -> Any:
+        drawing = DRAWINGS[code][-1]
+        return next(ln for ln in lines(systems[code], drawing) if ln.line_id == line_id)
+
+    def dwg(code: str, version: int | None = None) -> dict[str, Any]:
+        gold: dict[str, Any] = {"doc_id": DRAWINGS[code][-1].doc_id}
+        if version is not None:
+            gold["doc_version"] = version
+        return gold
+
+    a = DRAWINGS["A"][-1]
+    l02_b, l08_c, l12_a = line("B", "L02"), line("C", "L08"), line("A", "L12")
+    specs = [
+        ("en", "A", "What is the drawing number and the current revision of the System A system schematic?",
+         f"{a.drawing_no}, revision {a.revision} ({a.revisions[-1].date}).", [a.drawing_no],
+         [dwg("A", a.version)]),
+        ("en", "A", f"What changed in revision {a.revision} of the System A schematic?",
+         "The humidifier bypass valve A-BPV was added, with lines L14 and L15.", ["A-BPV"],
+         [dwg("A", a.version)]),
+        ("de", "B", "Welche Komponente fördert laut Systemschema von System B die Luft zum Befeuchter?",
+         f"Der elektrische Turboverdichter B-{l02_b.source} (Leitung {l02_b.line_id}).",
+         [f"B-{l02_b.source}"], [dwg("B")]),
+        ("en", "C", "In the System C schematic, which line carries recirculated hydrogen from the blower back to the stack?",
+         f"Line {l08_c.line_id}, from C-{l08_c.source} to C-{l08_c.target}.", [l08_c.line_id],
+         [dwg("C")]),
+        ("de", "A", f"Wohin führt die Leitung {l12_a.line_id} im Systemschema von System A?",
+         f"Vom Stack A-{l12_a.source} zum Kühler A-{l12_a.target} ({l12_a.medium_de}).",
+         [f"A-{l12_a.target}"], [dwg("A")]),
+    ]  # fmt: skip
+    return [
+        GoldenItem(
+            id=f"dwg-{n:02d}", category="drawing_step", language=lang, question=q,
+            reference_answer=ref, systems=[systems[code].system], expected_terms=terms,
+            gold_sources=gold,
+        )
+        for n, (lang, code, q, ref, terms, gold) in enumerate(specs, 1)
+    ]  # fmt: skip
+
+
 def _consistent(f: Fact) -> bool:
     """False for facts that deliberately contradict the truth (conflicting requirements)."""
     from fcrag.datagen.common import convert
@@ -346,6 +389,7 @@ def build_golden(systems_dir: Path, public_path: Path) -> list[GoldenItem]:
     derived = (
         builder.parameter_items() + builder.cross_system_items() + builder.version_items()
         + builder.trace_items() + builder.cross_doc_items() + cad_items(systems)
+        + drawing_items(systems)
     )  # fmt: skip
     return (
         [i for i in public if i.category == "fact_text"]
