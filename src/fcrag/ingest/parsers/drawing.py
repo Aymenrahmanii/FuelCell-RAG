@@ -438,7 +438,7 @@ def describe_with_vlm(image: "Image", model: str, context: str, language: str) -
     try:
         response: Any = litellm.completion(
             model=model, messages=messages, temperature=0,
-            timeout=get_settings().llm_timeout_s, num_retries=1,
+            timeout=get_settings().llm_timeout_s,
         )  # fmt: skip
         text = response.choices[0].message.content
         return str(text).strip() or None
