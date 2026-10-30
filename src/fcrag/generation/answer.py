@@ -166,6 +166,16 @@ class RagService:
             return []
         return [Source.from_parameter(h) for h in self.params.lookup(route.systems, route.keys)]
 
+    def scope(self, question: str, filters: Filters) -> Filters:
+        """Limit retrieval to the systems a question names, unless the caller chose systems.
+
+        "Is the System C requirement consistent with the parameter list?" otherwise ranks
+        System A's pump datasheet above the System C requirement."""
+        if filters.systems or filters.named_systems or self.vocabulary is None:
+            return filters
+        named = detect(question, self.vocabulary).systems
+        return replace(filters, named_systems=named) if named else filters
+
     def rank(
         self,
         question: str,
@@ -178,6 +188,7 @@ class RagService:
         """All hybrid-search candidates, reranked, best first (no cut-off, no threshold).
         Search and rerank times add up in ``timings`` across calls."""
         t = timings or Timings()
+        filters = self.scope(question, filters)
         if query is None:
             start = time.perf_counter()
             query = self.embedder.embed([question], max_tokens=QUERY_MAX_TOKENS)[0]

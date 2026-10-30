@@ -159,6 +159,41 @@ def test_system_filter(
     assert service.retrieve("coolant outlet temperature", Filters(systems=["System B"]))
 
 
+def test_question_scopes_retrieval_to_named_systems(
+    pipeline: Pipeline, settings: Settings, client: QdrantClient, tmp_path: Path, repo_root: Path
+) -> None:
+    """Another system's documents drop out; documents of no system (public reports) stay."""
+    from fcrag.ingest.extract_params import Vocabulary
+
+    b = source(tmp_path / "b.txt", DATASHEET_V1)
+    (tmp_path / "a").mkdir()
+    (tmp_path / "r").mkdir()
+    # Different text per file: chunk IDs come from the file hash
+    a = source(tmp_path / "a" / "a.txt", DATASHEET_V1 + "\nStack A.").model_copy(
+        update={"doc_id": "ds-stack-a", "system": "System A"}
+    )
+    report = source(tmp_path / "r" / "r.txt", DATASHEET_V1 + "\nReport.").model_copy(
+        update={"doc_id": "report", "system": None, "doc_type": "report"}
+    )
+    pipeline.run([b, a, report])
+    vocab = Vocabulary.from_truth(
+        repo_root / "data_gen/systems", repo_root / "data_gen/synonyms.yaml"
+    )
+    service = RagService(
+        settings, FakeEmbedder(), OverlapReranker(), client, None, vocabulary=vocab
+    )
+
+    def docs(question: str, filters: Filters | None = None) -> set[str]:
+        return {h.payload["doc_id"] for h in service.rank(question, filters or Filters())}
+
+    assert docs("coolant outlet temperature of System B") == {"ds-stack-b", "report"}
+    assert docs("coolant outlet temperature") == {"ds-stack-a", "ds-stack-b", "report"}
+    # A caller's own system filter wins over the question
+    assert docs("System B coolant outlet temperature", Filters(systems=["System A"])) == {
+        "ds-stack-a"
+    }
+
+
 def test_routing_detects_systems_and_parameters(repo_root: Path) -> None:
     from fcrag.ingest.extract_params import Vocabulary
     from fcrag.retrieval.route import detect
@@ -169,6 +204,8 @@ def test_routing_detects_systems_and_parameters(repo_root: Path) -> None:
     route = detect("Vergleiche die Membrandicke der Stacks von System A, B und C.", vocab)
     assert route.systems == ["System A", "System B", "System C"]
     assert route.keys == ["membrane_thickness"]
+    route = detect("Vergleiche die Systeme A und C.", vocab)
+    assert route.systems == ["System A", "System C"]
     route = detect("What is the maximum coolant outlet temperature of System B?", vocab)
     assert route.keys == ["coolant_outlet_temperature_max"] and route.is_parameter_query
     assert not detect("What causes membrane drying?", vocab).is_parameter_query

@@ -16,8 +16,9 @@ from fcrag.db.session import session_scope
 from fcrag.ingest.extract_params import Vocabulary, normalise_label
 
 SYSTEMS = re.compile(
-    r"\bSystems?\s+([A-Z](?:\s*(?:,|and|und|or|oder|&|/)\s*(?:System\s+)?[A-Z])*)\b"
+    r"\bSystem(?:s|e)?\s+([A-Z](?:\s*(?:,|and|und|or|oder|&|/)\s*(?:System\s+)?[A-Z])*)\b"
 )
+"""``System B``, ``Systems A and C``, ``Systeme A und C``."""
 MAX_RECORDS = 6
 
 
