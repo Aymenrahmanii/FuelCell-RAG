@@ -17,6 +17,9 @@ class Filters:
     """Off by default: the answer should show conflicting versions, labelled, not hide them."""
     groups: list[str] | None = None
     """The caller's access groups. Documents without ``allowed_groups`` are visible to everyone."""
+    named_systems: list[str] = field(default_factory=list)
+    """Systems the question names. Unlike ``systems``, documents that belong to no system (public
+    reports) stay in: only other systems' documents are dropped."""
 
 
 @dataclass
@@ -38,6 +41,17 @@ def build_filter(filters: Filters) -> models.Filter | None:
     if filters.doc_types:
         must.append(
             models.FieldCondition(key="doc_type", match=models.MatchAny(any=filters.doc_types))
+        )
+    if filters.named_systems:
+        must.append(
+            models.Filter(
+                should=[
+                    models.FieldCondition(
+                        key="system", match=models.MatchAny(any=filters.named_systems)
+                    ),
+                    models.IsEmptyCondition(is_empty=models.PayloadField(key="system")),
+                ]
+            )
         )
     if filters.latest_only:
         must.append(models.FieldCondition(key="is_latest", match=models.MatchValue(value=True)))
