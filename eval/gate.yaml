@@ -3,7 +3,8 @@
 # accepted run, so noise passes but a real regression fails.
 #
 # CI ingests only the generated Excel, requirement, STEP and drawing files (no Docling PDF
-# parsing on CPU), so it evaluates the question categories those documents answer.
+# parsing on CPU), so it evaluates the question categories those documents answer. CI reranks
+# 20 candidates per question (FCRAG_PREFETCH_LIMIT in the workflow), production 50.
 categories: [parameter, cross_system, version_conflict, requirement_trace, drawing_step]
 min:
   recall@5: 0.80

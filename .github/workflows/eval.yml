@@ -41,6 +41,10 @@ jobs:
       FCRAG_QDRANT_URL: http://localhost:6333
       FCRAG_SOURCE_DIRS: '["data/generated"]'
       FCRAG_EMBEDDING_BATCH_SIZE: "8"
+      # CI reranks the best 20 hybrid-search candidates instead of 50: reranking is ~99 % of
+      # CI time and grows with candidate text. On the 40 gate questions (2026-10-30) recall@5
+      # 1.00 and MRR 0.951 were identical at 50, 30 and 20. Production keeps 50.
+      FCRAG_PREFETCH_LIMIT: "20"
       HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
     steps:
       - uses: actions/checkout@v4
