@@ -16,29 +16,33 @@ where each value appears, which gives exact gold labels for evaluation.
 
 ## Results
 
-Measured on the 60-question golden set (21 German) and the 51-document corpus
-(33 public PDFs and 18 generated files, about 5,000 chunks). Answers by `openai/gpt-oss-120b`
-on Groq's free tier, judged by `qwen/qwen3.8-27b` (a different model family). Added since and
-not in these figures yet: 13 schematics, 16 component datasheets and 7 drawing questions. The
-generated corpus is now 47 files (44 without the optional STEP extra).
+Measured on the 67-question golden set (24 German) and the 80-document corpus (33 public
+PDFs and 47 generated files: datasheets, component datasheets, parameter sheets,
+requirements, schematics and STEP assemblies), run of 2026-10-30. Answers by
+`openai/gpt-oss-120b` on Groq's free tier (58 answers; 2 from the Gemini fallback, 1 error).
+Rows marked † come from the earlier 60-question run and were not re-measured.
 
 | Metric | Result | Target |
 |---|---|---|
-| Retrieval recall@5 / recall@10 / MRR | **0.925** / 0.943 / 0.840 | ≥ 0.85 |
-| Value accuracy (stated value and unit match the truth, any unit) | **0.947** | ≥ 0.85 |
-| Correct "not in the documents" answers / false refusals | **7 of 7** / 1 of 53 | ≥ 0.90 |
-| Citation precision (cited source is a gold source) | **0.914** | ≥ 0.90 |
-| Faithfulness, 67 claims (judge / second-opinion labels) | 0.931 / **0.877** | ≥ 0.90 |
+| Retrieval recall@5 / recall@10 / MRR | **0.917** / 0.950 / 0.847 | ≥ 0.85 |
+| Value accuracy (stated value and unit match the truth, any unit) | **0.946** | ≥ 0.85 |
+| Term accuracy (requirement IDs, part and drawing tags named in the answer) | **1.00** | – |
+| Correct "not in the documents" answers / false refusals | **7 of 7** / 1 of 59 | ≥ 0.90 |
+| Citation precision (cited source is a gold source) | **0.941** | ≥ 0.90 |
+| Faithfulness, 67 claims (judge / second-opinion labels) † | 0.931 / **0.877** | ≥ 0.90 |
 | Invalid citations (source numbers that do not exist) | 0 | 0 |
-| Parameter extraction recall / precision (610 facts, through Docling) | **99.5 % / 99.5 %** | – |
-| Ingestion throughput (laptop RTX 3050, 6 GB) | ~1,150 PDF pages/h | ≥ 1,000 |
-| Retrieval p50 / p95 · generation p95 | 1.4 s / 2.8 s · 4.8 s | end-to-end p95 < 6 s |
+| Parameter extraction recall / precision (610 facts, through Docling) † | **99.5 % / 99.5 %** | – |
+| Ingestion throughput (laptop RTX 3050, 6 GB) † | ~1,150 PDF pages/h | ≥ 1,000 |
+| Retrieval p50 / p95 · generation p95 | 2.1 s / 2.9 s · 4.8 s † | end-to-end p95 < 6 s |
+
+Generation p95 in this run was 23.8 s, but that includes waiting out Groq's free-tier limit of
+8,000 tokens per minute; the 4.8 s comes from the earlier run without rate limiting.
 
 Recall per category: parameter, cross-system, version conflict, requirement trace and
-drawing/STEP 1.00; public-document facts 0.92; cross-document 0.63. Cross-document is
-measured strictly: a conflict question only counts as found when the conflicting requirement
-is retrieved, which plain ranking often misses. The answer pipeline adds the best requirement
-chunks to such questions, and all three conflict questions are answered correctly.
+drawing/STEP 1.00; public-document facts 0.92; cross-document 0.50 (0.63 before the
+component datasheets were added). Cross-document is measured strictly: a conflict question
+only counts as found when the conflicting requirement is retrieved, which plain ranking
+often misses. The answer pipeline adds the best requirement chunks to such questions.
 
 Where it still fails (all visible in `eval/runs/`): a German question about an English slide
 deck (text-11) is refused because the German requirement documents outrank the English deck;
