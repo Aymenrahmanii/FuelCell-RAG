@@ -105,3 +105,25 @@ def test_agreement_with_a_named_labeller(tmp_path: Path) -> None:
     assert result["labeller"] == "claude" and result["labelled"] == 3
     assert result["judge_too_lenient"] == 1 and round(result["agreement"], 3) == 0.667
     assert agreement(path)["labelled"] == 0  # no human labels yet
+
+
+def test_rejudging_keeps_existing_labels(tmp_path: Path) -> None:
+    """A new judge prompt must be checkable against labels made for the old verdicts."""
+    from fcrag.eval.judge import Judgement
+
+    path = tmp_path / "run.judgements.jsonl"
+    old = [Judgement("q1", "Stack has 300 cells.", ["S1"], True, "ok"),
+           Judgement("q2", "It is the highest.", ["S1"], True, "ok")]  # fmt: skip
+    write_judgements(old, path)
+    rows = [json.loads(line) for line in path.open(encoding="utf-8")]
+    rows[0]["human"], rows[1]["claude"] = True, False
+    path.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+
+    new = [Judgement("q1", "Stack has 300 cells.", ["S1"], True, "ok"),
+           Judgement("q2", "It is the highest.", ["S1"], False, "comparison not cited"),
+           Judgement("q3", "A new claim.", ["S2"], True, "ok")]  # fmt: skip
+    write_judgements(new, path)
+    rows = [json.loads(line) for line in path.open(encoding="utf-8")]
+    assert rows[0]["human"] is True and rows[1]["claude"] is False
+    assert rows[1]["supported"] is False and rows[2]["human"] is None
+    assert agreement(path, "claude")["agreement"] == 1.0

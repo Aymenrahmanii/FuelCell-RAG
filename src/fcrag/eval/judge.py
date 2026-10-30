@@ -15,6 +15,7 @@ from typing import Any
 
 from fcrag.generation.citations import CITATION, SENTENCE_END
 
+PROMPT_VERSION = "judge-v2"
 PROMPT = """You check an engineering answer against its sources.
 
 Statement:
@@ -24,9 +25,17 @@ Sources cited by the statement:
 {sources}
 
 Is every fact in the statement (numbers, units, conditions, names) supported by these sources?
+Judge only against the sources shown here, never against other documents or general knowledge.
 Paraphrase and translation (English/German) are fine; a value or condition that is missing,
-different or invented is not.
+different or invented is not. Also not supported:
+- a comparison or superlative ("highest", "all", "only") unless these sources contain every
+  value it compares;
+- calling a value current or latest unless a source marked (latest) states it;
+- a description of a part or component (its function, side, material) that these sources do
+  not give; a tag or name alone does not support it.
 Reply with one line of JSON: {{"supported": true or false, "reason": "<at most 20 words>"}}"""
+
+JUDGEMENT_FIELDS = {"question_id", "statement", "cited", "supported", "reason"}
 
 JSON_OBJECT = re.compile(r"\{.*\}", re.DOTALL)
 THINK = re.compile(r"<think>.*?</think>", re.DOTALL)
@@ -140,9 +149,22 @@ def faithfulness(judgements: list[Judgement]) -> dict[str, Any]:
 
 
 def write_judgements(judgements: list[Judgement], path: Path) -> None:
+    """Write the judge's verdicts. Labels already in the file (``human``, or another labeller
+    such as ``claude``) are kept for every claim that is still there, so re-judging a run with
+    a new judge prompt can be checked against the same labels."""
+    labels: dict[tuple[str, str], dict[str, Any]] = {}
+    if path.exists():
+        for line in path.open(encoding="utf-8"):
+            if line.strip():
+                row = json.loads(line)
+                extra = {k: v for k, v in row.items() if k not in JUDGEMENT_FIELDS}
+                labels[(row["question_id"], row["statement"])] = extra
     with path.open("w", encoding="utf-8") as f:
         for j in judgements:
-            f.write(json.dumps(asdict(j), ensure_ascii=False) + "\n")
+            row = asdict(j)
+            kept = labels.get((j.question_id, j.statement), {})
+            row.update({k: v for k, v in kept.items() if v is not None or k not in row})
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
 
 
 def agreement(path: Path, field: str = "human") -> dict[str, Any]:

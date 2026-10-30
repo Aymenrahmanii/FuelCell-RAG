@@ -86,7 +86,13 @@ def _eval_judge(args: argparse.Namespace) -> None:
     import json
     from pathlib import Path
 
-    from fcrag.eval.judge import faithfulness, judge_run, litellm_judge, write_judgements
+    from fcrag.eval.judge import (
+        PROMPT_VERSION,
+        faithfulness,
+        judge_run,
+        litellm_judge,
+        write_judgements,
+    )
 
     get_settings()  # loads provider keys from .env
     path = Path(args.run)
@@ -94,7 +100,7 @@ def _eval_judge(args: argparse.Namespace) -> None:
     judgements = judge_run(run, litellm_judge(args.model), pause_s=args.pause)
     out = path.with_suffix(".judgements.jsonl")
     write_judgements(judgements, out)
-    summary = faithfulness(judgements) | {"judge_model": args.model}
+    summary = faithfulness(judgements) | {"judge_model": args.model, "judge_prompt": PROMPT_VERSION}
     run["summary"].setdefault("answers", {})["faithfulness"] = summary["faithfulness"]
     run["summary"]["judge"] = summary
     path.write_text(json.dumps(run, indent=2, ensure_ascii=False), encoding="utf-8")
