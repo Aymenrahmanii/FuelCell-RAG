@@ -116,6 +116,7 @@ def render(message: dict[str, Any], key: str) -> None:
         st.caption(
             f"retrieval {t['embed_s'] + t['search_s'] + t['rerank_s']:.1f}s · "
             f"generation {t['generate_s']:.1f}s · {result.get('model') or 'no LLM call'}"
+            + (" · cached" if result.get("cached") else "")
         )
         show_feedback(message, key)
 

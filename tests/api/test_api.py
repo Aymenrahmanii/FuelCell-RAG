@@ -176,3 +176,69 @@ def test_metrics_are_open_and_count_routes(
     assert metrics.ANSWERS.value(outcome="found") == before + 1
     assert 'fcrag_documents{status="indexed"} 1' in text  # read from the registry at scrape
     assert client.get("/documents").status_code == 401  # every other route still needs the key
+
+
+class FakeRedis:
+    def __init__(self, broken: bool = False) -> None:
+        self.data: dict[str, str] = {}
+        self.broken = broken
+
+    def get(self, key: str) -> str | None:
+        if self.broken:
+            raise ConnectionError("redis down")
+        return self.data.get(key)
+
+    def setex(self, key: str, ttl: int, value: str) -> None:
+        if self.broken:
+            raise ConnectionError("redis down")
+        self.data[key] = value
+
+
+class Counting:
+    model = "fake/counting"
+
+    def __init__(self) -> None:
+        self.calls = 0
+
+    def stream(self, messages: list[dict[str, str]]) -> Iterator[str]:
+        self.calls += 1
+        yield "It is 85 °C [S1]."
+
+
+def test_repeated_questions_are_answered_from_the_cache(client: TestClient) -> None:
+    from fcrag.generation.cache import RedisResponseCache
+
+    service = api.app.dependency_overrides[api.get_service]()
+    llm, version = Counting(), ["1"]
+    service.llm = llm
+    service.cache = RedisResponseCache(FakeRedis(), 60, lambda: version[0])
+    question = "What is the maximum coolant outlet temperature?"
+
+    first = client.post("/ask", json={"question": question}).json()
+    again = client.post(
+        "/ask", json={"question": "  what is the MAXIMUM coolant outlet temperature "}
+    )
+    assert llm.calls == 1 and first["cached"] is False
+    assert again.json()["cached"] is True and again.json()["answer"] == first["answer"]
+    with client.stream("POST", "/ask/stream", json={"question": question}) as response:
+        events = [json.loads(x[6:]) for x in response.iter_lines() if x.startswith("data: ")]
+    assert [e["type"] for e in events] == ["sources", "token", "done"] and llm.calls == 1
+
+    other = client.post("/ask", json={"question": question, "latest_only": True}).json()
+    assert other["cached"] is False and llm.calls == 2  # other filters, other key
+    history = [{"role": "user", "content": "Which stack?"}]
+    client.post("/ask", json={"question": question, "history": history})
+    assert llm.calls >= 3  # follow-ups bypass the cache
+    calls = llm.calls
+    version[0] = "2"  # a document was ingested
+    assert client.post("/ask", json={"question": question}).json()["cached"] is False
+    assert llm.calls == calls + 1
+
+
+def test_unreachable_cache_is_skipped(client: TestClient) -> None:
+    from fcrag.generation.cache import RedisResponseCache
+
+    service = api.app.dependency_overrides[api.get_service]()
+    service.cache = RedisResponseCache(FakeRedis(broken=True), 60, lambda: "1")
+    body = client.post("/ask", json=QUESTION).json()
+    assert body["answer"] == "It is 85 °C [S1]." and body["cached"] is False

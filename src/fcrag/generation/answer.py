@@ -18,6 +18,7 @@ from qdrant_client import QdrantClient
 from fcrag import metrics
 from fcrag.config import Settings, get_settings
 from fcrag.embedding import Embedder, Embedding
+from fcrag.generation.cache import ResponseCache
 from fcrag.generation.citations import check_citations, format_locator, normalise_citations
 from fcrag.generation.rewrite import Turn, rewrite
 from fcrag.ingest.extract_params import Vocabulary
@@ -140,7 +141,20 @@ class AnswerResult:
     timings: Timings = field(default_factory=Timings)
     search_question: str = ""
     """What retrieval used: the question, or its standalone rewrite for a follow-up."""
+    cached: bool = False
+    """Replayed from the response cache instead of computed."""
     trace_id: str | None = None
+
+
+def _replay(result: dict[str, Any]) -> Iterator[dict[str, Any]]:
+    """A cached answer as the events a computed one produces."""
+    result = {**result, "cached": True}
+    yield {
+        "type": "sources", "language": result["language"], "trace_id": result.get("trace_id"),
+        "search_question": result.get("search_question", ""), "sources": result["sources"],
+    }  # fmt: skip
+    yield {"type": "token", "text": result["answer"]}
+    yield {"type": "done", "result": result}
 
 
 def _record(timings: Timings, *, found: bool) -> None:
@@ -160,6 +174,7 @@ class RagService:
         llm: LLM | None,
         params: ParameterStore | None = None,
         vocabulary: Vocabulary | None = None,
+        cache: ResponseCache | None = None,
     ) -> None:
         self.settings = settings
         self.embedder = embedder
@@ -168,6 +183,7 @@ class RagService:
         self.llm = llm
         self.params = params
         self.vocabulary = vocabulary
+        self.cache = cache
 
     def parameter_sources(self, question: str) -> list[Source]:
         """Exact records from the parameters table when the question names system and parameter."""
@@ -266,8 +282,31 @@ class RagService:
         history: list[Turn] | None = None,
     ) -> Iterator[dict[str, Any]]:
         """Answer ``question``. With ``history`` (earlier turns of the chat), a follow-up is first
-        rewritten into a standalone question, which retrieval and the prompt then use."""
+        rewritten into a standalone question, which retrieval and the prompt then use.
+
+        Questions without history go through the response cache when one is configured: a hit
+        replays the stored answer as the same events, marked ``cached``."""
         filters = filters or Filters()
+        key = None
+        if self.cache is not None and not history:
+            key = self.cache.key(
+                question, filters, load_prompt()["version"], self.settings.active_llm_model
+            )
+            hit = self.cache.get(key) if key else None
+            if hit is not None:
+                metrics.RESPONSE_CACHE.inc(result="hit")
+                yield from _replay(hit)
+                return
+            if key:
+                metrics.RESPONSE_CACHE.inc(result="miss")
+        for event in self._stream(question, filters, history):
+            if key and self.cache is not None and event["type"] == "done":
+                self.cache.set(key, event["result"])
+            yield event
+
+    def _stream(
+        self, question: str, filters: Filters, history: list[Turn] | None
+    ) -> Iterator[dict[str, Any]]:
         prompt = load_prompt()
         language = detect_language(question)
         timings = Timings()
