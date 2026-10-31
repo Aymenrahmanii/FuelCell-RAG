@@ -255,6 +255,37 @@
           }
         }
       ]
+    },
+    {
+      "id": 9,
+      "title": "Response cache hit rate (1 h)",
+      "type": "stat",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 32
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(rate(fcrag_response_cache_total{result=\"hit\"}[1h])) / sum(rate(fcrag_response_cache_total[1h]))"
+        }
+      ]
     }
   ]
 }

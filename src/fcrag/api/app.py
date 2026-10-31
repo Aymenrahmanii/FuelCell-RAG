@@ -54,10 +54,24 @@ def get_service() -> RagService:
     from fcrag.ingest.extract_params import Vocabulary
     from fcrag.retrieval.route import SqlParameterStore
 
+    cache = None
+    if s.response_cache_ttl_s > 0:
+        from functools import partial
+
+        from redis import Redis
+
+        from fcrag.generation.cache import RedisResponseCache, registry_version
+
+        cache = RedisResponseCache(
+            Redis.from_url(s.redis_url.get_secret_value(), socket_timeout=0.5),
+            s.response_cache_ttl_s,
+            partial(registry_version, get_engine()),
+        )
     return RagService(
         s, get_embedder(), get_reranker(), get_client(), LiteLLMClient(s),
         params=SqlParameterStore(get_engine()),
         vocabulary=Vocabulary.from_truth(s.systems_dir, s.synonyms_path),
+        cache=cache,
     )  # fmt: skip
 
 

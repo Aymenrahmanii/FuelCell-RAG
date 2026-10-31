@@ -114,8 +114,11 @@ STAGE_LATENCY = Histogram(
 LLM_CALLS = Counter(
     "fcrag_llm_calls_total", "LLM calls by model and outcome: ok, retry, fallback, failed."
 )
+RESPONSE_CACHE = Counter(
+    "fcrag_response_cache_total", "Response cache lookups by result: hit or miss."
+)
 _REGISTRY: list[Counter | Histogram | Gauge] = [
-    HTTP_REQUESTS, HTTP_LATENCY, ANSWERS, STAGE_LATENCY, LLM_CALLS,
+    HTTP_REQUESTS, HTTP_LATENCY, ANSWERS, STAGE_LATENCY, LLM_CALLS, RESPONSE_CACHE,
 ]  # fmt: skip
 
 

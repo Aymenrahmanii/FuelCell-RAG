@@ -120,7 +120,10 @@ flowchart LR
 - **Operations.** Every answer is traced in Langfuse (rewrite, retrieval, generation). The API
   also serves Prometheus metrics at `/metrics`: requests and latency per route, error rate,
   time per answer stage, answers without a source, LLM retries and fallbacks, documents per
-  ingestion status and the ingestion queue. `docker compose --profile app --profile monitoring
+  ingestion status, the ingestion queue and the response cache hit rate. Repeated questions
+  are answered from a Redis cache (`FCRAG_RESPONSE_CACHE_TTL_S`, default one day, 0 = off)
+  keyed by the normalised question, filters, access groups, prompt, model and the document
+  registry, so any ingestion starts fresh; follow-ups are never cached. `docker compose --profile app --profile monitoring
   up -d` adds Prometheus (:9090) and Grafana (:3001) with an operations dashboard.
 
 Design decisions: [`docs/decisions/`](docs/decisions/).
