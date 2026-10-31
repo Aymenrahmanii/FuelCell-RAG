@@ -1,0 +1,119 @@
+[
+ {
+  "kind": "drawing",
+  "content": "Zeichnung DWG-B-0002 Index A, Blatt 1/1: System B – Schema Luftpfad.\nKomponenten:\n- B-CMP: Elektrischer Turboverdichter (je Modul)\n- B-AIR: Luftfilter\n- B-HUM: Membranbefeuchter (je Modul)\n- B-EXH: Abgasaustritt\n- B-STK: Brennstoffzellenstack (je Modul)\nLeitungsliste:\n- L01 Luft von B-AIR (Luftfilter) nach B-CMP (Elektrischer Turboverdichter (je Modul))\n- L02 Luft von B-CMP (Elektrischer Turboverdichter (je Modul)) nach B-HUM (Membranbefeuchter (je Modul))\n- L03 Befeuchtete Luft von B-HUM (Membranbefeuchter (je Modul)) nach B-STK (Brennstoffzellenstack (je Modul))\n- L04 Kathodenabgas von B-STK (Brennstoffzellenstack (je Modul)) nach B-HUM (Membranbefeuchter (je Modul))\n- L05 Kathodenabgas von B-HUM (Membranbefeuchter (je Modul)) nach B-EXH (Abgasaustritt)\nHinweise: Ein Modul dargestellt; das zweite Modul ist baugleich. Ohne Sensoren.",
+  "heading_path": [
+   "DWG-B-0002"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-B-0002",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System B – Schema Luftpfad",
+    "drawing_no": "DWG-B-0002",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "components": [
+    {
+     "tag": "B-CMP",
+     "name": "Elektrischer Turboverdichter (je Modul)"
+    },
+    {
+     "tag": "B-AIR",
+     "name": "Luftfilter"
+    },
+    {
+     "tag": "B-HUM",
+     "name": "Membranbefeuchter (je Modul)"
+    },
+    {
+     "tag": "B-EXH",
+     "name": "Abgasaustritt"
+    },
+    {
+     "tag": "B-STK",
+     "name": "Brennstoffzellenstack (je Modul)"
+    }
+   ],
+   "lines": [
+    {
+     "line": "L01",
+     "medium": "Luft",
+     "from": "B-AIR",
+     "to": "B-CMP"
+    },
+    {
+     "line": "L02",
+     "medium": "Luft",
+     "from": "B-CMP",
+     "to": "B-HUM"
+    },
+    {
+     "line": "L03",
+     "medium": "Befeuchtete Luft",
+     "from": "B-HUM",
+     "to": "B-STK"
+    },
+    {
+     "line": "L04",
+     "medium": "Kathodenabgas",
+     "from": "B-STK",
+     "to": "B-HUM"
+    },
+    {
+     "line": "L05",
+     "medium": "Kathodenabgas",
+     "from": "B-HUM",
+     "to": "B-EXH"
+    }
+   ],
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "Erstausgabe, Ausschnitt aus DWG-B-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ],
+   "text_source": "pdf"
+  }
+ },
+ {
+  "kind": "drawing",
+  "content": "Schriftfeld der Zeichnung DWG-B-0002: Benennung: System B – Schema Luftpfad; Zeichnungsnr.: DWG-B-0002; Index: A; Blatt: 1/1; Datum: 2026-08-03; Gezeichnet: FC-Design; Geprüft: FC-Systems.\nÄnderungshistorie:\n- Index A (2026-08-03, FC-Design): Erstausgabe, Ausschnitt aus DWG-B-0001",
+  "heading_path": [
+   "DWG-B-0002"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-B-0002",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System B – Schema Luftpfad",
+    "drawing_no": "DWG-B-0002",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "Erstausgabe, Ausschnitt aus DWG-B-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ]
+  }
+ }
+]

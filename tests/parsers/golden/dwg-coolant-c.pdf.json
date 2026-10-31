@@ -1,0 +1,99 @@
+[
+ {
+  "kind": "drawing",
+  "content": "Drawing DWG-C-0004 rev A, sheet 1/1: System C – coolant loop schematic.\nComponents:\n- C-STK: Fuel cell stack\n- C-CLP: Electric coolant pump\n- C-RAD: Heat exchanger (CHP circuit)\nLine list:\n- L11 Coolant from C-CLP (Electric coolant pump) to C-STK (Fuel cell stack)\n- L12 Coolant from C-STK (Fuel cell stack) to C-RAD (Heat exchanger (CHP circuit))\n- L13 Coolant from C-RAD (Heat exchanger (CHP circuit)) to C-CLP (Electric coolant pump)\nNotes: Schematic, not to scale. Sensors and check valves are not shown.",
+  "heading_path": [
+   "DWG-C-0004"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-C-0004",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System C – coolant loop schematic",
+    "drawing_no": "DWG-C-0004",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "components": [
+    {
+     "tag": "C-STK",
+     "name": "Fuel cell stack"
+    },
+    {
+     "tag": "C-CLP",
+     "name": "Electric coolant pump"
+    },
+    {
+     "tag": "C-RAD",
+     "name": "Heat exchanger (CHP circuit)"
+    }
+   ],
+   "lines": [
+    {
+     "line": "L11",
+     "medium": "Coolant",
+     "from": "C-CLP",
+     "to": "C-STK"
+    },
+    {
+     "line": "L12",
+     "medium": "Coolant",
+     "from": "C-STK",
+     "to": "C-RAD"
+    },
+    {
+     "line": "L13",
+     "medium": "Coolant",
+     "from": "C-RAD",
+     "to": "C-CLP"
+    }
+   ],
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "First issue, detail of DWG-C-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ],
+   "text_source": "pdf"
+  }
+ },
+ {
+  "kind": "drawing",
+  "content": "Title block of drawing DWG-C-0004: Title: System C – coolant loop schematic; Drawing no.: DWG-C-0004; Revision: A; Sheet: 1/1; Date: 2026-08-03; Drawn: FC-Design; Checked: FC-Systems.\nRevision history:\n- rev A (2026-08-03, FC-Design): First issue, detail of DWG-C-0001",
+  "heading_path": [
+   "DWG-C-0004"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-C-0004",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System C – coolant loop schematic",
+    "drawing_no": "DWG-C-0004",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "First issue, detail of DWG-C-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ]
+  }
+ }
+]

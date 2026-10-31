@@ -1,0 +1,135 @@
+[
+ {
+  "kind": "drawing",
+  "content": "Drawing DWG-A-0002 rev A, sheet 1/1: System A – air path schematic.\nComponents:\n- A-CMP: Electric turbo air compressor\n- A-AIR: Air inlet filter\n- A-HUM: Membrane humidifier\n- A-EXH: Exhaust outlet\n- A-BPV: Humidifier bypass valve\n- A-STK: Fuel cell stack\nLine list:\n- L01 Air from A-AIR (Air inlet filter) to A-CMP (Electric turbo air compressor)\n- L02 Air from A-CMP (Electric turbo air compressor) to A-HUM (Membrane humidifier)\n- L03 Humidified air from A-HUM (Membrane humidifier) to A-STK (Fuel cell stack)\n- L04 Cathode exhaust from A-STK (Fuel cell stack) to A-HUM (Membrane humidifier)\n- L05 Cathode exhaust from A-HUM (Membrane humidifier) to A-EXH (Exhaust outlet)\n- L14 Air from A-CMP (Electric turbo air compressor) to A-BPV (Humidifier bypass valve)\n- L15 Air from A-BPV (Humidifier bypass valve) to A-STK (Fuel cell stack)\nNotes: Schematic, not to scale. Sensors and check valves are not shown.",
+  "heading_path": [
+   "DWG-A-0002"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-A-0002",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System A – air path schematic",
+    "drawing_no": "DWG-A-0002",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "components": [
+    {
+     "tag": "A-CMP",
+     "name": "Electric turbo air compressor"
+    },
+    {
+     "tag": "A-AIR",
+     "name": "Air inlet filter"
+    },
+    {
+     "tag": "A-HUM",
+     "name": "Membrane humidifier"
+    },
+    {
+     "tag": "A-EXH",
+     "name": "Exhaust outlet"
+    },
+    {
+     "tag": "A-BPV",
+     "name": "Humidifier bypass valve"
+    },
+    {
+     "tag": "A-STK",
+     "name": "Fuel cell stack"
+    }
+   ],
+   "lines": [
+    {
+     "line": "L01",
+     "medium": "Air",
+     "from": "A-AIR",
+     "to": "A-CMP"
+    },
+    {
+     "line": "L02",
+     "medium": "Air",
+     "from": "A-CMP",
+     "to": "A-HUM"
+    },
+    {
+     "line": "L03",
+     "medium": "Humidified air",
+     "from": "A-HUM",
+     "to": "A-STK"
+    },
+    {
+     "line": "L04",
+     "medium": "Cathode exhaust",
+     "from": "A-STK",
+     "to": "A-HUM"
+    },
+    {
+     "line": "L05",
+     "medium": "Cathode exhaust",
+     "from": "A-HUM",
+     "to": "A-EXH"
+    },
+    {
+     "line": "L14",
+     "medium": "Air",
+     "from": "A-CMP",
+     "to": "A-BPV"
+    },
+    {
+     "line": "L15",
+     "medium": "Air",
+     "from": "A-BPV",
+     "to": "A-STK"
+    }
+   ],
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "First issue, detail of DWG-A-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ],
+   "text_source": "pdf"
+  }
+ },
+ {
+  "kind": "drawing",
+  "content": "Title block of drawing DWG-A-0002: Title: System A – air path schematic; Drawing no.: DWG-A-0002; Revision: A; Sheet: 1/1; Date: 2026-08-03; Drawn: FC-Design; Checked: FC-Systems.\nRevision history:\n- rev A (2026-08-03, FC-Design): First issue, detail of DWG-A-0001",
+  "heading_path": [
+   "DWG-A-0002"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-A-0002",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System A – air path schematic",
+    "drawing_no": "DWG-A-0002",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "First issue, detail of DWG-A-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ]
+  }
+ }
+]

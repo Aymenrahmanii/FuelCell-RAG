@@ -1,0 +1,742 @@
+[
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0001: Rated net electrical power\nThe fuel cell system shall achieve a rated net electrical power of 100 kW.\nType: performance; Status: approved; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0001"
+  },
+  "data": {
+   "req_id": "REQ-C-0001",
+   "title": "Rated net electrical power",
+   "text": "The fuel cell system shall achieve a rated net electrical power of 100 kW.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0002: Electrical efficiency at rated power\nThe fuel cell system shall achieve a electrical efficiency at rated power of 52 % (rated net power, LHV).\nType: performance; Status: approved; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0002"
+  },
+  "data": {
+   "req_id": "REQ-C-0002",
+   "title": "Electrical efficiency at rated power",
+   "text": "The fuel cell system shall achieve a electrical efficiency at rated power of 52 % (rated net power, LHV).",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0003: Peak electrical efficiency\nThe fuel cell system shall achieve a peak electrical efficiency of 57 % (40 % of rated net power, LHV).\nType: performance; Status: in review; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0003"
+  },
+  "data": {
+   "req_id": "REQ-C-0003",
+   "title": "Peak electrical efficiency",
+   "text": "The fuel cell system shall achieve a peak electrical efficiency of 57 % (40 % of rated net power, LHV).",
+   "type": "performance",
+   "status": "in review",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0004: Recoverable heat output at rated power\nThe fuel cell system shall have a recoverable heat output at rated power of 64 kW.\nType: performance; Status: draft; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0004"
+  },
+  "data": {
+   "req_id": "REQ-C-0004",
+   "title": "Recoverable heat output at rated power",
+   "text": "The fuel cell system shall have a recoverable heat output at rated power of 64 kW.",
+   "type": "performance",
+   "status": "draft",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0005: Total CHP efficiency\nThe fuel cell system shall have a total CHP efficiency of 85 % (rated net power, LHV).\nType: performance; Status: approved; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0005"
+  },
+  "data": {
+   "req_id": "REQ-C-0005",
+   "title": "Total CHP efficiency",
+   "text": "The fuel cell system shall have a total CHP efficiency of 85 % (rated net power, LHV).",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0006: Heat recovery water outlet temperature\nThe fuel cell system shall have a heat recovery water outlet temperature of 60 °C.\nType: operating limit; Status: approved; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0006"
+  },
+  "data": {
+   "req_id": "REQ-C-0006",
+   "title": "Heat recovery water outlet temperature",
+   "text": "The fuel cell system shall have a heat recovery water outlet temperature of 60 °C.",
+   "type": "operating limit",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0007: Hydrogen consumption at rated power\nThe fuel cell system shall have a hydrogen consumption at rated power of 1.6 g/s (rated net power, incl. purge losses).\nType: performance; Status: approved; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0007"
+  },
+  "data": {
+   "req_id": "REQ-C-0007",
+   "title": "Hydrogen consumption at rated power",
+   "text": "The fuel cell system shall have a hydrogen consumption at rated power of 1.6 g/s (rated net power, incl. purge losses).",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0008: Hydrogen supply pressure\nThe fuel cell system shall have a hydrogen supply pressure of 400 kPa (absolute, at system inlet).\nType: operating limit; Status: in review; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0008"
+  },
+  "data": {
+   "req_id": "REQ-C-0008",
+   "title": "Hydrogen supply pressure",
+   "text": "The fuel cell system shall have a hydrogen supply pressure of 400 kPa (absolute, at system inlet).",
+   "type": "operating limit",
+   "status": "in review",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0009: Minimum ambient temperature\nThe fuel cell system shall have a minimum ambient temperature of 5 °C (indoor installation).\nType: environmental; Status: draft; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0009"
+  },
+  "data": {
+   "req_id": "REQ-C-0009",
+   "title": "Minimum ambient temperature",
+   "text": "The fuel cell system shall have a minimum ambient temperature of 5 °C (indoor installation).",
+   "type": "environmental",
+   "status": "draft",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0010: Maximum ambient temperature\nThe fuel cell system shall not exceed a maximum ambient temperature of 40 °C.\nType: environmental; Status: approved; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0010"
+  },
+  "data": {
+   "req_id": "REQ-C-0010",
+   "title": "Maximum ambient temperature",
+   "text": "The fuel cell system shall not exceed a maximum ambient temperature of 40 °C.",
+   "type": "environmental",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0011: Design lifetime\nThe fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).\nType: performance; Status: approved; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0011"
+  },
+  "data": {
+   "req_id": "REQ-C-0011",
+   "title": "Design lifetime",
+   "text": "The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0012: System mass\nThe fuel cell system shall have a system mass of 950 kg (complete cabinet, dry).\nType: design; Status: approved; Verification: Analysis",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0012"
+  },
+  "data": {
+   "req_id": "REQ-C-0012",
+   "title": "System mass",
+   "text": "The fuel cell system shall have a system mass of 950 kg (complete cabinet, dry).",
+   "type": "design",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0013: Number of cells\nThe fuel cell stack shall have a number of cells of 380 –.\nType: performance; Status: in review; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0013"
+  },
+  "data": {
+   "req_id": "REQ-C-0013",
+   "title": "Number of cells",
+   "text": "The fuel cell stack shall have a number of cells of 380 –.",
+   "type": "performance",
+   "status": "in review",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0014: Active cell area\nThe fuel cell stack shall have a active cell area of 400 cm².\nType: performance; Status: draft; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0014"
+  },
+  "data": {
+   "req_id": "REQ-C-0014",
+   "title": "Active cell area",
+   "text": "The fuel cell stack shall have a active cell area of 400 cm².",
+   "type": "performance",
+   "status": "draft",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0015: Rated gross power\nThe fuel cell stack shall achieve a rated gross power of 107.9 kW.\nType: performance; Status: approved; Verification: Test; Refines: REQ-C-0001\nParent REQ-C-0001 (Rated net electrical power): The fuel cell system shall achieve a rated net electrical power of 100 kW.",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0015"
+  },
+  "data": {
+   "req_id": "REQ-C-0015",
+   "title": "Rated gross power",
+   "text": "The fuel cell stack shall achieve a rated gross power of 107.9 kW.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0001",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0016: Rated current\nThe fuel cell stack shall achieve a rated current of 400 A.\nType: performance; Status: approved; Verification: Test; Refines: REQ-C-0001\nParent REQ-C-0001 (Rated net electrical power): The fuel cell system shall achieve a rated net electrical power of 100 kW.",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0016"
+  },
+  "data": {
+   "req_id": "REQ-C-0016",
+   "title": "Rated current",
+   "text": "The fuel cell stack shall achieve a rated current of 400 A.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0001",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0017: Rated current density\nThe fuel cell stack shall achieve a rated current density of 1 A/cm².\nType: performance; Status: approved; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0017"
+  },
+  "data": {
+   "req_id": "REQ-C-0017",
+   "title": "Rated current density",
+   "text": "The fuel cell stack shall achieve a rated current density of 1 A/cm².",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0018: Cell voltage at rated current\nThe fuel cell stack shall have a cell voltage at rated current of 0.71 V.\nType: performance; Status: in review; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0018"
+  },
+  "data": {
+   "req_id": "REQ-C-0018",
+   "title": "Cell voltage at rated current",
+   "text": "The fuel cell stack shall have a cell voltage at rated current of 0.71 V.",
+   "type": "performance",
+   "status": "in review",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0019: Stack voltage at rated current\nThe fuel cell stack shall have a stack voltage at rated current of 269.8 V.\nType: performance; Status: draft; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0019"
+  },
+  "data": {
+   "req_id": "REQ-C-0019",
+   "title": "Stack voltage at rated current",
+   "text": "The fuel cell stack shall have a stack voltage at rated current of 269.8 V.",
+   "type": "performance",
+   "status": "draft",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0020: Open circuit voltage\nThe fuel cell stack shall have a open circuit voltage of 361 V.\nType: performance; Status: approved; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0020"
+  },
+  "data": {
+   "req_id": "REQ-C-0020",
+   "title": "Open circuit voltage",
+   "text": "The fuel cell stack shall have a open circuit voltage of 361 V.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0021: Nominal coolant outlet temperature\nThe fuel cell stack shall have a nominal coolant outlet temperature of 68 °C.\nType: operating limit; Status: approved; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0021"
+  },
+  "data": {
+   "req_id": "REQ-C-0021",
+   "title": "Nominal coolant outlet temperature",
+   "text": "The fuel cell stack shall have a nominal coolant outlet temperature of 68 °C.",
+   "type": "operating limit",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0022: Maximum coolant outlet temperature\nThe fuel cell stack shall not exceed a maximum coolant outlet temperature of 75 °C (continuous). See also REQ-C-0010.\nType: operating limit; Status: approved; Verification: Test; Refines: REQ-C-0011; Links: REQ-C-0010\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0022"
+  },
+  "data": {
+   "req_id": "REQ-C-0022",
+   "title": "Maximum coolant outlet temperature",
+   "text": "The fuel cell stack shall not exceed a maximum coolant outlet temperature of 75 °C (continuous). See also REQ-C-0010.",
+   "type": "operating limit",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": [
+    "REQ-C-0010"
+   ]
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0023: Maximum coolant temperature rise\nThe fuel cell stack shall not exceed a maximum coolant temperature rise of 6 K.\nType: performance; Status: in review; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0023"
+  },
+  "data": {
+   "req_id": "REQ-C-0023",
+   "title": "Maximum coolant temperature rise",
+   "text": "The fuel cell stack shall not exceed a maximum coolant temperature rise of 6 K.",
+   "type": "performance",
+   "status": "in review",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0024: Cathode inlet pressure at rated power\nThe fuel cell stack shall have a cathode inlet pressure at rated power of 130 kPa (absolute).\nType: operating limit; Status: draft; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0024"
+  },
+  "data": {
+   "req_id": "REQ-C-0024",
+   "title": "Cathode inlet pressure at rated power",
+   "text": "The fuel cell stack shall have a cathode inlet pressure at rated power of 130 kPa (absolute).",
+   "type": "operating limit",
+   "status": "draft",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0025: Anode inlet pressure at rated power\nThe fuel cell stack shall have a anode inlet pressure at rated power of 150 kPa (absolute).\nType: operating limit; Status: approved; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0025"
+  },
+  "data": {
+   "req_id": "REQ-C-0025",
+   "title": "Anode inlet pressure at rated power",
+   "text": "The fuel cell stack shall have a anode inlet pressure at rated power of 150 kPa (absolute).",
+   "type": "operating limit",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0026: Maximum anode-cathode differential pressure\nThe fuel cell stack shall not exceed a maximum anode-cathode differential pressure of 30 kPa.\nType: performance; Status: approved; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0026"
+  },
+  "data": {
+   "req_id": "REQ-C-0026",
+   "title": "Maximum anode-cathode differential pressure",
+   "text": "The fuel cell stack shall not exceed a maximum anode-cathode differential pressure of 30 kPa.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0027: Cathode stoichiometry\nThe fuel cell stack shall have a cathode stoichiometry of 2.2 – (rated current).\nType: performance; Status: approved; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0027"
+  },
+  "data": {
+   "req_id": "REQ-C-0027",
+   "title": "Cathode stoichiometry",
+   "text": "The fuel cell stack shall have a cathode stoichiometry of 2.2 – (rated current).",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0028: Anode stoichiometry\nThe fuel cell stack shall have a anode stoichiometry of 1.4 – (rated current).\nType: performance; Status: in review; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0028"
+  },
+  "data": {
+   "req_id": "REQ-C-0028",
+   "title": "Anode stoichiometry",
+   "text": "The fuel cell stack shall have a anode stoichiometry of 1.4 – (rated current).",
+   "type": "performance",
+   "status": "in review",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0029: Cathode inlet relative humidity\nThe fuel cell stack shall have a cathode inlet relative humidity of 80 % (rated current).\nType: performance; Status: draft; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0029"
+  },
+  "data": {
+   "req_id": "REQ-C-0029",
+   "title": "Cathode inlet relative humidity",
+   "text": "The fuel cell stack shall have a cathode inlet relative humidity of 80 % (rated current).",
+   "type": "performance",
+   "status": "draft",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0030: Cathode platinum loading\nThe fuel cell stack shall have a cathode platinum loading of 0.3 mg/cm².\nType: design; Status: approved; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0030"
+  },
+  "data": {
+   "req_id": "REQ-C-0030",
+   "title": "Cathode platinum loading",
+   "text": "The fuel cell stack shall have a cathode platinum loading of 0.3 mg/cm².",
+   "type": "design",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0031: Anode platinum loading\nThe fuel cell stack shall have a anode platinum loading of 0.05 mg/cm².\nType: design; Status: approved; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0031"
+  },
+  "data": {
+   "req_id": "REQ-C-0031",
+   "title": "Anode platinum loading",
+   "text": "The fuel cell stack shall have a anode platinum loading of 0.05 mg/cm².",
+   "type": "design",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0032: Membrane thickness\nThe fuel cell stack shall have a membrane thickness of 25 µm.\nType: design; Status: approved; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0032"
+  },
+  "data": {
+   "req_id": "REQ-C-0032",
+   "title": "Membrane thickness",
+   "text": "The fuel cell stack shall have a membrane thickness of 25 µm.",
+   "type": "design",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0033: Stack mass\nThe fuel cell stack shall have a stack mass of 75 kg.\nType: design; Status: in review; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0033"
+  },
+  "data": {
+   "req_id": "REQ-C-0033",
+   "title": "Stack mass",
+   "text": "The fuel cell stack shall have a stack mass of 75 kg.",
+   "type": "design",
+   "status": "in review",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0034: Stack volume\nThe fuel cell stack shall have a stack volume of 70 L.\nType: design; Status: draft; Verification: Test; Refines: REQ-C-0011\nParent REQ-C-0011 (Design lifetime): The fuel cell system shall achieve a design lifetime of 60,000 h (to 10 % rated power loss, continuous operation).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0034"
+  },
+  "data": {
+   "req_id": "REQ-C-0034",
+   "title": "Stack volume",
+   "text": "The fuel cell stack shall have a stack volume of 70 L.",
+   "type": "design",
+   "status": "draft",
+   "verification": "Test",
+   "parent": "REQ-C-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0035: Maximum air mass flow\nThe cathode air blower shall not exceed a maximum air mass flow of 130 g/s.\nType: performance; Status: approved; Verification: Test; Refines: REQ-C-0002\nParent REQ-C-0002 (Electrical efficiency at rated power): The fuel cell system shall achieve a electrical efficiency at rated power of 52 % (rated net power, LHV).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0035"
+  },
+  "data": {
+   "req_id": "REQ-C-0035",
+   "title": "Maximum air mass flow",
+   "text": "The cathode air blower shall not exceed a maximum air mass flow of 130 g/s.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0002",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0036: Maximum pressure ratio\nThe cathode air blower shall not exceed a maximum pressure ratio of 1.35 –.\nType: operating limit; Status: approved; Verification: Test; Refines: REQ-C-0002\nParent REQ-C-0002 (Electrical efficiency at rated power): The fuel cell system shall achieve a electrical efficiency at rated power of 52 % (rated net power, LHV).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0036"
+  },
+  "data": {
+   "req_id": "REQ-C-0036",
+   "title": "Maximum pressure ratio",
+   "text": "The cathode air blower shall not exceed a maximum pressure ratio of 1.35 –.",
+   "type": "operating limit",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0002",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0037: Electrical power at rated point\nThe cathode air blower shall have a electrical power at rated point of 4.5 kW.\nType: performance; Status: approved; Verification: Test; Refines: REQ-C-0002\nParent REQ-C-0002 (Electrical efficiency at rated power): The fuel cell system shall achieve a electrical efficiency at rated power of 52 % (rated net power, LHV).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0037"
+  },
+  "data": {
+   "req_id": "REQ-C-0037",
+   "title": "Electrical power at rated point",
+   "text": "The cathode air blower shall have a electrical power at rated point of 4.5 kW.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-C-0002",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0038: Dry-side pressure drop\nThe membrane humidifier shall have a dry-side pressure drop of 8 kPa (rated air flow).\nType: operating limit; Status: in review; Verification: Analysis; Refines: REQ-C-0002\nParent REQ-C-0002 (Electrical efficiency at rated power): The fuel cell system shall achieve a electrical efficiency at rated power of 52 % (rated net power, LHV).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0038"
+  },
+  "data": {
+   "req_id": "REQ-C-0038",
+   "title": "Dry-side pressure drop",
+   "text": "The membrane humidifier shall have a dry-side pressure drop of 8 kPa (rated air flow).",
+   "type": "operating limit",
+   "status": "in review",
+   "verification": "Analysis",
+   "parent": "REQ-C-0002",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0039: Rated coolant flow\nThe electric coolant pump shall have a rated coolant flow of 200 L/min.\nType: performance; Status: draft; Verification: Analysis; Refines: REQ-C-0002\nParent REQ-C-0002 (Electrical efficiency at rated power): The fuel cell system shall achieve a electrical efficiency at rated power of 52 % (rated net power, LHV).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0039"
+  },
+  "data": {
+   "req_id": "REQ-C-0039",
+   "title": "Rated coolant flow",
+   "text": "The electric coolant pump shall have a rated coolant flow of 200 L/min.",
+   "type": "performance",
+   "status": "draft",
+   "verification": "Analysis",
+   "parent": "REQ-C-0002",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0040: Rated electrical power\nThe electric coolant pump shall have a rated electrical power of 1.1 kW.\nType: performance; Status: approved; Verification: Analysis; Refines: REQ-C-0002\nParent REQ-C-0002 (Electrical efficiency at rated power): The fuel cell system shall achieve a electrical efficiency at rated power of 52 % (rated net power, LHV).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0040"
+  },
+  "data": {
+   "req_id": "REQ-C-0040",
+   "title": "Rated electrical power",
+   "text": "The electric coolant pump shall have a rated electrical power of 1.1 kW.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": "REQ-C-0002",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-C-0041: Rated electrical power\nThe hydrogen recirculation blower shall have a rated electrical power of 0.4 kW.\nType: performance; Status: approved; Verification: Analysis; Refines: REQ-C-0002\nParent REQ-C-0002 (Electrical efficiency at rated power): The fuel cell system shall achieve a electrical efficiency at rated power of 52 % (rated net power, LHV).",
+  "heading_path": [],
+  "locator": {
+   "req_id": "REQ-C-0041"
+  },
+  "data": {
+   "req_id": "REQ-C-0041",
+   "title": "Rated electrical power",
+   "text": "The hydrogen recirculation blower shall have a rated electrical power of 0.4 kW.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": "REQ-C-0002",
+   "links": []
+  }
+ }
+]

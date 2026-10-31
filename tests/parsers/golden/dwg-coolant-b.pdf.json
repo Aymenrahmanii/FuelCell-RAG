@@ -1,0 +1,99 @@
+[
+ {
+  "kind": "drawing",
+  "content": "Zeichnung DWG-B-0004 Index A, Blatt 1/1: System B – Schema Kühlkreislauf.\nKomponenten:\n- B-STK: Brennstoffzellenstack (je Modul)\n- B-CLP: Elektrische Kühlmittelpumpe (je Modul)\n- B-RAD: Kühler\nLeitungsliste:\n- L11 Kühlmittel von B-CLP (Elektrische Kühlmittelpumpe (je Modul)) nach B-STK (Brennstoffzellenstack (je Modul))\n- L12 Kühlmittel von B-STK (Brennstoffzellenstack (je Modul)) nach B-RAD (Kühler)\n- L13 Kühlmittel von B-RAD (Kühler) nach B-CLP (Elektrische Kühlmittelpumpe (je Modul))\nHinweise: Ein Modul dargestellt; das zweite Modul ist baugleich. Ohne Sensoren.",
+  "heading_path": [
+   "DWG-B-0004"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-B-0004",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System B – Schema Kühlkreislauf",
+    "drawing_no": "DWG-B-0004",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "components": [
+    {
+     "tag": "B-STK",
+     "name": "Brennstoffzellenstack (je Modul)"
+    },
+    {
+     "tag": "B-CLP",
+     "name": "Elektrische Kühlmittelpumpe (je Modul)"
+    },
+    {
+     "tag": "B-RAD",
+     "name": "Kühler"
+    }
+   ],
+   "lines": [
+    {
+     "line": "L11",
+     "medium": "Kühlmittel",
+     "from": "B-CLP",
+     "to": "B-STK"
+    },
+    {
+     "line": "L12",
+     "medium": "Kühlmittel",
+     "from": "B-STK",
+     "to": "B-RAD"
+    },
+    {
+     "line": "L13",
+     "medium": "Kühlmittel",
+     "from": "B-RAD",
+     "to": "B-CLP"
+    }
+   ],
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "Erstausgabe, Ausschnitt aus DWG-B-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ],
+   "text_source": "pdf"
+  }
+ },
+ {
+  "kind": "drawing",
+  "content": "Schriftfeld der Zeichnung DWG-B-0004: Benennung: System B – Schema Kühlkreislauf; Zeichnungsnr.: DWG-B-0004; Index: A; Blatt: 1/1; Datum: 2026-08-03; Gezeichnet: FC-Design; Geprüft: FC-Systems.\nÄnderungshistorie:\n- Index A (2026-08-03, FC-Design): Erstausgabe, Ausschnitt aus DWG-B-0001",
+  "heading_path": [
+   "DWG-B-0004"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-B-0004",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System B – Schema Kühlkreislauf",
+    "drawing_no": "DWG-B-0004",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "Erstausgabe, Ausschnitt aus DWG-B-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ]
+  }
+ }
+]

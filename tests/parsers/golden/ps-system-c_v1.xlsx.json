@@ -1,0 +1,1951 @@
+[
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-001 | Bezeichnung: Zellenanzahl | Wert: 380 | Einheit: –",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A6:E6"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-001",
+    "Zellenanzahl",
+    "380",
+    "–",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-002 | Bezeichnung: Aktive Zellfläche | Wert: 400 | Einheit: cm²",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A7:E7"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-002",
+    "Aktive Zellfläche",
+    "400",
+    "cm²",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-003 | Bezeichnung: Nenn-Bruttoleistung | Wert: 107.9 | Einheit: kW",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A8:E8"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-003",
+    "Nenn-Bruttoleistung",
+    "107.9",
+    "kW",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-004 | Bezeichnung: Nennstrom | Wert: 400 | Einheit: A",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A9:E9"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-004",
+    "Nennstrom",
+    "400",
+    "A",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-005 | Bezeichnung: Nennstromdichte | Wert: 1 | Einheit: A/cm²",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A10:E10"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-005",
+    "Nennstromdichte",
+    "1",
+    "A/cm²",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-006 | Bezeichnung: Zellspannung bei Nennstrom | Wert: 0.71 | Einheit: V",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A11:E11"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-006",
+    "Zellspannung bei Nennstrom",
+    "0.71",
+    "V",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-007 | Bezeichnung: Stackspannung bei Nennstrom | Wert: 269.8 | Einheit: V",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A12:E12"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-007",
+    "Stackspannung bei Nennstrom",
+    "269.8",
+    "V",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-008 | Bezeichnung: Leerlaufspannung | Wert: 361 | Einheit: V",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A13:E13"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-008",
+    "Leerlaufspannung",
+    "361",
+    "V",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-009 | Bezeichnung: Kathodeneintrittsdruck bei Nennleistung | Wert: 1.3 | Einheit: bar | Bedingung: absolute",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A14:E14"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-009",
+    "Kathodeneintrittsdruck bei Nennleistung",
+    "1.3",
+    "bar",
+    "absolute"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-010 | Bezeichnung: Anodeneintrittsdruck bei Nennleistung | Wert: 1.5 | Einheit: bar | Bedingung: absolute",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A15:E15"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-010",
+    "Anodeneintrittsdruck bei Nennleistung",
+    "1.5",
+    "bar",
+    "absolute"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-011 | Bezeichnung: Kathodenstöchiometrie | Wert: 2.2 | Einheit: – | Bedingung: rated current",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A16:E16"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-011",
+    "Kathodenstöchiometrie",
+    "2.2",
+    "–",
+    "rated current"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-012 | Bezeichnung: Anodenstöchiometrie | Wert: 1.4 | Einheit: – | Bedingung: rated current",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A17:E17"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-012",
+    "Anodenstöchiometrie",
+    "1.4",
+    "–",
+    "rated current"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-013 | Bezeichnung: Relative Feuchte am Kathodeneintritt | Wert: 80 | Einheit: % | Bedingung: rated current",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A18:E18"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-013",
+    "Relative Feuchte am Kathodeneintritt",
+    "80",
+    "%",
+    "rated current"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-014 | Bezeichnung: Platinbeladung Kathode | Wert: 0.3 | Einheit: mg/cm²",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A19:E19"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-014",
+    "Platinbeladung Kathode",
+    "0.3",
+    "mg/cm²",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-015 | Bezeichnung: Platinbeladung Anode | Wert: 0.05 | Einheit: mg/cm²",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A20:E20"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-015",
+    "Platinbeladung Anode",
+    "0.05",
+    "mg/cm²",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-016 | Bezeichnung: Membrandicke | Wert: 25 | Einheit: µm",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A21:E21"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-016",
+    "Membrandicke",
+    "25",
+    "µm",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-017 | Bezeichnung: Stackmasse | Wert: 75 | Einheit: kg",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A22:E22"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-017",
+    "Stackmasse",
+    "75",
+    "kg",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (C-STK) | ID: P-018 | Bezeichnung: Stackvolumen | Wert: 70 | Einheit: L",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A23:E23"
+  },
+  "data": {
+   "caption": "Fuel cell stack (C-STK)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-018",
+    "Stackvolumen",
+    "70",
+    "L",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "Fuel cell stack (C-STK)\n\n| Parameter / ID | Parameter / Bezeichnung | Betriebspunkt / Wert | Betriebspunkt / Einheit | Betriebspunkt / Bedingung |\n|---|---|---|---|---|\n| P-001 | Zellenanzahl | 380 | – |  |\n| P-002 | Aktive Zellfläche | 400 | cm² |  |\n| P-003 | Nenn-Bruttoleistung | 107.9 | kW |  |\n| P-004 | Nennstrom | 400 | A |  |\n| P-005 | Nennstromdichte | 1 | A/cm² |  |\n| P-006 | Zellspannung bei Nennstrom | 0.71 | V |  |\n| P-007 | Stackspannung bei Nennstrom | 269.8 | V |  |\n| P-008 | Leerlaufspannung | 361 | V |  |\n| P-009 | Kathodeneintrittsdruck bei Nennleistung | 1.3 | bar | absolute |\n| P-010 | Anodeneintrittsdruck bei Nennleistung | 1.5 | bar | absolute |\n| P-011 | Kathodenstöchiometrie | 2.2 | – | rated current |\n| P-012 | Anodenstöchiometrie | 1.4 | – | rated current |\n| P-013 | Relative Feuchte am Kathodeneintritt | 80 | % | rated current |\n| P-014 | Platinbeladung Kathode | 0.3 | mg/cm² |  |\n| P-015 | Platinbeladung Anode | 0.05 | mg/cm² |  |\n| P-016 | Membrandicke | 25 | µm |  |\n| P-017 | Stackmasse | 75 | kg |  |\n| P-018 | Stackvolumen | 70 | L |  |",
+  "heading_path": [
+   "Stack",
+   "System C – Parameterliste · Rev. 1",
+   "Fuel cell stack (C-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A4:E23"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Bezeichnung",
+    "Betriebspunkt / Wert",
+    "Betriebspunkt / Einheit",
+    "Betriebspunkt / Bedingung"
+   ],
+   "rows": [
+    [
+     "P-001",
+     "Zellenanzahl",
+     "380",
+     "–",
+     ""
+    ],
+    [
+     "P-002",
+     "Aktive Zellfläche",
+     "400",
+     "cm²",
+     ""
+    ],
+    [
+     "P-003",
+     "Nenn-Bruttoleistung",
+     "107.9",
+     "kW",
+     ""
+    ],
+    [
+     "P-004",
+     "Nennstrom",
+     "400",
+     "A",
+     ""
+    ],
+    [
+     "P-005",
+     "Nennstromdichte",
+     "1",
+     "A/cm²",
+     ""
+    ],
+    [
+     "P-006",
+     "Zellspannung bei Nennstrom",
+     "0.71",
+     "V",
+     ""
+    ],
+    [
+     "P-007",
+     "Stackspannung bei Nennstrom",
+     "269.8",
+     "V",
+     ""
+    ],
+    [
+     "P-008",
+     "Leerlaufspannung",
+     "361",
+     "V",
+     ""
+    ],
+    [
+     "P-009",
+     "Kathodeneintrittsdruck bei Nennleistung",
+     "1.3",
+     "bar",
+     "absolute"
+    ],
+    [
+     "P-010",
+     "Anodeneintrittsdruck bei Nennleistung",
+     "1.5",
+     "bar",
+     "absolute"
+    ],
+    [
+     "P-011",
+     "Kathodenstöchiometrie",
+     "2.2",
+     "–",
+     "rated current"
+    ],
+    [
+     "P-012",
+     "Anodenstöchiometrie",
+     "1.4",
+     "–",
+     "rated current"
+    ],
+    [
+     "P-013",
+     "Relative Feuchte am Kathodeneintritt",
+     "80",
+     "%",
+     "rated current"
+    ],
+    [
+     "P-014",
+     "Platinbeladung Kathode",
+     "0.3",
+     "mg/cm²",
+     ""
+    ],
+    [
+     "P-015",
+     "Platinbeladung Anode",
+     "0.05",
+     "mg/cm²",
+     ""
+    ],
+    [
+     "P-016",
+     "Membrandicke",
+     "25",
+     "µm",
+     ""
+    ],
+    [
+     "P-017",
+     "Stackmasse",
+     "75",
+     "kg",
+     ""
+    ],
+    [
+     "P-018",
+     "Stackvolumen",
+     "70",
+     "L",
+     ""
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Cathode air blower (C-BLW) | ID: P-019 | Bezeichnung: Maximaler Luftmassenstrom | Wert: 130 | Einheit: g/s",
+  "heading_path": [
+   "BoP",
+   "Cathode air blower (C-BLW)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A4:E4"
+  },
+  "data": {
+   "caption": "Cathode air blower (C-BLW)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-019",
+    "Maximaler Luftmassenstrom",
+    "130",
+    "g/s",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Cathode air blower (C-BLW) | ID: P-020 | Bezeichnung: Maximales Druckverhältnis | Wert: 1.35 | Einheit: –",
+  "heading_path": [
+   "BoP",
+   "Cathode air blower (C-BLW)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A5:E5"
+  },
+  "data": {
+   "caption": "Cathode air blower (C-BLW)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-020",
+    "Maximales Druckverhältnis",
+    "1.35",
+    "–",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Cathode air blower (C-BLW) | ID: P-021 | Bezeichnung: Elektrische Leistungsaufnahme im Nennpunkt | Wert: 4.5 | Einheit: kW",
+  "heading_path": [
+   "BoP",
+   "Cathode air blower (C-BLW)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A6:E6"
+  },
+  "data": {
+   "caption": "Cathode air blower (C-BLW)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-021",
+    "Elektrische Leistungsaufnahme im Nennpunkt",
+    "4.5",
+    "kW",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "Cathode air blower (C-BLW)\n\n| Parameter / ID | Parameter / Bezeichnung | Betriebspunkt / Wert | Betriebspunkt / Einheit | Betriebspunkt / Bedingung |\n|---|---|---|---|---|\n| P-019 | Maximaler Luftmassenstrom | 130 | g/s |  |\n| P-020 | Maximales Druckverhältnis | 1.35 | – |  |\n| P-021 | Elektrische Leistungsaufnahme im Nennpunkt | 4.5 | kW |  |",
+  "heading_path": [
+   "BoP",
+   "Cathode air blower (C-BLW)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A2:E6"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Bezeichnung",
+    "Betriebspunkt / Wert",
+    "Betriebspunkt / Einheit",
+    "Betriebspunkt / Bedingung"
+   ],
+   "rows": [
+    [
+     "P-019",
+     "Maximaler Luftmassenstrom",
+     "130",
+     "g/s",
+     ""
+    ],
+    [
+     "P-020",
+     "Maximales Druckverhältnis",
+     "1.35",
+     "–",
+     ""
+    ],
+    [
+     "P-021",
+     "Elektrische Leistungsaufnahme im Nennpunkt",
+     "4.5",
+     "kW",
+     ""
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Membrane humidifier (C-HUM) | ID: P-022 | Bezeichnung: Druckverlust Trockenseite | Wert: 0.08 | Einheit: bar | Bedingung: rated air flow",
+  "heading_path": [
+   "BoP",
+   "Membrane humidifier (C-HUM)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A12:E12"
+  },
+  "data": {
+   "caption": "Membrane humidifier (C-HUM)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-022",
+    "Druckverlust Trockenseite",
+    "0.08",
+    "bar",
+    "rated air flow"
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "Membrane humidifier (C-HUM)\n\n| Parameter / ID | Parameter / Bezeichnung | Betriebspunkt / Wert | Betriebspunkt / Einheit | Betriebspunkt / Bedingung |\n|---|---|---|---|---|\n| P-022 | Druckverlust Trockenseite | 0.08 | bar | rated air flow |",
+  "heading_path": [
+   "BoP",
+   "Membrane humidifier (C-HUM)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A10:E12"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Bezeichnung",
+    "Betriebspunkt / Wert",
+    "Betriebspunkt / Einheit",
+    "Betriebspunkt / Bedingung"
+   ],
+   "rows": [
+    [
+     "P-022",
+     "Druckverlust Trockenseite",
+     "0.08",
+     "bar",
+     "rated air flow"
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Electric coolant pump (C-CLP) | ID: P-023 | Bezeichnung: Nenn-Kühlmittelvolumenstrom | Wert: 220 | Einheit: L/min",
+  "heading_path": [
+   "BoP",
+   "Electric coolant pump (C-CLP)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A18:E18"
+  },
+  "data": {
+   "caption": "Electric coolant pump (C-CLP)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-023",
+    "Nenn-Kühlmittelvolumenstrom",
+    "220",
+    "L/min",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Electric coolant pump (C-CLP) | ID: P-024 | Bezeichnung: Elektrische Nennleistung | Wert: 1.1 | Einheit: kW",
+  "heading_path": [
+   "BoP",
+   "Electric coolant pump (C-CLP)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A19:E19"
+  },
+  "data": {
+   "caption": "Electric coolant pump (C-CLP)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-024",
+    "Elektrische Nennleistung",
+    "1.1",
+    "kW",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "Electric coolant pump (C-CLP)\n\n| Parameter / ID | Parameter / Bezeichnung | Betriebspunkt / Wert | Betriebspunkt / Einheit | Betriebspunkt / Bedingung |\n|---|---|---|---|---|\n| P-023 | Nenn-Kühlmittelvolumenstrom | 220 | L/min |  |\n| P-024 | Elektrische Nennleistung | 1.1 | kW |  |",
+  "heading_path": [
+   "BoP",
+   "Electric coolant pump (C-CLP)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A16:E19"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Bezeichnung",
+    "Betriebspunkt / Wert",
+    "Betriebspunkt / Einheit",
+    "Betriebspunkt / Bedingung"
+   ],
+   "rows": [
+    [
+     "P-023",
+     "Nenn-Kühlmittelvolumenstrom",
+     "220",
+     "L/min",
+     ""
+    ],
+    [
+     "P-024",
+     "Elektrische Nennleistung",
+     "1.1",
+     "kW",
+     ""
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Hydrogen recirculation blower (C-HRB) | ID: P-025 | Bezeichnung: Elektrische Nennleistung | Wert: 0.4 | Einheit: kW",
+  "heading_path": [
+   "BoP",
+   "Hydrogen recirculation blower (C-HRB)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A25:E25"
+  },
+  "data": {
+   "caption": "Hydrogen recirculation blower (C-HRB)",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-025",
+    "Elektrische Nennleistung",
+    "0.4",
+    "kW",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "Hydrogen recirculation blower (C-HRB)\n\n| Parameter / ID | Parameter / Bezeichnung | Betriebspunkt / Wert | Betriebspunkt / Einheit | Betriebspunkt / Bedingung |\n|---|---|---|---|---|\n| P-025 | Elektrische Nennleistung | 0.4 | kW |  |",
+  "heading_path": [
+   "BoP",
+   "Hydrogen recirculation blower (C-HRB)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A23:E25"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Bezeichnung",
+    "Betriebspunkt / Wert",
+    "Betriebspunkt / Einheit",
+    "Betriebspunkt / Bedingung"
+   ],
+   "rows": [
+    [
+     "P-025",
+     "Elektrische Nennleistung",
+     "0.4",
+     "kW",
+     ""
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-026 | Bezeichnung: Elektrische Nenn-Nettoleistung | Wert: 100 | Einheit: kW",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A4:E4"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-026",
+    "Elektrische Nenn-Nettoleistung",
+    "100",
+    "kW",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-027 | Bezeichnung: Elektrischer Wirkungsgrad bei Nennleistung | Wert: 50 | Einheit: % | Bedingung: rated net power, LHV",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A5:E5"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-027",
+    "Elektrischer Wirkungsgrad bei Nennleistung",
+    "50",
+    "%",
+    "rated net power, LHV"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-028 | Bezeichnung: Maximaler elektrischer Wirkungsgrad | Wert: 57 | Einheit: % | Bedingung: 40 % of rated net power, LHV",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A6:E6"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-028",
+    "Maximaler elektrischer Wirkungsgrad",
+    "57",
+    "%",
+    "40 % of rated net power, LHV"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-029 | Bezeichnung: Nutzbare Wärmeleistung bei Nennleistung | Wert: 64 | Einheit: kW",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A7:E7"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-029",
+    "Nutzbare Wärmeleistung bei Nennleistung",
+    "64",
+    "kW",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-030 | Bezeichnung: Gesamtwirkungsgrad KWK | Wert: 85 | Einheit: % | Bedingung: rated net power, LHV",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A8:E8"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-030",
+    "Gesamtwirkungsgrad KWK",
+    "85",
+    "%",
+    "rated net power, LHV"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-031 | Bezeichnung: Vorlauftemperatur Wärmeauskopplung | Wert: 60 | Einheit: °C",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A9:E9"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-031",
+    "Vorlauftemperatur Wärmeauskopplung",
+    "60",
+    "°C",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-032 | Bezeichnung: Wasserstoffverbrauch bei Nennleistung | Wert: 1.6 | Einheit: g/s | Bedingung: rated net power, incl. purge losses",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A10:E10"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-032",
+    "Wasserstoffverbrauch bei Nennleistung",
+    "1.6",
+    "g/s",
+    "rated net power, incl. purge losses"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-033 | Bezeichnung: Wasserstoff-Versorgungsdruck | Wert: 4 | Einheit: bar | Bedingung: absolute, at system inlet",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A11:E11"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-033",
+    "Wasserstoff-Versorgungsdruck",
+    "4",
+    "bar",
+    "absolute, at system inlet"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-034 | Bezeichnung: Minimale Umgebungstemperatur | Wert: 5 | Einheit: °C | Bedingung: indoor installation",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A12:E12"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-034",
+    "Minimale Umgebungstemperatur",
+    "5",
+    "°C",
+    "indoor installation"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-035 | Bezeichnung: Maximale Umgebungstemperatur | Wert: 40 | Einheit: °C",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A13:E13"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-035",
+    "Maximale Umgebungstemperatur",
+    "40",
+    "°C",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-036 | Bezeichnung: Auslegungslebensdauer | Wert: 60000 | Einheit: h | Bedingung: to 10 % rated power loss, continuous operation",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A14:E14"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-036",
+    "Auslegungslebensdauer",
+    "60000",
+    "h",
+    "to 10 % rated power loss, continuous operation"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C | ID: P-037 | Bezeichnung: Systemmasse | Wert: 950 | Einheit: kg | Bedingung: complete cabinet, dry",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A15:E15"
+  },
+  "data": {
+   "caption": "System C",
+   "columns": [
+    "ID",
+    "Bezeichnung",
+    "Wert",
+    "Einheit",
+    "Bedingung"
+   ],
+   "values": [
+    "P-037",
+    "Systemmasse",
+    "950",
+    "kg",
+    "complete cabinet, dry"
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "System C\n\n| Parameter / ID | Parameter / Bezeichnung | Betriebspunkt / Wert | Betriebspunkt / Einheit | Betriebspunkt / Bedingung |\n|---|---|---|---|---|\n| P-026 | Elektrische Nenn-Nettoleistung | 100 | kW |  |\n| P-027 | Elektrischer Wirkungsgrad bei Nennleistung | 50 | % | rated net power, LHV |\n| P-028 | Maximaler elektrischer Wirkungsgrad | 57 | % | 40 % of rated net power, LHV |\n| P-029 | Nutzbare Wärmeleistung bei Nennleistung | 64 | kW |  |\n| P-030 | Gesamtwirkungsgrad KWK | 85 | % | rated net power, LHV |\n| P-031 | Vorlauftemperatur Wärmeauskopplung | 60 | °C |  |\n| P-032 | Wasserstoffverbrauch bei Nennleistung | 1.6 | g/s | rated net power, incl. purge losses |\n| P-033 | Wasserstoff-Versorgungsdruck | 4 | bar | absolute, at system inlet |\n| P-034 | Minimale Umgebungstemperatur | 5 | °C | indoor installation |\n| P-035 | Maximale Umgebungstemperatur | 40 | °C |  |\n| P-036 | Auslegungslebensdauer | 60000 | h | to 10 % rated power loss, continuous operation |\n| P-037 | Systemmasse | 950 | kg | complete cabinet, dry |",
+  "heading_path": [
+   "Systemebene",
+   "System C"
+  ],
+  "locator": {
+   "sheet": "Systemebene",
+   "cells": "A2:E15"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Bezeichnung",
+    "Betriebspunkt / Wert",
+    "Betriebspunkt / Einheit",
+    "Betriebspunkt / Bedingung"
+   ],
+   "rows": [
+    [
+     "P-026",
+     "Elektrische Nenn-Nettoleistung",
+     "100",
+     "kW",
+     ""
+    ],
+    [
+     "P-027",
+     "Elektrischer Wirkungsgrad bei Nennleistung",
+     "50",
+     "%",
+     "rated net power, LHV"
+    ],
+    [
+     "P-028",
+     "Maximaler elektrischer Wirkungsgrad",
+     "57",
+     "%",
+     "40 % of rated net power, LHV"
+    ],
+    [
+     "P-029",
+     "Nutzbare Wärmeleistung bei Nennleistung",
+     "64",
+     "kW",
+     ""
+    ],
+    [
+     "P-030",
+     "Gesamtwirkungsgrad KWK",
+     "85",
+     "%",
+     "rated net power, LHV"
+    ],
+    [
+     "P-031",
+     "Vorlauftemperatur Wärmeauskopplung",
+     "60",
+     "°C",
+     ""
+    ],
+    [
+     "P-032",
+     "Wasserstoffverbrauch bei Nennleistung",
+     "1.6",
+     "g/s",
+     "rated net power, incl. purge losses"
+    ],
+    [
+     "P-033",
+     "Wasserstoff-Versorgungsdruck",
+     "4",
+     "bar",
+     "absolute, at system inlet"
+    ],
+    [
+     "P-034",
+     "Minimale Umgebungstemperatur",
+     "5",
+     "°C",
+     "indoor installation"
+    ],
+    [
+     "P-035",
+     "Maximale Umgebungstemperatur",
+     "40",
+     "°C",
+     ""
+    ],
+    [
+     "P-036",
+     "Auslegungslebensdauer",
+     "60000",
+     "h",
+     "to 10 % rated power loss, continuous operation"
+    ],
+    [
+     "P-037",
+     "Systemmasse",
+     "950",
+     "kg",
+     "complete cabinet, dry"
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – Betriebsgrenzen | Nominale Kühlmittelaustrittstemperatur: 68 °C",
+  "heading_path": [
+   "Betriebsgrenzen",
+   "System C – Betriebsgrenzen"
+  ],
+  "locator": {
+   "sheet": "Betriebsgrenzen",
+   "cells": "B3:B5"
+  },
+  "data": {
+   "caption": "System C – Betriebsgrenzen",
+   "parameter": "Nominale Kühlmittelaustrittstemperatur",
+   "value": "68",
+   "unit": "°C"
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – Betriebsgrenzen | Maximale Kühlmittelaustrittstemperatur: 75 °C",
+  "heading_path": [
+   "Betriebsgrenzen",
+   "System C – Betriebsgrenzen"
+  ],
+  "locator": {
+   "sheet": "Betriebsgrenzen",
+   "cells": "C3:C5"
+  },
+  "data": {
+   "caption": "System C – Betriebsgrenzen",
+   "parameter": "Maximale Kühlmittelaustrittstemperatur",
+   "value": "75",
+   "unit": "°C"
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – Betriebsgrenzen | Maximale Kühlmittel-Temperaturspreizung: 6 K",
+  "heading_path": [
+   "Betriebsgrenzen",
+   "System C – Betriebsgrenzen"
+  ],
+  "locator": {
+   "sheet": "Betriebsgrenzen",
+   "cells": "D3:D5"
+  },
+  "data": {
+   "caption": "System C – Betriebsgrenzen",
+   "parameter": "Maximale Kühlmittel-Temperaturspreizung",
+   "value": "6",
+   "unit": "K"
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – Betriebsgrenzen | Maximaler Differenzdruck Anode-Kathode: 0.3 bar",
+  "heading_path": [
+   "Betriebsgrenzen",
+   "System C – Betriebsgrenzen"
+  ],
+  "locator": {
+   "sheet": "Betriebsgrenzen",
+   "cells": "E3:E5"
+  },
+  "data": {
+   "caption": "System C – Betriebsgrenzen",
+   "parameter": "Maximaler Differenzdruck Anode-Kathode",
+   "value": "0.3",
+   "unit": "bar"
+  }
+ },
+ {
+  "kind": "table",
+  "content": "System C – Betriebsgrenzen\n\n| Parameter | Value | Unit |\n|---|---|---|\n| Nominale Kühlmittelaustrittstemperatur | 68 | °C |\n| Maximale Kühlmittelaustrittstemperatur | 75 | °C |\n| Maximale Kühlmittel-Temperaturspreizung | 6 | K |\n| Maximaler Differenzdruck Anode-Kathode | 0.3 | bar |",
+  "heading_path": [
+   "Betriebsgrenzen",
+   "System C – Betriebsgrenzen"
+  ],
+  "locator": {
+   "sheet": "Betriebsgrenzen",
+   "cells": "A3:E5"
+  },
+  "data": {
+   "columns": [
+    "Parameter",
+    "Value",
+    "Unit"
+   ],
+   "rows": [
+    [
+     "Nominale Kühlmittelaustrittstemperatur",
+     "68",
+     "°C"
+    ],
+    [
+     "Maximale Kühlmittelaustrittstemperatur",
+     "75",
+     "°C"
+    ],
+    [
+     "Maximale Kühlmittel-Temperaturspreizung",
+     "6",
+     "K"
+    ],
+    [
+     "Maximaler Differenzdruck Anode-Kathode",
+     "0.3",
+     "bar"
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – stack BOM | Part ID: EP-01 | Description: end plate, dry side | Assembly: EPA-01 | Qty: 1 | Size (mm): 376.2 x 186.5 x 25",
+  "heading_path": [
+   "BOM",
+   "System C – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A4:E4"
+  },
+  "data": {
+   "caption": "System C – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "EP-01",
+    "end plate, dry side",
+    "EPA-01",
+    "1",
+    "376.2 x 186.5 x 25"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – stack BOM | Part ID: INS-01 | Description: insulation plate, dry side | Assembly: EPA-01 | Qty: 1 | Size (mm): 356.2 x 166.5 x 5",
+  "heading_path": [
+   "BOM",
+   "System C – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A5:E5"
+  },
+  "data": {
+   "caption": "System C – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "INS-01",
+    "insulation plate, dry side",
+    "EPA-01",
+    "1",
+    "356.2 x 166.5 x 5"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – stack BOM | Part ID: CC-01 | Description: current collector, dry side | Assembly: EPA-01 | Qty: 1 | Size (mm): 346.2 x 156.5 x 2",
+  "heading_path": [
+   "BOM",
+   "System C – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A6:E6"
+  },
+  "data": {
+   "caption": "System C – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "CC-01",
+    "current collector, dry side",
+    "EPA-01",
+    "1",
+    "346.2 x 156.5 x 2"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – stack BOM | Part ID: EP-02 | Description: end plate, wet side | Assembly: EPA-02 | Qty: 1 | Size (mm): 376.2 x 186.5 x 25",
+  "heading_path": [
+   "BOM",
+   "System C – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A7:E7"
+  },
+  "data": {
+   "caption": "System C – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "EP-02",
+    "end plate, wet side",
+    "EPA-02",
+    "1",
+    "376.2 x 186.5 x 25"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – stack BOM | Part ID: INS-02 | Description: insulation plate, wet side | Assembly: EPA-02 | Qty: 1 | Size (mm): 356.2 x 166.5 x 5",
+  "heading_path": [
+   "BOM",
+   "System C – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A8:E8"
+  },
+  "data": {
+   "caption": "System C – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "INS-02",
+    "insulation plate, wet side",
+    "EPA-02",
+    "1",
+    "356.2 x 166.5 x 5"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – stack BOM | Part ID: CC-02 | Description: current collector, wet side | Assembly: EPA-02 | Qty: 1 | Size (mm): 346.2 x 156.5 x 2",
+  "heading_path": [
+   "BOM",
+   "System C – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A9:E9"
+  },
+  "data": {
+   "caption": "System C – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "CC-02",
+    "current collector, wet side",
+    "EPA-02",
+    "1",
+    "346.2 x 156.5 x 2"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – stack BOM | Part ID: CB-01 | Description: cell block, 380 cells | Assembly: top level | Qty: 1 | Size (mm): 356.2 x 166.5 x 684",
+  "heading_path": [
+   "BOM",
+   "System C – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A10:E10"
+  },
+  "data": {
+   "caption": "System C – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "CB-01",
+    "cell block, 380 cells",
+    "top level",
+    "1",
+    "356.2 x 166.5 x 684"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – stack BOM | Part ID: TR-01 | Description: tie rod M10 | Assembly: top level | Qty: 4 | Size (mm): 10 x 10 x 788",
+  "heading_path": [
+   "BOM",
+   "System C – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A11:E11"
+  },
+  "data": {
+   "caption": "System C – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "TR-01",
+    "tie rod M10",
+    "top level",
+    "4",
+    "10 x 10 x 788"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System C – stack BOM | Part ID: MF-01 | Description: media manifold block | Assembly: top level | Qty: 1 | Size (mm): 60 x 166.5 x 40",
+  "heading_path": [
+   "BOM",
+   "System C – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A12:E12"
+  },
+  "data": {
+   "caption": "System C – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "MF-01",
+    "media manifold block",
+    "top level",
+    "1",
+    "60 x 166.5 x 40"
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "System C – stack BOM\n\n| Part ID | Description | Assembly | Qty | Size (mm) |\n|---|---|---|---|---|\n| EP-01 | end plate, dry side | EPA-01 | 1 | 376.2 x 186.5 x 25 |\n| INS-01 | insulation plate, dry side | EPA-01 | 1 | 356.2 x 166.5 x 5 |\n| CC-01 | current collector, dry side | EPA-01 | 1 | 346.2 x 156.5 x 2 |\n| EP-02 | end plate, wet side | EPA-02 | 1 | 376.2 x 186.5 x 25 |\n| INS-02 | insulation plate, wet side | EPA-02 | 1 | 356.2 x 166.5 x 5 |\n| CC-02 | current collector, wet side | EPA-02 | 1 | 346.2 x 156.5 x 2 |\n| CB-01 | cell block, 380 cells | top level | 1 | 356.2 x 166.5 x 684 |\n| TR-01 | tie rod M10 | top level | 4 | 10 x 10 x 788 |\n| MF-01 | media manifold block | top level | 1 | 60 x 166.5 x 40 |",
+  "heading_path": [
+   "BOM",
+   "System C – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A3:E12"
+  },
+  "data": {
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "rows": [
+    [
+     "EP-01",
+     "end plate, dry side",
+     "EPA-01",
+     "1",
+     "376.2 x 186.5 x 25"
+    ],
+    [
+     "INS-01",
+     "insulation plate, dry side",
+     "EPA-01",
+     "1",
+     "356.2 x 166.5 x 5"
+    ],
+    [
+     "CC-01",
+     "current collector, dry side",
+     "EPA-01",
+     "1",
+     "346.2 x 156.5 x 2"
+    ],
+    [
+     "EP-02",
+     "end plate, wet side",
+     "EPA-02",
+     "1",
+     "376.2 x 186.5 x 25"
+    ],
+    [
+     "INS-02",
+     "insulation plate, wet side",
+     "EPA-02",
+     "1",
+     "356.2 x 166.5 x 5"
+    ],
+    [
+     "CC-02",
+     "current collector, wet side",
+     "EPA-02",
+     "1",
+     "346.2 x 156.5 x 2"
+    ],
+    [
+     "CB-01",
+     "cell block, 380 cells",
+     "top level",
+     "1",
+     "356.2 x 166.5 x 684"
+    ],
+    [
+     "TR-01",
+     "tie rod M10",
+     "top level",
+     "4",
+     "10 x 10 x 788"
+    ],
+    [
+     "MF-01",
+     "media manifold block",
+     "top level",
+     "1",
+     "60 x 166.5 x 40"
+    ]
+   ]
+  }
+ }
+]
