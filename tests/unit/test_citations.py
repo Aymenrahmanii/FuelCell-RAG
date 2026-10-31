@@ -44,3 +44,18 @@ def test_line_span_citations_and_typography() -> None:
 
     answer = "REQ\u2011A\u20110013 refines it\u00a0【S2†L1-L3】【S4†L1】."
     assert normalise_citations(answer) == "REQ-A-0013 refines it [S2][S4]."
+
+
+def test_bare_labels_in_a_reference_parenthesis_are_citations() -> None:
+    from fcrag.generation.citations import normalise_citations
+
+    answer = "Er beträgt 40 kPa (vgl. S2, S6, REQ-B-0026 in S4) bzw. 0,4 bar (vgl. S8)."
+    assert normalise_citations(answer) == (
+        "Er beträgt 40 kPa (vgl. [S2], [S6], REQ-B-0026 in [S4]) bzw. 0,4 bar (vgl. [S8])."
+    )
+    assert check_citations(answer, n_sources=8).cited == [2, 6, 4, 8]
+    # outside such a parenthesis a bare S2 is text (a part or sensor name), not a citation
+    assert normalise_citations("Sensor S2 reads 80 °C (S2 is the outlet).") == (
+        "Sensor S2 reads 80 °C (S2 is the outlet)."
+    )
+    assert normalise_citations("It is 80 °C (see [S1], S3).") == "It is 80 °C (see [S1], [S3])."

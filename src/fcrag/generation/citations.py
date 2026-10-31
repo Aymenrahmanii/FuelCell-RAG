@@ -7,14 +7,22 @@ from typing import Any
 CITATION = re.compile(r"\[S(\d+)\]")
 # Some models (gpt-oss) write full-width brackets, sometimes with line spans: 【S1】, 【S2†L1-L3】
 VARIANT_CITATION = re.compile(r"[【［\[]\s*S\s*(\d+)(?:†[^】］\]]*)?\s*[】］\]]")
+# Bare labels in a reference parenthesis, as models sometimes write in German:
+# "(vgl. S2, S6, REQ-B-0026 in S4)". Only inside such a parenthesis, so "S2" elsewhere stays text.
+REFERENCE_PAREN = re.compile(r"\((?:vgl\.|siehe|see|cf\.)[^()]*\)", re.IGNORECASE)
+BARE_LABEL = re.compile(r"(?<![\[\w-])S(\d+)(?![\]\w])")
 # Non-breaking hyphens and spaces that models emit; IDs such as REQ-A-0001 must stay searchable
 TYPOGRAPHY = str.maketrans({"\u2010": "-", "\u2011": "-", "\u00a0": " ", "\u202f": " "})
 
 
 def normalise_citations(answer: str) -> str:
-    """Rewrite citation variants as [S1] and typographic hyphens/spaces as ASCII, so checks,
+    """Rewrite citation variants as [S1] (full-width brackets, line spans, bare labels in a
+    "(vgl. S2, S4)" parenthesis) and typographic hyphens/spaces as ASCII, so checks,
     display and copying see one format."""
-    return VARIANT_CITATION.sub(lambda m: f"[S{m.group(1)}]", answer.translate(TYPOGRAPHY))
+    answer = VARIANT_CITATION.sub(lambda m: f"[S{m.group(1)}]", answer.translate(TYPOGRAPHY))
+    return REFERENCE_PAREN.sub(
+        lambda m: BARE_LABEL.sub(lambda b: f"[S{b.group(1)}]", m.group(0)), answer
+    )
 
 
 SENTENCE_END = re.compile(r"(?<=[.!?])\s+(?=[A-ZÄÖÜ0-9])")
