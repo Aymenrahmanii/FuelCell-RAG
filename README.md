@@ -125,6 +125,12 @@ flowchart LR
   keyed by the normalised question, filters, access groups, prompt, model and the document
   registry, so any ingestion starts fresh; follow-ups are never cached. `docker compose --profile app --profile monitoring
   up -d` adds Prometheus (:9090) and Grafana (:3001) with an operations dashboard.
+- **Audit log.** Every answered question is stored in Postgres (`audit_log`) with the user
+  (`X-User-Id` header, set by the gateway until OIDC), access groups, the retrieved sources
+  (document, version, location, chunk; not the chunk text), the answer, model, prompt version,
+  trace ID and time; failed answers are stored with the error. Rows are kept for
+  `FCRAG_AUDIT_RETENTION_DAYS` (default 90, 0 = off); run `uv run fcrag audit-prune` daily
+  to delete older ones.
 
 Design decisions: [`docs/decisions/`](docs/decisions/).
 

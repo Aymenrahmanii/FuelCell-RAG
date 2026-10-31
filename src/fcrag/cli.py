@@ -1,4 +1,4 @@
-"""Command line: ``fcrag db-upgrade | ingest | search | ask | serve``."""
+"""Command line: ``fcrag db-upgrade | ingest | search | ask | serve | audit-prune ...``."""
 
 import argparse
 import logging
@@ -17,6 +17,16 @@ def _db_upgrade(_: argparse.Namespace) -> None:
     from alembic.config import Config
 
     command.upgrade(Config("alembic.ini"), "head")
+
+
+def _audit_prune(args: argparse.Namespace) -> None:
+    from fcrag.audit import prune
+
+    days = args.days if args.days is not None else get_settings().audit_retention_days
+    if days <= 0:
+        print("audit log is off (FCRAG_AUDIT_RETENTION_DAYS=0); nothing to prune")
+        return
+    print(f"removed {prune(days)} audit rows older than {days} days")
 
 
 def _generate(args: argparse.Namespace) -> None:
@@ -242,6 +252,10 @@ def main() -> None:
     sub = parser.add_subparsers(required=True)
 
     sub.add_parser("db-upgrade", help="apply database migrations").set_defaults(func=_db_upgrade)
+
+    p = sub.add_parser("audit-prune", help="delete audit log rows past the retention period")
+    p.add_argument("--days", type=int, help="override FCRAG_AUDIT_RETENTION_DAYS")
+    p.set_defaults(func=_audit_prune)
 
     p = sub.add_parser("generate", help="build the synthetic corpus from the system truths")
     p.add_argument("--systems", default="data_gen/systems")
