@@ -1,0 +1,119 @@
+[
+ {
+  "kind": "drawing",
+  "content": "Drawing DWG-A-0003 rev A, sheet 1/1: System A – anode loop schematic.\nComponents:\n- A-EXH: Exhaust outlet\n- A-H2S: Hydrogen supply\n- A-STK: Fuel cell stack\n- A-PRG: Anode purge valve\n- A-HRB: Hydrogen recirculation blower\nLine list:\n- L06 Hydrogen from A-H2S (Hydrogen supply) to A-STK (Fuel cell stack)\n- L07 Anode recirculation from A-STK (Fuel cell stack) to A-HRB (Hydrogen recirculation blower)\n- L08 Anode recirculation from A-HRB (Hydrogen recirculation blower) to A-STK (Fuel cell stack)\n- L09 Purge gas from A-STK (Fuel cell stack) to A-PRG (Anode purge valve)\n- L10 Purge gas from A-PRG (Anode purge valve) to A-EXH (Exhaust outlet)\nNotes: Schematic, not to scale. Sensors and check valves are not shown.",
+  "heading_path": [
+   "DWG-A-0003"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-A-0003",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System A – anode loop schematic",
+    "drawing_no": "DWG-A-0003",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "components": [
+    {
+     "tag": "A-EXH",
+     "name": "Exhaust outlet"
+    },
+    {
+     "tag": "A-H2S",
+     "name": "Hydrogen supply"
+    },
+    {
+     "tag": "A-STK",
+     "name": "Fuel cell stack"
+    },
+    {
+     "tag": "A-PRG",
+     "name": "Anode purge valve"
+    },
+    {
+     "tag": "A-HRB",
+     "name": "Hydrogen recirculation blower"
+    }
+   ],
+   "lines": [
+    {
+     "line": "L06",
+     "medium": "Hydrogen",
+     "from": "A-H2S",
+     "to": "A-STK"
+    },
+    {
+     "line": "L07",
+     "medium": "Anode recirculation",
+     "from": "A-STK",
+     "to": "A-HRB"
+    },
+    {
+     "line": "L08",
+     "medium": "Anode recirculation",
+     "from": "A-HRB",
+     "to": "A-STK"
+    },
+    {
+     "line": "L09",
+     "medium": "Purge gas",
+     "from": "A-STK",
+     "to": "A-PRG"
+    },
+    {
+     "line": "L10",
+     "medium": "Purge gas",
+     "from": "A-PRG",
+     "to": "A-EXH"
+    }
+   ],
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "First issue, detail of DWG-A-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ],
+   "text_source": "pdf"
+  }
+ },
+ {
+  "kind": "drawing",
+  "content": "Title block of drawing DWG-A-0003: Title: System A – anode loop schematic; Drawing no.: DWG-A-0003; Revision: A; Sheet: 1/1; Date: 2026-08-03; Drawn: FC-Design; Checked: FC-Systems.\nRevision history:\n- rev A (2026-08-03, FC-Design): First issue, detail of DWG-A-0001",
+  "heading_path": [
+   "DWG-A-0003"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-A-0003",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System A – anode loop schematic",
+    "drawing_no": "DWG-A-0003",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "First issue, detail of DWG-A-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ]
+  }
+ }
+]

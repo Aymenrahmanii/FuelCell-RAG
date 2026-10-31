@@ -1,0 +1,187 @@
+[
+ {
+  "kind": "drawing",
+  "content": "Zeichnung DWG-B-0001 Index A, Blatt 1/1: System B – Systemschema Brennstoffzellensystem.\nKomponenten:\n- B-CMP: Elektrischer Turboverdichter (je Modul)\n- B-AIR: Luftfilter\n- B-HUM: Membranbefeuchter (je Modul)\n- B-EXH: Abgasaustritt\n- B-H2S: Wasserstoffversorgung\n- B-STK: Brennstoffzellenstack (je Modul)\n- B-PRG: Anoden-Spülventil\n- B-HRB: Wasserstoff-Rezirkulationsgebläse (je Modul)\n- B-CLP: Elektrische Kühlmittelpumpe (je Modul)\n- B-RAD: Kühler\nLeitungsliste:\n- L01 Luft von B-AIR (Luftfilter) nach B-CMP (Elektrischer Turboverdichter (je Modul))\n- L02 Luft von B-CMP (Elektrischer Turboverdichter (je Modul)) nach B-HUM (Membranbefeuchter (je Modul))\n- L03 Befeuchtete Luft von B-HUM (Membranbefeuchter (je Modul)) nach B-STK (Brennstoffzellenstack (je Modul))\n- L04 Kathodenabgas von B-STK (Brennstoffzellenstack (je Modul)) nach B-HUM (Membranbefeuchter (je Modul))\n- L05 Kathodenabgas von B-HUM (Membranbefeuchter (je Modul)) nach B-EXH (Abgasaustritt)\n- L06 Wasserstoff von B-H2S (Wasserstoffversorgung) nach B-STK (Brennstoffzellenstack (je Modul))\n- L07 Anodenrezirkulation von B-STK (Brennstoffzellenstack (je Modul)) nach B-HRB (Wasserstoff-Rezirkulationsgebläse (je Modul))\n- L08 Anodenrezirkulation von B-HRB (Wasserstoff-Rezirkulationsgebläse (je Modul)) nach B-STK (Brennstoffzellenstack (je Modul))\n- L09 Spülgas von B-STK (Brennstoffzellenstack (je Modul)) nach B-PRG (Anoden-Spülventil)\n- L10 Spülgas von B-PRG (Anoden-Spülventil) nach B-EXH (Abgasaustritt)\n- L11 Kühlmittel von B-CLP (Elektrische Kühlmittelpumpe (je Modul)) nach B-STK (Brennstoffzellenstack (je Modul))\n- L12 Kühlmittel von B-STK (Brennstoffzellenstack (je Modul)) nach B-RAD (Kühler)\n- L13 Kühlmittel von B-RAD (Kühler) nach B-CLP (Elektrische Kühlmittelpumpe (je Modul))\nHinweise: Ein Modul dargestellt; das zweite Modul ist baugleich. Ohne Sensoren.",
+  "heading_path": [
+   "DWG-B-0001"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-B-0001",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System B – Systemschema Brennstoffzellensystem",
+    "drawing_no": "DWG-B-0001",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-04-20",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "components": [
+    {
+     "tag": "B-CMP",
+     "name": "Elektrischer Turboverdichter (je Modul)"
+    },
+    {
+     "tag": "B-AIR",
+     "name": "Luftfilter"
+    },
+    {
+     "tag": "B-HUM",
+     "name": "Membranbefeuchter (je Modul)"
+    },
+    {
+     "tag": "B-EXH",
+     "name": "Abgasaustritt"
+    },
+    {
+     "tag": "B-H2S",
+     "name": "Wasserstoffversorgung"
+    },
+    {
+     "tag": "B-STK",
+     "name": "Brennstoffzellenstack (je Modul)"
+    },
+    {
+     "tag": "B-PRG",
+     "name": "Anoden-Spülventil"
+    },
+    {
+     "tag": "B-HRB",
+     "name": "Wasserstoff-Rezirkulationsgebläse (je Modul)"
+    },
+    {
+     "tag": "B-CLP",
+     "name": "Elektrische Kühlmittelpumpe (je Modul)"
+    },
+    {
+     "tag": "B-RAD",
+     "name": "Kühler"
+    }
+   ],
+   "lines": [
+    {
+     "line": "L01",
+     "medium": "Luft",
+     "from": "B-AIR",
+     "to": "B-CMP"
+    },
+    {
+     "line": "L02",
+     "medium": "Luft",
+     "from": "B-CMP",
+     "to": "B-HUM"
+    },
+    {
+     "line": "L03",
+     "medium": "Befeuchtete Luft",
+     "from": "B-HUM",
+     "to": "B-STK"
+    },
+    {
+     "line": "L04",
+     "medium": "Kathodenabgas",
+     "from": "B-STK",
+     "to": "B-HUM"
+    },
+    {
+     "line": "L05",
+     "medium": "Kathodenabgas",
+     "from": "B-HUM",
+     "to": "B-EXH"
+    },
+    {
+     "line": "L06",
+     "medium": "Wasserstoff",
+     "from": "B-H2S",
+     "to": "B-STK"
+    },
+    {
+     "line": "L07",
+     "medium": "Anodenrezirkulation",
+     "from": "B-STK",
+     "to": "B-HRB"
+    },
+    {
+     "line": "L08",
+     "medium": "Anodenrezirkulation",
+     "from": "B-HRB",
+     "to": "B-STK"
+    },
+    {
+     "line": "L09",
+     "medium": "Spülgas",
+     "from": "B-STK",
+     "to": "B-PRG"
+    },
+    {
+     "line": "L10",
+     "medium": "Spülgas",
+     "from": "B-PRG",
+     "to": "B-EXH"
+    },
+    {
+     "line": "L11",
+     "medium": "Kühlmittel",
+     "from": "B-CLP",
+     "to": "B-STK"
+    },
+    {
+     "line": "L12",
+     "medium": "Kühlmittel",
+     "from": "B-STK",
+     "to": "B-RAD"
+    },
+    {
+     "line": "L13",
+     "medium": "Kühlmittel",
+     "from": "B-RAD",
+     "to": "B-CLP"
+    }
+   ],
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "Erstausgabe",
+     "date": "2026-04-20",
+     "by": "FC-Design"
+    }
+   ],
+   "text_source": "pdf"
+  }
+ },
+ {
+  "kind": "drawing",
+  "content": "Schriftfeld der Zeichnung DWG-B-0001: Benennung: System B – Systemschema Brennstoffzellensystem; Zeichnungsnr.: DWG-B-0001; Index: A; Blatt: 1/1; Datum: 2026-04-20; Gezeichnet: FC-Design; Geprüft: FC-Systems.\nÄnderungshistorie:\n- Index A (2026-04-20, FC-Design): Erstausgabe",
+  "heading_path": [
+   "DWG-B-0001"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-B-0001",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System B – Systemschema Brennstoffzellensystem",
+    "drawing_no": "DWG-B-0001",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-04-20",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "Erstausgabe",
+     "date": "2026-04-20",
+     "by": "FC-Design"
+    }
+   ]
+  }
+ }
+]

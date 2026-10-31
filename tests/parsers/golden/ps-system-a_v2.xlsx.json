@@ -1,0 +1,1879 @@
+[
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-001 | Name: Number of cells | Value: 300 | Unit: –",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A6:E6"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-001",
+    "Number of cells",
+    "300",
+    "–",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-002 | Name: Active cell area | Value: 300 | Unit: cm²",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A7:E7"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-002",
+    "Active cell area",
+    "300",
+    "cm²",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-003 | Name: Rated gross power | Value: 95 | Unit: kW",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A8:E8"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-003",
+    "Rated gross power",
+    "95",
+    "kW",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-004 | Name: Rated current | Value: 480 | Unit: A",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A9:E9"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-004",
+    "Rated current",
+    "480",
+    "A",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-005 | Name: Rated current density | Value: 1.6 | Unit: A/cm²",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A10:E10"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-005",
+    "Rated current density",
+    "1.6",
+    "A/cm²",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-006 | Name: Cell voltage at rated current | Value: 0.66 | Unit: V",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A11:E11"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-006",
+    "Cell voltage at rated current",
+    "0.66",
+    "V",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-007 | Name: Stack voltage at rated current | Value: 198 | Unit: V",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A12:E12"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-007",
+    "Stack voltage at rated current",
+    "198",
+    "V",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-008 | Name: Open circuit voltage | Value: 285 | Unit: V",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A13:E13"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-008",
+    "Open circuit voltage",
+    "285",
+    "V",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-009 | Name: Cathode inlet pressure at rated power | Value: 250 | Unit: kPa | Condition: absolute",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A14:E14"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-009",
+    "Cathode inlet pressure at rated power",
+    "250",
+    "kPa",
+    "absolute"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-010 | Name: Anode inlet pressure at rated power | Value: 270 | Unit: kPa | Condition: absolute",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A15:E15"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-010",
+    "Anode inlet pressure at rated power",
+    "270",
+    "kPa",
+    "absolute"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-011 | Name: Cathode stoichiometry | Value: 1.8 | Unit: – | Condition: rated current",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A16:E16"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-011",
+    "Cathode stoichiometry",
+    "1.8",
+    "–",
+    "rated current"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-012 | Name: Anode stoichiometry | Value: 1.5 | Unit: – | Condition: rated current",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A17:E17"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-012",
+    "Anode stoichiometry",
+    "1.5",
+    "–",
+    "rated current"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-013 | Name: Cathode inlet relative humidity | Value: 50 | Unit: % | Condition: rated current",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A18:E18"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-013",
+    "Cathode inlet relative humidity",
+    "50",
+    "%",
+    "rated current"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-014 | Name: Cathode platinum loading | Value: 0.25 | Unit: mg/cm²",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A19:E19"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-014",
+    "Cathode platinum loading",
+    "0.25",
+    "mg/cm²",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-015 | Name: Anode platinum loading | Value: 0.05 | Unit: mg/cm²",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A20:E20"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-015",
+    "Anode platinum loading",
+    "0.05",
+    "mg/cm²",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-016 | Name: Membrane thickness | Value: 12 | Unit: µm",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A21:E21"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-016",
+    "Membrane thickness",
+    "12",
+    "µm",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-017 | Name: Stack mass | Value: 45 | Unit: kg",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A22:E22"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-017",
+    "Stack mass",
+    "45",
+    "kg",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Fuel cell stack (A-STK) | ID: P-018 | Name: Stack volume | Value: 40 | Unit: L",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A23:E23"
+  },
+  "data": {
+   "caption": "Fuel cell stack (A-STK)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-018",
+    "Stack volume",
+    "40",
+    "L",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "Fuel cell stack (A-STK)\n\n| Parameter / ID | Parameter / Name | Operating point / Value | Operating point / Unit | Operating point / Condition |\n|---|---|---|---|---|\n| P-001 | Number of cells | 300 | – |  |\n| P-002 | Active cell area | 300 | cm² |  |\n| P-003 | Rated gross power | 95 | kW |  |\n| P-004 | Rated current | 480 | A |  |\n| P-005 | Rated current density | 1.6 | A/cm² |  |\n| P-006 | Cell voltage at rated current | 0.66 | V |  |\n| P-007 | Stack voltage at rated current | 198 | V |  |\n| P-008 | Open circuit voltage | 285 | V |  |\n| P-009 | Cathode inlet pressure at rated power | 250 | kPa | absolute |\n| P-010 | Anode inlet pressure at rated power | 270 | kPa | absolute |\n| P-011 | Cathode stoichiometry | 1.8 | – | rated current |\n| P-012 | Anode stoichiometry | 1.5 | – | rated current |\n| P-013 | Cathode inlet relative humidity | 50 | % | rated current |\n| P-014 | Cathode platinum loading | 0.25 | mg/cm² |  |\n| P-015 | Anode platinum loading | 0.05 | mg/cm² |  |\n| P-016 | Membrane thickness | 12 | µm |  |\n| P-017 | Stack mass | 45 | kg |  |\n| P-018 | Stack volume | 40 | L |  |",
+  "heading_path": [
+   "Stack",
+   "System A – parameter list · Rev. 2",
+   "Fuel cell stack (A-STK)"
+  ],
+  "locator": {
+   "sheet": "Stack",
+   "cells": "A4:E23"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Name",
+    "Operating point / Value",
+    "Operating point / Unit",
+    "Operating point / Condition"
+   ],
+   "rows": [
+    [
+     "P-001",
+     "Number of cells",
+     "300",
+     "–",
+     ""
+    ],
+    [
+     "P-002",
+     "Active cell area",
+     "300",
+     "cm²",
+     ""
+    ],
+    [
+     "P-003",
+     "Rated gross power",
+     "95",
+     "kW",
+     ""
+    ],
+    [
+     "P-004",
+     "Rated current",
+     "480",
+     "A",
+     ""
+    ],
+    [
+     "P-005",
+     "Rated current density",
+     "1.6",
+     "A/cm²",
+     ""
+    ],
+    [
+     "P-006",
+     "Cell voltage at rated current",
+     "0.66",
+     "V",
+     ""
+    ],
+    [
+     "P-007",
+     "Stack voltage at rated current",
+     "198",
+     "V",
+     ""
+    ],
+    [
+     "P-008",
+     "Open circuit voltage",
+     "285",
+     "V",
+     ""
+    ],
+    [
+     "P-009",
+     "Cathode inlet pressure at rated power",
+     "250",
+     "kPa",
+     "absolute"
+    ],
+    [
+     "P-010",
+     "Anode inlet pressure at rated power",
+     "270",
+     "kPa",
+     "absolute"
+    ],
+    [
+     "P-011",
+     "Cathode stoichiometry",
+     "1.8",
+     "–",
+     "rated current"
+    ],
+    [
+     "P-012",
+     "Anode stoichiometry",
+     "1.5",
+     "–",
+     "rated current"
+    ],
+    [
+     "P-013",
+     "Cathode inlet relative humidity",
+     "50",
+     "%",
+     "rated current"
+    ],
+    [
+     "P-014",
+     "Cathode platinum loading",
+     "0.25",
+     "mg/cm²",
+     ""
+    ],
+    [
+     "P-015",
+     "Anode platinum loading",
+     "0.05",
+     "mg/cm²",
+     ""
+    ],
+    [
+     "P-016",
+     "Membrane thickness",
+     "12",
+     "µm",
+     ""
+    ],
+    [
+     "P-017",
+     "Stack mass",
+     "45",
+     "kg",
+     ""
+    ],
+    [
+     "P-018",
+     "Stack volume",
+     "40",
+     "L",
+     ""
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Electric turbo air compressor (A-CMP) | ID: P-019 | Name: Maximum air mass flow | Value: 100 | Unit: g/s",
+  "heading_path": [
+   "BoP",
+   "Electric turbo air compressor (A-CMP)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A4:E4"
+  },
+  "data": {
+   "caption": "Electric turbo air compressor (A-CMP)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-019",
+    "Maximum air mass flow",
+    "100",
+    "g/s",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Electric turbo air compressor (A-CMP) | ID: P-020 | Name: Maximum pressure ratio | Value: 2.5 | Unit: –",
+  "heading_path": [
+   "BoP",
+   "Electric turbo air compressor (A-CMP)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A5:E5"
+  },
+  "data": {
+   "caption": "Electric turbo air compressor (A-CMP)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-020",
+    "Maximum pressure ratio",
+    "2.5",
+    "–",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Electric turbo air compressor (A-CMP) | ID: P-021 | Name: Electrical power at rated point | Value: 12 | Unit: kW",
+  "heading_path": [
+   "BoP",
+   "Electric turbo air compressor (A-CMP)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A6:E6"
+  },
+  "data": {
+   "caption": "Electric turbo air compressor (A-CMP)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-021",
+    "Electrical power at rated point",
+    "12",
+    "kW",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Electric turbo air compressor (A-CMP) | ID: P-022 | Name: Maximum speed | Value: 120000 | Unit: rpm",
+  "heading_path": [
+   "BoP",
+   "Electric turbo air compressor (A-CMP)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A7:E7"
+  },
+  "data": {
+   "caption": "Electric turbo air compressor (A-CMP)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-022",
+    "Maximum speed",
+    "120000",
+    "rpm",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "Electric turbo air compressor (A-CMP)\n\n| Parameter / ID | Parameter / Name | Operating point / Value | Operating point / Unit | Operating point / Condition |\n|---|---|---|---|---|\n| P-019 | Maximum air mass flow | 100 | g/s |  |\n| P-020 | Maximum pressure ratio | 2.5 | – |  |\n| P-021 | Electrical power at rated point | 12 | kW |  |\n| P-022 | Maximum speed | 120000 | rpm |  |",
+  "heading_path": [
+   "BoP",
+   "Electric turbo air compressor (A-CMP)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A2:E7"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Name",
+    "Operating point / Value",
+    "Operating point / Unit",
+    "Operating point / Condition"
+   ],
+   "rows": [
+    [
+     "P-019",
+     "Maximum air mass flow",
+     "100",
+     "g/s",
+     ""
+    ],
+    [
+     "P-020",
+     "Maximum pressure ratio",
+     "2.5",
+     "–",
+     ""
+    ],
+    [
+     "P-021",
+     "Electrical power at rated point",
+     "12",
+     "kW",
+     ""
+    ],
+    [
+     "P-022",
+     "Maximum speed",
+     "120000",
+     "rpm",
+     ""
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Membrane humidifier (A-HUM) | ID: P-023 | Name: Dry-side pressure drop | Value: 15 | Unit: kPa | Condition: rated air flow",
+  "heading_path": [
+   "BoP",
+   "Membrane humidifier (A-HUM)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A13:E13"
+  },
+  "data": {
+   "caption": "Membrane humidifier (A-HUM)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-023",
+    "Dry-side pressure drop",
+    "15",
+    "kPa",
+    "rated air flow"
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "Membrane humidifier (A-HUM)\n\n| Parameter / ID | Parameter / Name | Operating point / Value | Operating point / Unit | Operating point / Condition |\n|---|---|---|---|---|\n| P-023 | Dry-side pressure drop | 15 | kPa | rated air flow |",
+  "heading_path": [
+   "BoP",
+   "Membrane humidifier (A-HUM)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A11:E13"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Name",
+    "Operating point / Value",
+    "Operating point / Unit",
+    "Operating point / Condition"
+   ],
+   "rows": [
+    [
+     "P-023",
+     "Dry-side pressure drop",
+     "15",
+     "kPa",
+     "rated air flow"
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Electric coolant pump (A-CLP) | ID: P-024 | Name: Rated coolant flow | Value: 150 | Unit: L/min",
+  "heading_path": [
+   "BoP",
+   "Electric coolant pump (A-CLP)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A20:E20"
+  },
+  "data": {
+   "caption": "Electric coolant pump (A-CLP)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-024",
+    "Rated coolant flow",
+    "150",
+    "L/min",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Electric coolant pump (A-CLP) | ID: P-025 | Name: Rated electrical power | Value: 0.8 | Unit: kW",
+  "heading_path": [
+   "BoP",
+   "Electric coolant pump (A-CLP)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A21:E21"
+  },
+  "data": {
+   "caption": "Electric coolant pump (A-CLP)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-025",
+    "Rated electrical power",
+    "0.8",
+    "kW",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "Electric coolant pump (A-CLP)\n\n| Parameter / ID | Parameter / Name | Operating point / Value | Operating point / Unit | Operating point / Condition |\n|---|---|---|---|---|\n| P-024 | Rated coolant flow | 150 | L/min |  |\n| P-025 | Rated electrical power | 0.8 | kW |  |",
+  "heading_path": [
+   "BoP",
+   "Electric coolant pump (A-CLP)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A18:E21"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Name",
+    "Operating point / Value",
+    "Operating point / Unit",
+    "Operating point / Condition"
+   ],
+   "rows": [
+    [
+     "P-024",
+     "Rated coolant flow",
+     "150",
+     "L/min",
+     ""
+    ],
+    [
+     "P-025",
+     "Rated electrical power",
+     "0.8",
+     "kW",
+     ""
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "Hydrogen recirculation blower (A-HRB) | ID: P-026 | Name: Rated electrical power | Value: 0.5 | Unit: kW",
+  "heading_path": [
+   "BoP",
+   "Hydrogen recirculation blower (A-HRB)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A27:E27"
+  },
+  "data": {
+   "caption": "Hydrogen recirculation blower (A-HRB)",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-026",
+    "Rated electrical power",
+    "0.5",
+    "kW",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "Hydrogen recirculation blower (A-HRB)\n\n| Parameter / ID | Parameter / Name | Operating point / Value | Operating point / Unit | Operating point / Condition |\n|---|---|---|---|---|\n| P-026 | Rated electrical power | 0.5 | kW |  |",
+  "heading_path": [
+   "BoP",
+   "Hydrogen recirculation blower (A-HRB)"
+  ],
+  "locator": {
+   "sheet": "BoP",
+   "cells": "A25:E27"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Name",
+    "Operating point / Value",
+    "Operating point / Unit",
+    "Operating point / Condition"
+   ],
+   "rows": [
+    [
+     "P-026",
+     "Rated electrical power",
+     "0.5",
+     "kW",
+     ""
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A | ID: P-027 | Name: Rated net power | Value: 80 | Unit: kW",
+  "heading_path": [
+   "System level",
+   "System A"
+  ],
+  "locator": {
+   "sheet": "System level",
+   "cells": "A4:E4"
+  },
+  "data": {
+   "caption": "System A",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-027",
+    "Rated net power",
+    "80",
+    "kW",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A | ID: P-028 | Name: System efficiency at rated power | Value: 44 | Unit: % | Condition: rated net power, LHV",
+  "heading_path": [
+   "System level",
+   "System A"
+  ],
+  "locator": {
+   "sheet": "System level",
+   "cells": "A5:E5"
+  },
+  "data": {
+   "caption": "System A",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-028",
+    "System efficiency at rated power",
+    "44",
+    "%",
+    "rated net power, LHV"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A | ID: P-029 | Name: Peak system efficiency | Value: 60 | Unit: % | Condition: 25 % of rated net power, LHV",
+  "heading_path": [
+   "System level",
+   "System A"
+  ],
+  "locator": {
+   "sheet": "System level",
+   "cells": "A6:E6"
+  },
+  "data": {
+   "caption": "System A",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-029",
+    "Peak system efficiency",
+    "60",
+    "%",
+    "25 % of rated net power, LHV"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A | ID: P-030 | Name: Hydrogen consumption at rated power | Value: 1.52 | Unit: g/s | Condition: rated net power, incl. purge losses",
+  "heading_path": [
+   "System level",
+   "System A"
+  ],
+  "locator": {
+   "sheet": "System level",
+   "cells": "A7:E7"
+  },
+  "data": {
+   "caption": "System A",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-030",
+    "Hydrogen consumption at rated power",
+    "1.52",
+    "g/s",
+    "rated net power, incl. purge losses"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A | ID: P-031 | Name: Hydrogen supply pressure | Value: 1200 | Unit: kPa | Condition: absolute, at system inlet",
+  "heading_path": [
+   "System level",
+   "System A"
+  ],
+  "locator": {
+   "sheet": "System level",
+   "cells": "A8:E8"
+  },
+  "data": {
+   "caption": "System A",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-031",
+    "Hydrogen supply pressure",
+    "1200",
+    "kPa",
+    "absolute, at system inlet"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A | ID: P-032 | Name: Minimum cold start temperature | Value: 243.15 | Unit: K | Condition: unassisted, 50 % power within 30 s",
+  "heading_path": [
+   "System level",
+   "System A"
+  ],
+  "locator": {
+   "sheet": "System level",
+   "cells": "A9:E9"
+  },
+  "data": {
+   "caption": "System A",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-032",
+    "Minimum cold start temperature",
+    "243.15",
+    "K",
+    "unassisted, 50 % power within 30 s"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A | ID: P-033 | Name: Maximum ambient temperature | Value: 318.15 | Unit: K",
+  "heading_path": [
+   "System level",
+   "System A"
+  ],
+  "locator": {
+   "sheet": "System level",
+   "cells": "A10:E10"
+  },
+  "data": {
+   "caption": "System A",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-033",
+    "Maximum ambient temperature",
+    "318.15",
+    "K",
+    ""
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A | ID: P-034 | Name: Design lifetime | Value: 8000 | Unit: h | Condition: to 10 % rated power loss, drive-cycle operation",
+  "heading_path": [
+   "System level",
+   "System A"
+  ],
+  "locator": {
+   "sheet": "System level",
+   "cells": "A11:E11"
+  },
+  "data": {
+   "caption": "System A",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-034",
+    "Design lifetime",
+    "8000",
+    "h",
+    "to 10 % rated power loss, drive-cycle operation"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A | ID: P-035 | Name: System mass | Value: 115 | Unit: kg | Condition: dry, without hydrogen storage",
+  "heading_path": [
+   "System level",
+   "System A"
+  ],
+  "locator": {
+   "sheet": "System level",
+   "cells": "A12:E12"
+  },
+  "data": {
+   "caption": "System A",
+   "columns": [
+    "ID",
+    "Name",
+    "Value",
+    "Unit",
+    "Condition"
+   ],
+   "values": [
+    "P-035",
+    "System mass",
+    "115",
+    "kg",
+    "dry, without hydrogen storage"
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "System A\n\n| Parameter / ID | Parameter / Name | Operating point / Value | Operating point / Unit | Operating point / Condition |\n|---|---|---|---|---|\n| P-027 | Rated net power | 80 | kW |  |\n| P-028 | System efficiency at rated power | 44 | % | rated net power, LHV |\n| P-029 | Peak system efficiency | 60 | % | 25 % of rated net power, LHV |\n| P-030 | Hydrogen consumption at rated power | 1.52 | g/s | rated net power, incl. purge losses |\n| P-031 | Hydrogen supply pressure | 1200 | kPa | absolute, at system inlet |\n| P-032 | Minimum cold start temperature | 243.15 | K | unassisted, 50 % power within 30 s |\n| P-033 | Maximum ambient temperature | 318.15 | K |  |\n| P-034 | Design lifetime | 8000 | h | to 10 % rated power loss, drive-cycle operation |\n| P-035 | System mass | 115 | kg | dry, without hydrogen storage |",
+  "heading_path": [
+   "System level",
+   "System A"
+  ],
+  "locator": {
+   "sheet": "System level",
+   "cells": "A2:E12"
+  },
+  "data": {
+   "columns": [
+    "Parameter / ID",
+    "Parameter / Name",
+    "Operating point / Value",
+    "Operating point / Unit",
+    "Operating point / Condition"
+   ],
+   "rows": [
+    [
+     "P-027",
+     "Rated net power",
+     "80",
+     "kW",
+     ""
+    ],
+    [
+     "P-028",
+     "System efficiency at rated power",
+     "44",
+     "%",
+     "rated net power, LHV"
+    ],
+    [
+     "P-029",
+     "Peak system efficiency",
+     "60",
+     "%",
+     "25 % of rated net power, LHV"
+    ],
+    [
+     "P-030",
+     "Hydrogen consumption at rated power",
+     "1.52",
+     "g/s",
+     "rated net power, incl. purge losses"
+    ],
+    [
+     "P-031",
+     "Hydrogen supply pressure",
+     "1200",
+     "kPa",
+     "absolute, at system inlet"
+    ],
+    [
+     "P-032",
+     "Minimum cold start temperature",
+     "243.15",
+     "K",
+     "unassisted, 50 % power within 30 s"
+    ],
+    [
+     "P-033",
+     "Maximum ambient temperature",
+     "318.15",
+     "K",
+     ""
+    ],
+    [
+     "P-034",
+     "Design lifetime",
+     "8000",
+     "h",
+     "to 10 % rated power loss, drive-cycle operation"
+    ],
+    [
+     "P-035",
+     "System mass",
+     "115",
+     "kg",
+     "dry, without hydrogen storage"
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – Operating limits | Nominal coolant outlet temperature: 353.15 K",
+  "heading_path": [
+   "Operating limits",
+   "System A – Operating limits"
+  ],
+  "locator": {
+   "sheet": "Operating limits",
+   "cells": "B3:B5"
+  },
+  "data": {
+   "caption": "System A – Operating limits",
+   "parameter": "Nominal coolant outlet temperature",
+   "value": "353.15",
+   "unit": "K"
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – Operating limits | Maximum coolant outlet temperature: 368.15 K",
+  "heading_path": [
+   "Operating limits",
+   "System A – Operating limits"
+  ],
+  "locator": {
+   "sheet": "Operating limits",
+   "cells": "C3:C5"
+  },
+  "data": {
+   "caption": "System A – Operating limits",
+   "parameter": "Maximum coolant outlet temperature",
+   "value": "368.15",
+   "unit": "K"
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – Operating limits | Maximum coolant temperature rise: 10 K",
+  "heading_path": [
+   "Operating limits",
+   "System A – Operating limits"
+  ],
+  "locator": {
+   "sheet": "Operating limits",
+   "cells": "D3:D5"
+  },
+  "data": {
+   "caption": "System A – Operating limits",
+   "parameter": "Maximum coolant temperature rise",
+   "value": "10",
+   "unit": "K"
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – Operating limits | Maximum anode-cathode differential pressure: 50 kPa",
+  "heading_path": [
+   "Operating limits",
+   "System A – Operating limits"
+  ],
+  "locator": {
+   "sheet": "Operating limits",
+   "cells": "E3:E5"
+  },
+  "data": {
+   "caption": "System A – Operating limits",
+   "parameter": "Maximum anode-cathode differential pressure",
+   "value": "50",
+   "unit": "kPa"
+  }
+ },
+ {
+  "kind": "table",
+  "content": "System A – Operating limits\n\n| Parameter | Value | Unit |\n|---|---|---|\n| Nominal coolant outlet temperature | 353.15 | K |\n| Maximum coolant outlet temperature | 368.15 | K |\n| Maximum coolant temperature rise | 10 | K |\n| Maximum anode-cathode differential pressure | 50 | kPa |",
+  "heading_path": [
+   "Operating limits",
+   "System A – Operating limits"
+  ],
+  "locator": {
+   "sheet": "Operating limits",
+   "cells": "A3:E5"
+  },
+  "data": {
+   "columns": [
+    "Parameter",
+    "Value",
+    "Unit"
+   ],
+   "rows": [
+    [
+     "Nominal coolant outlet temperature",
+     "353.15",
+     "K"
+    ],
+    [
+     "Maximum coolant outlet temperature",
+     "368.15",
+     "K"
+    ],
+    [
+     "Maximum coolant temperature rise",
+     "10",
+     "K"
+    ],
+    [
+     "Maximum anode-cathode differential pressure",
+     "50",
+     "kPa"
+    ]
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – stack BOM | Part ID: EP-01 | Description: end plate, dry side | Assembly: EPA-01 | Qty: 1 | Size (mm): 333.9 x 169.5 x 25",
+  "heading_path": [
+   "BOM",
+   "System A – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A4:E4"
+  },
+  "data": {
+   "caption": "System A – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "EP-01",
+    "end plate, dry side",
+    "EPA-01",
+    "1",
+    "333.9 x 169.5 x 25"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – stack BOM | Part ID: INS-01 | Description: insulation plate, dry side | Assembly: EPA-01 | Qty: 1 | Size (mm): 313.9 x 149.5 x 5",
+  "heading_path": [
+   "BOM",
+   "System A – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A5:E5"
+  },
+  "data": {
+   "caption": "System A – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "INS-01",
+    "insulation plate, dry side",
+    "EPA-01",
+    "1",
+    "313.9 x 149.5 x 5"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – stack BOM | Part ID: CC-01 | Description: current collector, dry side | Assembly: EPA-01 | Qty: 1 | Size (mm): 303.9 x 139.5 x 2",
+  "heading_path": [
+   "BOM",
+   "System A – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A6:E6"
+  },
+  "data": {
+   "caption": "System A – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "CC-01",
+    "current collector, dry side",
+    "EPA-01",
+    "1",
+    "303.9 x 139.5 x 2"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – stack BOM | Part ID: EP-02 | Description: end plate, wet side | Assembly: EPA-02 | Qty: 1 | Size (mm): 333.9 x 169.5 x 25",
+  "heading_path": [
+   "BOM",
+   "System A – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A7:E7"
+  },
+  "data": {
+   "caption": "System A – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "EP-02",
+    "end plate, wet side",
+    "EPA-02",
+    "1",
+    "333.9 x 169.5 x 25"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – stack BOM | Part ID: INS-02 | Description: insulation plate, wet side | Assembly: EPA-02 | Qty: 1 | Size (mm): 313.9 x 149.5 x 5",
+  "heading_path": [
+   "BOM",
+   "System A – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A8:E8"
+  },
+  "data": {
+   "caption": "System A – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "INS-02",
+    "insulation plate, wet side",
+    "EPA-02",
+    "1",
+    "313.9 x 149.5 x 5"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – stack BOM | Part ID: CC-02 | Description: current collector, wet side | Assembly: EPA-02 | Qty: 1 | Size (mm): 303.9 x 139.5 x 2",
+  "heading_path": [
+   "BOM",
+   "System A – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A9:E9"
+  },
+  "data": {
+   "caption": "System A – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "CC-02",
+    "current collector, wet side",
+    "EPA-02",
+    "1",
+    "303.9 x 139.5 x 2"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – stack BOM | Part ID: CB-01 | Description: cell block, 300 cells | Assembly: top level | Qty: 1 | Size (mm): 313.9 x 149.5 x 330",
+  "heading_path": [
+   "BOM",
+   "System A – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A10:E10"
+  },
+  "data": {
+   "caption": "System A – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "CB-01",
+    "cell block, 300 cells",
+    "top level",
+    "1",
+    "313.9 x 149.5 x 330"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – stack BOM | Part ID: TR-01 | Description: tie rod M10 | Assembly: top level | Qty: 4 | Size (mm): 10 x 10 x 434",
+  "heading_path": [
+   "BOM",
+   "System A – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A11:E11"
+  },
+  "data": {
+   "caption": "System A – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "TR-01",
+    "tie rod M10",
+    "top level",
+    "4",
+    "10 x 10 x 434"
+   ]
+  }
+ },
+ {
+  "kind": "table_row",
+  "content": "System A – stack BOM | Part ID: MF-01 | Description: media manifold block | Assembly: top level | Qty: 1 | Size (mm): 60 x 149.5 x 40",
+  "heading_path": [
+   "BOM",
+   "System A – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A12:E12"
+  },
+  "data": {
+   "caption": "System A – stack BOM",
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "values": [
+    "MF-01",
+    "media manifold block",
+    "top level",
+    "1",
+    "60 x 149.5 x 40"
+   ]
+  }
+ },
+ {
+  "kind": "table",
+  "content": "System A – stack BOM\n\n| Part ID | Description | Assembly | Qty | Size (mm) |\n|---|---|---|---|---|\n| EP-01 | end plate, dry side | EPA-01 | 1 | 333.9 x 169.5 x 25 |\n| INS-01 | insulation plate, dry side | EPA-01 | 1 | 313.9 x 149.5 x 5 |\n| CC-01 | current collector, dry side | EPA-01 | 1 | 303.9 x 139.5 x 2 |\n| EP-02 | end plate, wet side | EPA-02 | 1 | 333.9 x 169.5 x 25 |\n| INS-02 | insulation plate, wet side | EPA-02 | 1 | 313.9 x 149.5 x 5 |\n| CC-02 | current collector, wet side | EPA-02 | 1 | 303.9 x 139.5 x 2 |\n| CB-01 | cell block, 300 cells | top level | 1 | 313.9 x 149.5 x 330 |\n| TR-01 | tie rod M10 | top level | 4 | 10 x 10 x 434 |\n| MF-01 | media manifold block | top level | 1 | 60 x 149.5 x 40 |",
+  "heading_path": [
+   "BOM",
+   "System A – stack BOM"
+  ],
+  "locator": {
+   "sheet": "BOM",
+   "cells": "A3:E12"
+  },
+  "data": {
+   "columns": [
+    "Part ID",
+    "Description",
+    "Assembly",
+    "Qty",
+    "Size (mm)"
+   ],
+   "rows": [
+    [
+     "EP-01",
+     "end plate, dry side",
+     "EPA-01",
+     "1",
+     "333.9 x 169.5 x 25"
+    ],
+    [
+     "INS-01",
+     "insulation plate, dry side",
+     "EPA-01",
+     "1",
+     "313.9 x 149.5 x 5"
+    ],
+    [
+     "CC-01",
+     "current collector, dry side",
+     "EPA-01",
+     "1",
+     "303.9 x 139.5 x 2"
+    ],
+    [
+     "EP-02",
+     "end plate, wet side",
+     "EPA-02",
+     "1",
+     "333.9 x 169.5 x 25"
+    ],
+    [
+     "INS-02",
+     "insulation plate, wet side",
+     "EPA-02",
+     "1",
+     "313.9 x 149.5 x 5"
+    ],
+    [
+     "CC-02",
+     "current collector, wet side",
+     "EPA-02",
+     "1",
+     "303.9 x 139.5 x 2"
+    ],
+    [
+     "CB-01",
+     "cell block, 300 cells",
+     "top level",
+     "1",
+     "313.9 x 149.5 x 330"
+    ],
+    [
+     "TR-01",
+     "tie rod M10",
+     "top level",
+     "4",
+     "10 x 10 x 434"
+    ],
+    [
+     "MF-01",
+     "media manifold block",
+     "top level",
+     "1",
+     "60 x 149.5 x 40"
+    ]
+   ]
+  }
+ }
+]

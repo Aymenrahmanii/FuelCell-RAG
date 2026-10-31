@@ -1,0 +1,119 @@
+[
+ {
+  "kind": "drawing",
+  "content": "Drawing DWG-C-0002 rev A, sheet 1/1: System C – air path schematic.\nComponents:\n- C-AIR: Air inlet filter\n- C-BLW: Cathode air blower\n- C-HUM: Membrane humidifier\n- C-EXH: Exhaust outlet\n- C-STK: Fuel cell stack\nLine list:\n- L01 Air from C-AIR (Air inlet filter) to C-BLW (Cathode air blower)\n- L02 Air from C-BLW (Cathode air blower) to C-HUM (Membrane humidifier)\n- L03 Humidified air from C-HUM (Membrane humidifier) to C-STK (Fuel cell stack)\n- L04 Cathode exhaust from C-STK (Fuel cell stack) to C-HUM (Membrane humidifier)\n- L05 Cathode exhaust from C-HUM (Membrane humidifier) to C-EXH (Exhaust outlet)\nNotes: Schematic, not to scale. Sensors and check valves are not shown.",
+  "heading_path": [
+   "DWG-C-0002"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-C-0002",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System C – air path schematic",
+    "drawing_no": "DWG-C-0002",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "components": [
+    {
+     "tag": "C-AIR",
+     "name": "Air inlet filter"
+    },
+    {
+     "tag": "C-BLW",
+     "name": "Cathode air blower"
+    },
+    {
+     "tag": "C-HUM",
+     "name": "Membrane humidifier"
+    },
+    {
+     "tag": "C-EXH",
+     "name": "Exhaust outlet"
+    },
+    {
+     "tag": "C-STK",
+     "name": "Fuel cell stack"
+    }
+   ],
+   "lines": [
+    {
+     "line": "L01",
+     "medium": "Air",
+     "from": "C-AIR",
+     "to": "C-BLW"
+    },
+    {
+     "line": "L02",
+     "medium": "Air",
+     "from": "C-BLW",
+     "to": "C-HUM"
+    },
+    {
+     "line": "L03",
+     "medium": "Humidified air",
+     "from": "C-HUM",
+     "to": "C-STK"
+    },
+    {
+     "line": "L04",
+     "medium": "Cathode exhaust",
+     "from": "C-STK",
+     "to": "C-HUM"
+    },
+    {
+     "line": "L05",
+     "medium": "Cathode exhaust",
+     "from": "C-HUM",
+     "to": "C-EXH"
+    }
+   ],
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "First issue, detail of DWG-C-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ],
+   "text_source": "pdf"
+  }
+ },
+ {
+  "kind": "drawing",
+  "content": "Title block of drawing DWG-C-0002: Title: System C – air path schematic; Drawing no.: DWG-C-0002; Revision: A; Sheet: 1/1; Date: 2026-08-03; Drawn: FC-Design; Checked: FC-Systems.\nRevision history:\n- rev A (2026-08-03, FC-Design): First issue, detail of DWG-C-0001",
+  "heading_path": [
+   "DWG-C-0002"
+  ],
+  "locator": {
+   "page": 1,
+   "drawing_no": "DWG-C-0002",
+   "revision": "A"
+  },
+  "data": {
+   "title_block": {
+    "title": "System C – air path schematic",
+    "drawing_no": "DWG-C-0002",
+    "revision": "A",
+    "sheet": "1/1",
+    "date": "2026-08-03",
+    "drawn": "FC-Design",
+    "checked": "FC-Systems"
+   },
+   "revisions": [
+    {
+     "rev": "A",
+     "description": "First issue, detail of DWG-C-0001",
+     "date": "2026-08-03",
+     "by": "FC-Design"
+    }
+   ]
+  }
+ }
+]

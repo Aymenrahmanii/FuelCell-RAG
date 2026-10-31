@@ -1,0 +1,844 @@
+[
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0001: Anzahl Brennstoffzellenmodule\nDas Brennstoffzellensystem muss eine Anzahl Brennstoffzellenmodule von 2 – aufweisen.\nType: performance; Status: approved; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0001"
+  },
+  "data": {
+   "req_id": "REQ-B-0001",
+   "title": "Anzahl Brennstoffzellenmodule",
+   "text": "Das Brennstoffzellensystem muss eine Anzahl Brennstoffzellenmodule von 2 – aufweisen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0002: Nenn-Nettoleistung je Modul\nDas Brennstoffzellensystem muss eine Nenn-Nettoleistung je Modul von 150 kW erreichen.\nType: performance; Status: approved; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0002"
+  },
+  "data": {
+   "req_id": "REQ-B-0002",
+   "title": "Nenn-Nettoleistung je Modul",
+   "text": "Das Brennstoffzellensystem muss eine Nenn-Nettoleistung je Modul von 150 kW erreichen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0003: Nenn-Nettoleistung\nDas Brennstoffzellensystem muss eine Nenn-Nettoleistung von 300 kW (both modules) erreichen.\nType: performance; Status: in review; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0003"
+  },
+  "data": {
+   "req_id": "REQ-B-0003",
+   "title": "Nenn-Nettoleistung",
+   "text": "Das Brennstoffzellensystem muss eine Nenn-Nettoleistung von 300 kW (both modules) erreichen.",
+   "type": "performance",
+   "status": "in review",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0004: Systemwirkungsgrad bei Nennleistung\nDas Brennstoffzellensystem muss eine Systemwirkungsgrad bei Nennleistung von 48 % (rated net power, LHV) erreichen.\nType: performance; Status: draft; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0004"
+  },
+  "data": {
+   "req_id": "REQ-B-0004",
+   "title": "Systemwirkungsgrad bei Nennleistung",
+   "text": "Das Brennstoffzellensystem muss eine Systemwirkungsgrad bei Nennleistung von 48 % (rated net power, LHV) erreichen.",
+   "type": "performance",
+   "status": "draft",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0005: Maximaler Systemwirkungsgrad\nDas Brennstoffzellensystem muss eine Maximaler Systemwirkungsgrad von 58 % (30 % of rated net power, LHV) erreichen.\nType: performance; Status: approved; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0005"
+  },
+  "data": {
+   "req_id": "REQ-B-0005",
+   "title": "Maximaler Systemwirkungsgrad",
+   "text": "Das Brennstoffzellensystem muss eine Maximaler Systemwirkungsgrad von 58 % (30 % of rated net power, LHV) erreichen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0006: Wasserstoffverbrauch bei Nennleistung je Modul\nDas Brennstoffzellensystem muss eine Wasserstoffverbrauch bei Nennleistung je Modul von 2,6 g/s (rated net power, incl. purge losses) aufweisen.\nType: performance; Status: approved; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0006"
+  },
+  "data": {
+   "req_id": "REQ-B-0006",
+   "title": "Wasserstoffverbrauch bei Nennleistung je Modul",
+   "text": "Das Brennstoffzellensystem muss eine Wasserstoffverbrauch bei Nennleistung je Modul von 2,6 g/s (rated net power, incl. purge losses) aufweisen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0007: Wasserstoffverbrauch bei Nennleistung\nDas Brennstoffzellensystem muss eine Wasserstoffverbrauch bei Nennleistung von 5,2 g/s (both modules at rated net power, incl. purge losses) aufweisen.\nType: performance; Status: approved; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0007"
+  },
+  "data": {
+   "req_id": "REQ-B-0007",
+   "title": "Wasserstoffverbrauch bei Nennleistung",
+   "text": "Das Brennstoffzellensystem muss eine Wasserstoffverbrauch bei Nennleistung von 5,2 g/s (both modules at rated net power, incl. purge losses) aufweisen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0008: Wasserstoff-Versorgungsdruck\nDas Brennstoffzellensystem muss eine Wasserstoff-Versorgungsdruck von 1.200 kPa (absolute, at module inlet) aufweisen.\nType: operating limit; Status: in review; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0008"
+  },
+  "data": {
+   "req_id": "REQ-B-0008",
+   "title": "Wasserstoff-Versorgungsdruck",
+   "text": "Das Brennstoffzellensystem muss eine Wasserstoff-Versorgungsdruck von 1.200 kPa (absolute, at module inlet) aufweisen.",
+   "type": "operating limit",
+   "status": "in review",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0009: Minimale Kaltstarttemperatur\nDas Brennstoffzellensystem muss eine Minimale Kaltstarttemperatur von -25 °C (unassisted, 50 % power within 60 s) erreichen.\nType: environmental; Status: draft; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0009"
+  },
+  "data": {
+   "req_id": "REQ-B-0009",
+   "title": "Minimale Kaltstarttemperatur",
+   "text": "Das Brennstoffzellensystem muss eine Minimale Kaltstarttemperatur von -25 °C (unassisted, 50 % power within 60 s) erreichen.",
+   "type": "environmental",
+   "status": "draft",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0010: Maximale Umgebungstemperatur\nDas Brennstoffzellensystem darf eine Maximale Umgebungstemperatur von 50 °C nicht überschreiten.\nType: environmental; Status: approved; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0010"
+  },
+  "data": {
+   "req_id": "REQ-B-0010",
+   "title": "Maximale Umgebungstemperatur",
+   "text": "Das Brennstoffzellensystem darf eine Maximale Umgebungstemperatur von 50 °C nicht überschreiten.",
+   "type": "environmental",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0011: Auslegungslebensdauer\nDas Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.\nType: performance; Status: approved; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0011"
+  },
+  "data": {
+   "req_id": "REQ-B-0011",
+   "title": "Auslegungslebensdauer",
+   "text": "Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0012: Systemmasse\nDas Brennstoffzellensystem muss eine Systemmasse von 410 kg (both modules, dry, without hydrogen storage) aufweisen.\nType: design; Status: approved; Verification: Analysis",
+  "heading_path": [
+   "1 Systemanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0012"
+  },
+  "data": {
+   "req_id": "REQ-B-0012",
+   "title": "Systemmasse",
+   "text": "Das Brennstoffzellensystem muss eine Systemmasse von 410 kg (both modules, dry, without hydrogen storage) aufweisen.",
+   "type": "design",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": null,
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0013: Zellenanzahl\nDas Stackmodul muss eine Zellenanzahl von 440 – aufweisen.\nType: performance; Status: in review; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0013"
+  },
+  "data": {
+   "req_id": "REQ-B-0013",
+   "title": "Zellenanzahl",
+   "text": "Das Stackmodul muss eine Zellenanzahl von 440 – aufweisen.",
+   "type": "performance",
+   "status": "in review",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0014: Aktive Zellfläche\nDas Stackmodul muss eine Aktive Zellfläche von 400 cm² aufweisen.\nType: performance; Status: draft; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0014"
+  },
+  "data": {
+   "req_id": "REQ-B-0014",
+   "title": "Aktive Zellfläche",
+   "text": "Das Stackmodul muss eine Aktive Zellfläche von 400 cm² aufweisen.",
+   "type": "performance",
+   "status": "draft",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0015: Nenn-Bruttoleistung\nDas Stackmodul muss eine Nenn-Bruttoleistung von 172,5 kW erreichen.\nType: performance; Status: approved; Verification: Test; Refines: REQ-B-0003\nParent REQ-B-0003 (Nenn-Nettoleistung): Das Brennstoffzellensystem muss eine Nenn-Nettoleistung von 300 kW (both modules) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0015"
+  },
+  "data": {
+   "req_id": "REQ-B-0015",
+   "title": "Nenn-Bruttoleistung",
+   "text": "Das Stackmodul muss eine Nenn-Bruttoleistung von 172,5 kW erreichen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0003",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0016: Nennstrom\nDas Stackmodul muss eine Nennstrom von 560 A erreichen.\nType: performance; Status: approved; Verification: Test; Refines: REQ-B-0003\nParent REQ-B-0003 (Nenn-Nettoleistung): Das Brennstoffzellensystem muss eine Nenn-Nettoleistung von 300 kW (both modules) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0016"
+  },
+  "data": {
+   "req_id": "REQ-B-0016",
+   "title": "Nennstrom",
+   "text": "Das Stackmodul muss eine Nennstrom von 560 A erreichen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0003",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0017: Nennstromdichte\nDas Stackmodul muss eine Nennstromdichte von 1,4 A/cm² erreichen.\nType: performance; Status: approved; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0017"
+  },
+  "data": {
+   "req_id": "REQ-B-0017",
+   "title": "Nennstromdichte",
+   "text": "Das Stackmodul muss eine Nennstromdichte von 1,4 A/cm² erreichen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0018: Zellspannung bei Nennstrom\nDas Stackmodul muss eine Zellspannung bei Nennstrom von 0,7 V aufweisen.\nType: performance; Status: in review; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0018"
+  },
+  "data": {
+   "req_id": "REQ-B-0018",
+   "title": "Zellspannung bei Nennstrom",
+   "text": "Das Stackmodul muss eine Zellspannung bei Nennstrom von 0,7 V aufweisen.",
+   "type": "performance",
+   "status": "in review",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0019: Stackspannung bei Nennstrom\nDas Stackmodul muss eine Stackspannung bei Nennstrom von 308 V aufweisen.\nType: performance; Status: draft; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0019"
+  },
+  "data": {
+   "req_id": "REQ-B-0019",
+   "title": "Stackspannung bei Nennstrom",
+   "text": "Das Stackmodul muss eine Stackspannung bei Nennstrom von 308 V aufweisen.",
+   "type": "performance",
+   "status": "draft",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0020: Leerlaufspannung\nDas Stackmodul muss eine Leerlaufspannung von 418 V aufweisen.\nType: performance; Status: approved; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0020"
+  },
+  "data": {
+   "req_id": "REQ-B-0020",
+   "title": "Leerlaufspannung",
+   "text": "Das Stackmodul muss eine Leerlaufspannung von 418 V aufweisen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0021: Nominale Kühlmittelaustrittstemperatur\nDas Stackmodul muss eine Nominale Kühlmittelaustrittstemperatur von 75 °C aufweisen.\nType: operating limit; Status: approved; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0021"
+  },
+  "data": {
+   "req_id": "REQ-B-0021",
+   "title": "Nominale Kühlmittelaustrittstemperatur",
+   "text": "Das Stackmodul muss eine Nominale Kühlmittelaustrittstemperatur von 75 °C aufweisen.",
+   "type": "operating limit",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0022: Maximale Kühlmittelaustrittstemperatur\nDas Stackmodul darf eine Maximale Kühlmittelaustrittstemperatur von 85 °C (continuous) nicht überschreiten. Siehe auch REQ-B-0010.\nType: operating limit; Status: approved; Verification: Test; Refines: REQ-B-0011; Links: REQ-B-0010\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0022"
+  },
+  "data": {
+   "req_id": "REQ-B-0022",
+   "title": "Maximale Kühlmittelaustrittstemperatur",
+   "text": "Das Stackmodul darf eine Maximale Kühlmittelaustrittstemperatur von 85 °C (continuous) nicht überschreiten. Siehe auch REQ-B-0010.",
+   "type": "operating limit",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": [
+    "REQ-B-0010"
+   ]
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0023: Maximale Kühlmittel-Temperaturspreizung\nDas Stackmodul darf eine Maximale Kühlmittel-Temperaturspreizung von 8 K nicht überschreiten.\nType: performance; Status: in review; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0023"
+  },
+  "data": {
+   "req_id": "REQ-B-0023",
+   "title": "Maximale Kühlmittel-Temperaturspreizung",
+   "text": "Das Stackmodul darf eine Maximale Kühlmittel-Temperaturspreizung von 8 K nicht überschreiten.",
+   "type": "performance",
+   "status": "in review",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0024: Kathodeneintrittsdruck bei Nennleistung\nDas Stackmodul muss eine Kathodeneintrittsdruck bei Nennleistung von 250 kPa (absolute) aufweisen.\nType: operating limit; Status: draft; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0024"
+  },
+  "data": {
+   "req_id": "REQ-B-0024",
+   "title": "Kathodeneintrittsdruck bei Nennleistung",
+   "text": "Das Stackmodul muss eine Kathodeneintrittsdruck bei Nennleistung von 250 kPa (absolute) aufweisen.",
+   "type": "operating limit",
+   "status": "draft",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0025: Anodeneintrittsdruck bei Nennleistung\nDas Stackmodul muss eine Anodeneintrittsdruck bei Nennleistung von 240 kPa (absolute) aufweisen.\nType: operating limit; Status: approved; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0025"
+  },
+  "data": {
+   "req_id": "REQ-B-0025",
+   "title": "Anodeneintrittsdruck bei Nennleistung",
+   "text": "Das Stackmodul muss eine Anodeneintrittsdruck bei Nennleistung von 240 kPa (absolute) aufweisen.",
+   "type": "operating limit",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0026: Maximaler Differenzdruck Anode-Kathode\nDas Stackmodul darf eine Maximaler Differenzdruck Anode-Kathode von 40 kPa nicht überschreiten.\nType: performance; Status: approved; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0026"
+  },
+  "data": {
+   "req_id": "REQ-B-0026",
+   "title": "Maximaler Differenzdruck Anode-Kathode",
+   "text": "Das Stackmodul darf eine Maximaler Differenzdruck Anode-Kathode von 40 kPa nicht überschreiten.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0027: Kathodenstöchiometrie\nDas Stackmodul muss eine Kathodenstöchiometrie von 2 – (rated current) aufweisen.\nType: performance; Status: approved; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0027"
+  },
+  "data": {
+   "req_id": "REQ-B-0027",
+   "title": "Kathodenstöchiometrie",
+   "text": "Das Stackmodul muss eine Kathodenstöchiometrie von 2 – (rated current) aufweisen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0028: Anodenstöchiometrie\nDas Stackmodul muss eine Anodenstöchiometrie von 1,6 – (rated current) aufweisen.\nType: performance; Status: in review; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0028"
+  },
+  "data": {
+   "req_id": "REQ-B-0028",
+   "title": "Anodenstöchiometrie",
+   "text": "Das Stackmodul muss eine Anodenstöchiometrie von 1,6 – (rated current) aufweisen.",
+   "type": "performance",
+   "status": "in review",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0029: Relative Feuchte am Kathodeneintritt\nDas Stackmodul muss eine Relative Feuchte am Kathodeneintritt von 60 % (rated current) aufweisen.\nType: performance; Status: draft; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0029"
+  },
+  "data": {
+   "req_id": "REQ-B-0029",
+   "title": "Relative Feuchte am Kathodeneintritt",
+   "text": "Das Stackmodul muss eine Relative Feuchte am Kathodeneintritt von 60 % (rated current) aufweisen.",
+   "type": "performance",
+   "status": "draft",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0030: Platinbeladung Kathode\nDas Stackmodul muss eine Platinbeladung Kathode von 0,4 mg/cm² aufweisen.\nType: design; Status: approved; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0030"
+  },
+  "data": {
+   "req_id": "REQ-B-0030",
+   "title": "Platinbeladung Kathode",
+   "text": "Das Stackmodul muss eine Platinbeladung Kathode von 0,4 mg/cm² aufweisen.",
+   "type": "design",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0031: Platinbeladung Anode\nDas Stackmodul muss eine Platinbeladung Anode von 0,1 mg/cm² aufweisen.\nType: design; Status: approved; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0031"
+  },
+  "data": {
+   "req_id": "REQ-B-0031",
+   "title": "Platinbeladung Anode",
+   "text": "Das Stackmodul muss eine Platinbeladung Anode von 0,1 mg/cm² aufweisen.",
+   "type": "design",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0032: Membrandicke\nDas Stackmodul muss eine Membrandicke von 18 µm aufweisen.\nType: design; Status: approved; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0032"
+  },
+  "data": {
+   "req_id": "REQ-B-0032",
+   "title": "Membrandicke",
+   "text": "Das Stackmodul muss eine Membrandicke von 18 µm aufweisen.",
+   "type": "design",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0033: Stackmasse\nDas Stackmodul muss eine Stackmasse von 68 kg aufweisen.\nType: design; Status: in review; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0033"
+  },
+  "data": {
+   "req_id": "REQ-B-0033",
+   "title": "Stackmasse",
+   "text": "Das Stackmodul muss eine Stackmasse von 68 kg aufweisen.",
+   "type": "design",
+   "status": "in review",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0034: Stackvolumen\nDas Stackmodul muss eine Stackvolumen von 62 L aufweisen.\nType: design; Status: draft; Verification: Test; Refines: REQ-B-0011\nParent REQ-B-0011 (Auslegungslebensdauer): Das Brennstoffzellensystem muss eine Auslegungslebensdauer von 25.000 h (to 10 % rated power loss, long-haul duty cycle) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0034"
+  },
+  "data": {
+   "req_id": "REQ-B-0034",
+   "title": "Stackvolumen",
+   "text": "Das Stackmodul muss eine Stackvolumen von 62 L aufweisen.",
+   "type": "design",
+   "status": "draft",
+   "verification": "Test",
+   "parent": "REQ-B-0011",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0035: Maximaler Luftmassenstrom\nDas Luftverdichtermodul darf eine Maximaler Luftmassenstrom von 190 g/s nicht überschreiten.\nType: performance; Status: approved; Verification: Test; Refines: REQ-B-0004\nParent REQ-B-0004 (Systemwirkungsgrad bei Nennleistung): Das Brennstoffzellensystem muss eine Systemwirkungsgrad bei Nennleistung von 48 % (rated net power, LHV) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0035"
+  },
+  "data": {
+   "req_id": "REQ-B-0035",
+   "title": "Maximaler Luftmassenstrom",
+   "text": "Das Luftverdichtermodul darf eine Maximaler Luftmassenstrom von 190 g/s nicht überschreiten.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0004",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0036: Maximales Druckverhältnis\nDas Luftverdichtermodul darf eine Maximales Druckverhältnis von 2,3 – nicht überschreiten.\nType: operating limit; Status: approved; Verification: Test; Refines: REQ-B-0004\nParent REQ-B-0004 (Systemwirkungsgrad bei Nennleistung): Das Brennstoffzellensystem muss eine Systemwirkungsgrad bei Nennleistung von 48 % (rated net power, LHV) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0036"
+  },
+  "data": {
+   "req_id": "REQ-B-0036",
+   "title": "Maximales Druckverhältnis",
+   "text": "Das Luftverdichtermodul darf eine Maximales Druckverhältnis von 2,3 – nicht überschreiten.",
+   "type": "operating limit",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0004",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0037: Elektrische Leistungsaufnahme im Nennpunkt\nDas Luftverdichtermodul muss eine Elektrische Leistungsaufnahme im Nennpunkt von 18 kW aufweisen.\nType: performance; Status: approved; Verification: Test; Refines: REQ-B-0004\nParent REQ-B-0004 (Systemwirkungsgrad bei Nennleistung): Das Brennstoffzellensystem muss eine Systemwirkungsgrad bei Nennleistung von 48 % (rated net power, LHV) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0037"
+  },
+  "data": {
+   "req_id": "REQ-B-0037",
+   "title": "Elektrische Leistungsaufnahme im Nennpunkt",
+   "text": "Das Luftverdichtermodul muss eine Elektrische Leistungsaufnahme im Nennpunkt von 18 kW aufweisen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Test",
+   "parent": "REQ-B-0004",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0038: Maximaldrehzahl\nDas Luftverdichtermodul darf eine Maximaldrehzahl von 100.000 rpm nicht überschreiten.\nType: performance; Status: in review; Verification: Test; Refines: REQ-B-0004\nParent REQ-B-0004 (Systemwirkungsgrad bei Nennleistung): Das Brennstoffzellensystem muss eine Systemwirkungsgrad bei Nennleistung von 48 % (rated net power, LHV) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0038"
+  },
+  "data": {
+   "req_id": "REQ-B-0038",
+   "title": "Maximaldrehzahl",
+   "text": "Das Luftverdichtermodul darf eine Maximaldrehzahl von 100.000 rpm nicht überschreiten.",
+   "type": "performance",
+   "status": "in review",
+   "verification": "Test",
+   "parent": "REQ-B-0004",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0039: Druckverlust Trockenseite\nDas Befeuchtermodul muss eine Druckverlust Trockenseite von 20 kPa (rated air flow) aufweisen.\nType: operating limit; Status: draft; Verification: Analysis; Refines: REQ-B-0004\nParent REQ-B-0004 (Systemwirkungsgrad bei Nennleistung): Das Brennstoffzellensystem muss eine Systemwirkungsgrad bei Nennleistung von 48 % (rated net power, LHV) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0039"
+  },
+  "data": {
+   "req_id": "REQ-B-0039",
+   "title": "Druckverlust Trockenseite",
+   "text": "Das Befeuchtermodul muss eine Druckverlust Trockenseite von 20 kPa (rated air flow) aufweisen.",
+   "type": "operating limit",
+   "status": "draft",
+   "verification": "Analysis",
+   "parent": "REQ-B-0004",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0040: Nenn-Kühlmittelvolumenstrom\nDas Kühlmittelpumpenmodul muss eine Nenn-Kühlmittelvolumenstrom von 280 L/min aufweisen.\nType: performance; Status: approved; Verification: Analysis; Refines: REQ-B-0004\nParent REQ-B-0004 (Systemwirkungsgrad bei Nennleistung): Das Brennstoffzellensystem muss eine Systemwirkungsgrad bei Nennleistung von 48 % (rated net power, LHV) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0040"
+  },
+  "data": {
+   "req_id": "REQ-B-0040",
+   "title": "Nenn-Kühlmittelvolumenstrom",
+   "text": "Das Kühlmittelpumpenmodul muss eine Nenn-Kühlmittelvolumenstrom von 280 L/min aufweisen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": "REQ-B-0004",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0041: Elektrische Nennleistung\nDas Kühlmittelpumpenmodul muss eine Elektrische Nennleistung von 1,6 kW aufweisen.\nType: performance; Status: approved; Verification: Analysis; Refines: REQ-B-0004\nParent REQ-B-0004 (Systemwirkungsgrad bei Nennleistung): Das Brennstoffzellensystem muss eine Systemwirkungsgrad bei Nennleistung von 48 % (rated net power, LHV) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0041"
+  },
+  "data": {
+   "req_id": "REQ-B-0041",
+   "title": "Elektrische Nennleistung",
+   "text": "Das Kühlmittelpumpenmodul muss eine Elektrische Nennleistung von 1,6 kW aufweisen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": "REQ-B-0004",
+   "links": []
+  }
+ },
+ {
+  "kind": "requirement",
+  "content": "REQ-B-0042: Elektrische Nennleistung\nDas Rezirkulationsmodul muss eine Elektrische Nennleistung von 0,9 kW aufweisen.\nType: performance; Status: approved; Verification: Analysis; Refines: REQ-B-0004\nParent REQ-B-0004 (Systemwirkungsgrad bei Nennleistung): Das Brennstoffzellensystem muss eine Systemwirkungsgrad bei Nennleistung von 48 % (rated net power, LHV) erreichen.",
+  "heading_path": [
+   "2 Komponentenanforderungen"
+  ],
+  "locator": {
+   "req_id": "REQ-B-0042"
+  },
+  "data": {
+   "req_id": "REQ-B-0042",
+   "title": "Elektrische Nennleistung",
+   "text": "Das Rezirkulationsmodul muss eine Elektrische Nennleistung von 0,9 kW aufweisen.",
+   "type": "performance",
+   "status": "approved",
+   "verification": "Analysis",
+   "parent": "REQ-B-0004",
+   "links": []
+  }
+ }
+]

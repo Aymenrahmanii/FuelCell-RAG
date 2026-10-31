@@ -1,0 +1,123 @@
+[
+ {
+  "kind": "cad_part",
+  "content": "STEP assembly X-STK-ASM: 4 parts. Tree: X-STK-ASM -> EPA-01, EPA-02, CB-01; EPA-01 -> EP-01, CC-01; EPA-02 -> EP-02",
+  "heading_path": [
+   "X-STK-ASM"
+  ],
+  "locator": {
+   "part_id": "X-STK-ASM"
+  },
+  "data": null
+ },
+ {
+  "kind": "cad_part",
+  "content": "Assembly EPA-01 (X-STK-ASM) contains: EP-01, CC-01.",
+  "heading_path": [
+   "X-STK-ASM"
+  ],
+  "locator": {
+   "part_id": "EPA-01"
+  },
+  "data": {
+   "part_id": "EPA-01",
+   "parent": "X-STK-ASM",
+   "children": [
+    "EP-01",
+    "CC-01"
+   ],
+   "size_mm": null,
+   "volume_mm3": null
+  }
+ },
+ {
+  "kind": "cad_part",
+  "content": "Part EP-01 in assembly X-STK-ASM > EPA-01.",
+  "heading_path": [
+   "X-STK-ASM",
+   "EPA-01"
+  ],
+  "locator": {
+   "part_id": "EP-01"
+  },
+  "data": {
+   "part_id": "EP-01",
+   "parent": "EPA-01",
+   "children": [],
+   "size_mm": null,
+   "volume_mm3": null
+  }
+ },
+ {
+  "kind": "cad_part",
+  "content": "Part CC-01 in assembly X-STK-ASM > EPA-01.",
+  "heading_path": [
+   "X-STK-ASM",
+   "EPA-01"
+  ],
+  "locator": {
+   "part_id": "CC-01"
+  },
+  "data": {
+   "part_id": "CC-01",
+   "parent": "EPA-01",
+   "children": [],
+   "size_mm": null,
+   "volume_mm3": null
+  }
+ },
+ {
+  "kind": "cad_part",
+  "content": "Assembly EPA-02 (X-STK-ASM) contains: EP-02.",
+  "heading_path": [
+   "X-STK-ASM"
+  ],
+  "locator": {
+   "part_id": "EPA-02"
+  },
+  "data": {
+   "part_id": "EPA-02",
+   "parent": "X-STK-ASM",
+   "children": [
+    "EP-02"
+   ],
+   "size_mm": null,
+   "volume_mm3": null
+  }
+ },
+ {
+  "kind": "cad_part",
+  "content": "Part EP-02 in assembly X-STK-ASM > EPA-02.",
+  "heading_path": [
+   "X-STK-ASM",
+   "EPA-02"
+  ],
+  "locator": {
+   "part_id": "EP-02"
+  },
+  "data": {
+   "part_id": "EP-02",
+   "parent": "EPA-02",
+   "children": [],
+   "size_mm": null,
+   "volume_mm3": null
+  }
+ },
+ {
+  "kind": "cad_part",
+  "content": "Part CB-01 in assembly X-STK-ASM.",
+  "heading_path": [
+   "X-STK-ASM"
+  ],
+  "locator": {
+   "part_id": "CB-01"
+  },
+  "data": {
+   "part_id": "CB-01",
+   "parent": "X-STK-ASM",
+   "children": [],
+   "size_mm": null,
+   "volume_mm3": null
+  }
+ }
+]
