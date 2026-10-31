@@ -52,6 +52,7 @@ x-app-ml: &app-ml
   environment: *app-env
   volumes:
     - ./data:/app/data
+    - ./eval:/app/eval
     - models:/models
 
 services:

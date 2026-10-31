@@ -96,3 +96,17 @@ def ingest_status(job_id: str) -> dict[str, Any]:
 def send_feedback(payload: dict[str, Any]) -> bool:
     response = httpx.post(_url("/feedback"), json=payload, headers=_headers(), timeout=10)
     return response.status_code == 201
+
+
+def eval_runs() -> list[dict[str, Any]]:
+    response = httpx.get(_url("/eval/runs"), headers=_headers(), timeout=30)
+    response.raise_for_status()
+    runs: list[dict[str, Any]] = response.json()
+    return runs
+
+
+def eval_run(name: str) -> dict[str, Any]:
+    response = httpx.get(_url(f"/eval/runs/{name}"), headers=_headers(), timeout=60)
+    response.raise_for_status()
+    run: dict[str, Any] = response.json()
+    return run

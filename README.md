@@ -160,6 +160,9 @@ Everything in containers, the app included: `docker compose --profile app up -d 
   between current documents are flagged.
 - **Requirement checker**: paste a draft requirement; stated values are checked against the
   current documents, and similar and linked requirements are listed.
+- **Evaluation**: every saved run with its headline metrics, a comparison of two runs (metric
+  changes and the configuration that differs), recall per category, and the failing questions of
+  a run with the reason each failed. Reads `eval/runs/` through the API.
 
 ## Evaluation
 

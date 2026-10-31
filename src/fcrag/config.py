@@ -69,6 +69,9 @@ class Settings(BaseSettings):
 
     # Retrieval and generation
     prompts_dir: Path = Path("prompts")
+    eval_runs_dir: Path = Path("eval/runs")
+    """Saved evaluation runs, shown by the dashboard (GET /eval/runs)."""
+    golden_path: Path = Path("eval/golden_set.jsonl")
     prefetch_limit: int = 50
     rerank_top_k: int = 8
     rerank_threshold: float = 0.21
