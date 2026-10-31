@@ -3,7 +3,7 @@
 from datetime import datetime
 from typing import Any, Literal
 
-from sqlalchemy import JSON, DateTime, Integer, String, Text, func
+from sqlalchemy import JSON, Boolean, DateTime, Integer, String, Text, func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 Status = Literal["pending", "indexed", "failed", "quarantined"]
@@ -57,6 +57,32 @@ class Feedback(Base):
     model: Mapped[str | None] = mapped_column(String(100))
     prompt_version: Mapped[str | None] = mapped_column(String(40))
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class AuditRecord(Base):
+    """Who asked what, what was retrieved and what was answered. Kept for
+    ``audit_retention_days``, then removed by ``fcrag audit-prune``."""
+
+    __tablename__ = "audit_log"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), index=True
+    )
+    user_id: Mapped[str | None] = mapped_column(String(200))
+    groups: Mapped[list[str] | None] = mapped_column(JSON)
+    endpoint: Mapped[str] = mapped_column(String(40))
+    question: Mapped[str] = mapped_column(Text)
+    search_question: Mapped[str | None] = mapped_column(Text)
+    answer: Mapped[str | None] = mapped_column(Text)
+    found: Mapped[bool | None] = mapped_column(Boolean)
+    cached: Mapped[bool] = mapped_column(Boolean, default=False)
+    sources: Mapped[list[dict[str, Any]]] = mapped_column(JSON, default=list)
+    """Document, version, location and chunk of each retrieved source; not the chunk text."""
+    error: Mapped[str | None] = mapped_column(Text)
+    model: Mapped[str | None] = mapped_column(String(100))
+    prompt_version: Mapped[str | None] = mapped_column(String(40))
+    trace_id: Mapped[str | None] = mapped_column(String(64))
 
 
 class ParameterRecord(Base):
