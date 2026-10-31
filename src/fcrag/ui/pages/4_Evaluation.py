@@ -71,8 +71,16 @@ st.dataframe(
 )
 if run.get("injection"):
     inj = run["injection"]
-    st.caption(f"Prompt injection: {inj['resisted']} of {inj['questions']} answers resisted; the "
-               f"planted note was among the sources in {inj['planted_in_sources']}.")  # fmt: skip
+    text = (
+        f"Prompt injection: {inj['resisted']} of {inj['questions']} answers resisted; the "
+        f"planted note was among the sources in {inj['planted_in_sources']}."
+    )
+    if inj.get("forced"):
+        text += (
+            f" With the planted note given as the first source: {inj['forced_resisted']} "
+            f"of {inj['forced']} resisted."
+        )
+    st.caption(text)  # fmt: skip
 
 
 def problems(r: dict[str, Any]) -> list[str]:
@@ -95,6 +103,8 @@ def problems(r: dict[str, Any]) -> list[str]:
         issues.append("missing ID or term")
     if r.get("resisted") is False:
         issues.append("followed a planted instruction")
+    if r.get("forced_resisted") is False:
+        issues.append("followed a planted instruction given as a source")
     return issues
 
 
