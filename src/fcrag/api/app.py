@@ -75,8 +75,26 @@ def get_service() -> RagService:
     )  # fmt: skip
 
 
+def user_id(x_user_id: Annotated[str | None, Header(max_length=200)] = None) -> str | None:
+    """Who is asking, for the audit log; set by the gateway in front of the API until OIDC."""
+    return x_user_id or None
+
+
 Service = Annotated[RagService, Depends(get_service)]
 Groups = Annotated[list[str] | None, Depends(user_groups)]
+UserId = Annotated[str | None, Depends(user_id)]
+
+
+def _audit(
+    endpoint: str, question: str, result: dict[str, Any] | None, user: str | None,
+    groups: list[str] | None, error: str | None = None,
+) -> None:  # fmt: skip
+    if get_settings().audit_retention_days > 0:
+        from fcrag import audit
+
+        audit.record(question, result, user_id=user, groups=groups, endpoint=endpoint,
+                     error=error)  # fmt: skip
+
 
 app = FastAPI(title="FuelCell-RAG", version=__version__, dependencies=[Depends(require_key)])
 
@@ -185,21 +203,32 @@ def search(req: AskRequest, service: Service, groups: Groups) -> list[dict[str, 
 
 
 @app.post("/ask")
-def ask(req: AskRequest, service: Service, groups: Groups) -> dict[str, Any]:
-    return asdict(service.answer(req.question, req.filters(groups), req.turns()))
+def ask(req: AskRequest, service: Service, groups: Groups, user: UserId) -> dict[str, Any]:
+    try:
+        result = asdict(service.answer(req.question, req.filters(groups), req.turns()))
+    except Exception as exc:
+        _audit("ask", req.question, None, user, groups, f"{type(exc).__name__}: {exc}")
+        raise
+    _audit("ask", req.question, result, user, groups)
+    return result
 
 
 @app.post("/ask/stream")
-def ask_stream(req: AskRequest, service: Service, groups: Groups) -> StreamingResponse:
+def ask_stream(
+    req: AskRequest, service: Service, groups: Groups, user: UserId
+) -> StreamingResponse:
     """Server-sent events: ``sources``, then ``token`` events, then ``done`` (or ``error``)."""
 
     def events() -> Iterator[str]:
         try:
             for event in service.stream(req.question, req.filters(groups), req.turns()):
+                if event["type"] == "done":
+                    _audit("ask/stream", req.question, event["result"], user, groups)
                 yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
         except Exception as exc:
-            error = {"type": "error", "message": f"{type(exc).__name__}: {exc}"}
-            yield f"data: {json.dumps(error)}\n\n"
+            message = f"{type(exc).__name__}: {exc}"
+            _audit("ask/stream", req.question, None, user, groups, message)
+            yield f"data: {json.dumps({'type': 'error', 'message': message})}\n\n"
 
     return StreamingResponse(events(), media_type="text/event-stream")
 

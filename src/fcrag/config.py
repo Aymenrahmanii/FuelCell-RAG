@@ -77,6 +77,9 @@ class Settings(BaseSettings):
     response_cache_ttl_s: int = 86_400
     """How long a computed answer is replayed for the same question; 0 turns the cache off.
     Any ingestion changes the cache key, so answers never outlive the documents they cite."""
+    audit_retention_days: int = 90
+    """Days an answered question (user, groups, sources, answer) stays in the audit log;
+    ``fcrag audit-prune`` removes older rows. 0 turns the audit log off."""
     rerank_threshold: float = 0.21
     """Minimum reranker score (0..1) to count as evidence; if none passes, answer 'not found'.
     Calibrated on the golden set (2026-10-25): answerable questions scored >= 0.228, six of

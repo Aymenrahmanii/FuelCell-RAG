@@ -242,3 +242,39 @@ def test_unreachable_cache_is_skipped(client: TestClient) -> None:
     service.cache = RedisResponseCache(FakeRedis(broken=True), 60, lambda: "1")
     body = client.post("/ask", json=QUESTION).json()
     assert body["answer"] == "It is 85 °C [S1]." and body["cached"] is False
+
+
+def test_answers_are_audited_with_user_and_sources(client: TestClient, engine: Engine) -> None:
+    from sqlalchemy import select
+    from sqlalchemy.orm import Session
+
+    from fcrag.db.models import AuditRecord
+
+    headers = {"X-User-Id": "alice", "X-User-Groups": "eng"}
+    client.post("/ask", json=QUESTION, headers=headers)
+    with client.stream("POST", "/ask/stream", json=QUESTION) as response:
+        list(response.iter_lines())
+    with Session(engine) as session:
+        rows = session.scalars(select(AuditRecord).order_by(AuditRecord.id)).all()
+    assert [r.endpoint for r in rows] == ["ask", "ask/stream"]
+    first = rows[0]
+    assert first.user_id == "alice" and first.groups == ["eng"]
+    assert first.question == QUESTION["question"] and first.answer == "It is 85 °C [S1]."
+    assert first.found is True and first.sources[0]["doc_id"] == "ds"
+    assert "text" not in first.sources[0]
+    assert rows[1].user_id is None and rows[1].groups is None
+
+
+def test_audit_log_can_be_turned_off(
+    client: TestClient, engine: Engine, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from sqlalchemy import func, select
+    from sqlalchemy.orm import Session
+
+    from fcrag.db.models import AuditRecord
+
+    monkeypatch.setattr(api, "get_settings", lambda: Settings(_env_file=None,
+                                                              audit_retention_days=0))  # fmt: skip
+    client.post("/ask", json=QUESTION)
+    with Session(engine) as session:
+        assert session.scalar(select(func.count()).select_from(AuditRecord)) == 0
