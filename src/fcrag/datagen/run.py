@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from fcrag.datagen import cad, datasheet, drawing, excel, requirements
+from fcrag.datagen import cad, datasheet, drawing, excel, injection, requirements
 from fcrag.datagen.common import GeneratedFile, write_manifest
 from fcrag.truth import load_all
 
@@ -12,6 +12,7 @@ GENERATORS = (
     requirements.build_all,
     cad.build_all,
     drawing.build_all,
+    injection.build_all,
 )
 
 
