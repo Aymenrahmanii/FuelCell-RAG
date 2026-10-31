@@ -195,6 +195,32 @@ services:
       NEXTAUTH_URL: http://localhost:3000
       NEXTAUTH_SECRET: ${LANGFUSE_NEXTAUTH_SECRET:-CHANGEME-nextauth}
 
+  # Operations metrics: docker compose --profile monitoring up -d
+  # Prometheus on :9090 scrapes the API; Grafana on :3001 (Langfuse has :3000) opens the
+  # provisioned "FuelCell-RAG operations" dashboard.
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    restart: unless-stopped
+    profiles: [monitoring]
+    ports: ["9090:9090"]
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+
+  grafana:
+    image: grafana/grafana:12.1.0
+    restart: unless-stopped
+    profiles: [monitoring]
+    depends_on: [prometheus]
+    ports: ["3001:3000"]
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-CHANGEME-grafana}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./docker/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+
 volumes:
   models:
   qdrant_data:
@@ -203,3 +229,5 @@ volumes:
   minio_data:
   clickhouse_data:
   clickhouse_logs:
+  prometheus_data:
+  grafana_data:

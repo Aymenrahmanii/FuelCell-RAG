@@ -6,18 +6,19 @@ Models load on first use, so ``/health`` answers immediately after start-up.
 import io
 import json
 import secrets
+import time
 from collections.abc import Iterator
 from dataclasses import asdict
 from functools import lru_cache
 from pathlib import Path
 from typing import Annotated, Any, Literal
 
-from fastapi import Depends, FastAPI, Header, HTTPException
-from fastapi.responses import Response, StreamingResponse
+from fastapi import Depends, FastAPI, Header, HTTPException, Request
+from fastapi.responses import PlainTextResponse, Response, StreamingResponse
 from pydantic import BaseModel, Field
-from sqlalchemy import select, text
+from sqlalchemy import func, select, text
 
-from fcrag import __version__
+from fcrag import __version__, metrics
 from fcrag.config import get_settings
 from fcrag.db.models import Document, Feedback
 from fcrag.db.session import get_engine, session_scope
@@ -26,8 +27,10 @@ from fcrag.generation.rewrite import Turn
 from fcrag.retrieval.search import Filters
 
 
-def require_key(x_api_key: Annotated[str | None, Header()] = None) -> None:
+def require_key(request: Request, x_api_key: Annotated[str | None, Header()] = None) -> None:
     expected = get_settings().api_key
+    if request.url.path == "/metrics":
+        return  # scraped by Prometheus on the internal network; counts and timings only
     if expected is not None and not secrets.compare_digest(
         x_api_key or "", expected.get_secret_value()
     ):
@@ -62,6 +65,54 @@ Service = Annotated[RagService, Depends(get_service)]
 Groups = Annotated[list[str] | None, Depends(user_groups)]
 
 app = FastAPI(title="FuelCell-RAG", version=__version__, dependencies=[Depends(require_key)])
+
+
+@app.middleware("http")
+async def count_requests(request: Request, call_next: Any) -> Response:
+    """Requests and their duration per route template (never the raw path: IDs in URLs would
+    create one series per document). For /ask/stream the duration ends at the first byte."""
+    start = time.perf_counter()
+    status = 500
+    try:
+        response: Response = await call_next(request)
+        status = response.status_code
+        return response
+    finally:
+        route = request.scope.get("route")
+        path = getattr(route, "path", "unmatched")
+        metrics.HTTP_REQUESTS.inc(path=path, method=request.method, status=str(status))
+        metrics.HTTP_LATENCY.observe(time.perf_counter() - start, path=path)
+
+
+def _documents_by_status() -> list[tuple[dict[str, str], float]]:
+    with session_scope() as session:
+        rows = session.execute(
+            select(Document.status, func.count()).group_by(Document.status)
+        ).all()
+    return [({"status": status}, float(n)) for status, n in rows]
+
+
+def _ingest_queue_length() -> list[tuple[dict[str, str], float]]:
+    from rq import Queue
+
+    from fcrag.ingest.worker import QUEUE, _redis
+
+    return [({}, float(Queue(QUEUE, connection=_redis()).count))]
+
+
+metrics.register(metrics.Gauge(
+    "fcrag_documents", "Registered documents by ingestion status (failed, quarantined, ...).",
+    _documents_by_status,
+))  # fmt: skip
+metrics.register(metrics.Gauge(
+    "fcrag_ingest_queue_length", "Ingestion jobs waiting in the queue.", _ingest_queue_length
+))  # fmt: skip
+
+
+@app.get("/metrics", response_class=PlainTextResponse)
+def metrics_endpoint() -> str:
+    """Prometheus scrape target (no API key: aggregate counts and timings only)."""
+    return metrics.render()
 
 
 class ChatTurn(BaseModel):
