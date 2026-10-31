@@ -1,0 +1,24 @@
+# Known vulnerabilities accepted until the lock can be upgraded. One ID per line, then a reason.
+# The CI audit (.github/workflows/ci.yml) fails on any vulnerability not listed here.
+# Remove an entry as soon as the fixed version is locked:
+#   uv lock --upgrade-package filelock --upgrade-package litellm --upgrade-package setuptools --upgrade-package torch
+#
+# filelock 3.32.7, fixed in 4.2.1: litellm 1.106.4 requires filelock<4.0. Used by model and
+# dataset downloads (huggingface-hub), not by request handling.
+CVE-2026-112907  filelock: needs litellm with filelock>=4 support
+CVE-2026-112908  filelock: needs litellm with filelock>=4 support
+CVE-2026-112909  filelock: needs litellm with filelock>=4 support
+CVE-2026-112910  filelock: needs litellm with filelock>=4 support
+CVE-2026-112911  filelock: needs litellm with filelock>=4 support
+CVE-2026-112912  filelock: needs litellm with filelock>=4 support
+CVE-2026-112913  filelock: needs litellm with filelock>=4 support
+CVE-2026-112915  filelock: needs litellm with filelock>=4 support
+CVE-2026-112935  filelock: needs litellm with filelock>=4 support
+CVE-2026-112936  filelock: needs litellm with filelock>=4 support
+CVE-2026-112938  filelock: needs litellm with filelock>=4 support
+CVE-2026-112939  filelock: needs litellm with filelock>=4 support
+CVE-2026-112940  filelock: needs litellm with filelock>=4 support
+# setuptools 81.0.0, fixed in 84.1.0: torch 2.11.0+cu128 (Windows CUDA build) requires
+# setuptools<82. A build-time tool; the app does not import it.
+PYSEC-2026-3447  setuptools: needs a newer torch CUDA build
+GHSA-xmj3-9gf7-h52w  setuptools: needs a newer torch CUDA build
