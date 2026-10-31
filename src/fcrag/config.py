@@ -74,6 +74,9 @@ class Settings(BaseSettings):
     golden_path: Path = Path("eval/golden_set.jsonl")
     prefetch_limit: int = 50
     rerank_top_k: int = 8
+    rerank_max_length: int = 1024
+    """Tokens of question plus chunk the cross-encoder reads; longer chunks are truncated.
+    Reranking cost on CPU grows with it (CI uses 512, see .github/workflows/eval.yml)."""
     response_cache_ttl_s: int = 86_400
     """How long a computed answer is replayed for the same question; 0 turns the cache off.
     Any ingestion changes the cache key, so answers never outlive the documents they cite."""

@@ -29,7 +29,7 @@ PLANTED = "inj-"
 CONFIG_FIELDS = (
     "embedding_model", "reranker_model", "chunk_strategy", "chunk_max_tokens",
     "chunk_fixed_tokens", "contextual_headers", "prefetch_limit", "rerank_top_k",
-    "rerank_threshold", "llm_model",
+    "rerank_max_length", "rerank_threshold", "llm_model",
 )  # fmt: skip
 
 

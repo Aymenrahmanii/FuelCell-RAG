@@ -14,10 +14,11 @@ class Reranker(Protocol):
 
 
 class BgeReranker:
-    def __init__(self, model_name: str) -> None:
+    def __init__(self, model_name: str, max_length: int = 1024) -> None:
         import torch
         from FlagEmbedding import FlagReranker
 
+        self.max_length = max_length
         cuda = torch.cuda.is_available()
         self._model: Any = FlagReranker(
             model_name, use_fp16=cuda, devices="cuda:0" if cuda else "cpu"
@@ -27,7 +28,10 @@ class BgeReranker:
         if not texts:
             return []
         scores = self._model.compute_score(
-            [[query, t] for t in texts], normalize=True, batch_size=16, max_length=1024
+            [[query, t] for t in texts],
+            normalize=True,
+            batch_size=16,
+            max_length=self.max_length,
         )
         return [float(s) for s in (scores if isinstance(scores, list) else [scores])]
 
@@ -44,4 +48,5 @@ def rerank(
 
 @lru_cache(maxsize=1)
 def get_reranker() -> Reranker:
-    return BgeReranker(get_settings().reranker_model)
+    s = get_settings()
+    return BgeReranker(s.reranker_model, s.rerank_max_length)
