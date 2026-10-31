@@ -257,6 +257,26 @@ def ingest_status(job_id: str) -> dict[str, Any]:
     return job_status(job_id)
 
 
+@app.get("/eval/runs")
+def eval_runs() -> list[dict[str, Any]]:
+    """Saved evaluation runs, newest first, with their headline metrics."""
+    from fcrag.eval.store import list_runs
+
+    return list_runs(get_settings().eval_runs_dir)
+
+
+@app.get("/eval/runs/{name}")
+def eval_run(name: str) -> dict[str, Any]:
+    """One run with every question's result and question text."""
+    from fcrag.eval.store import load_run
+
+    s = get_settings()
+    run = load_run(s.eval_runs_dir, name, s.golden_path)
+    if run is None:
+        raise HTTPException(status_code=404, detail=f"no evaluation run {name!r}")
+    return run
+
+
 @app.post("/feedback", status_code=201)
 def feedback(req: FeedbackRequest) -> dict[str, int]:
     from fcrag.observability import score

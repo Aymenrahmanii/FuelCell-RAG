@@ -141,3 +141,19 @@ def test_history_is_validated(client: TestClient) -> None:
     assert client.post("/ask", json=bad).status_code == 422
     too_long = {**QUESTION, "history": [{"role": "user", "content": "q"}] * 21}
     assert client.post("/ask", json=too_long).status_code == 422
+
+
+def test_eval_runs_endpoints(
+    client: TestClient, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    runs = tmp_path / "runs"
+    runs.mkdir()
+    record = {"name": "ci", "config": {}, "summary": {"questions": 1, "recall@5": 1.0},
+              "results": [{"id": "q", "category": "parameter", "rank": 1}]}  # fmt: skip
+    (runs / "2026-10-31-ci.json").write_text(json.dumps(record), encoding="utf-8")
+    settings = Settings(_env_file=None, eval_runs_dir=runs, golden_path=tmp_path / "none.jsonl")
+    monkeypatch.setattr(api, "get_settings", lambda: settings)
+    listing = client.get("/eval/runs").json()
+    assert [r["name"] for r in listing] == ["2026-10-31-ci"] and listing[0]["recall@5"] == 1.0
+    assert client.get("/eval/runs/2026-10-31-ci").json()["summary"]["questions"] == 1
+    assert client.get("/eval/runs/nope").status_code == 404
