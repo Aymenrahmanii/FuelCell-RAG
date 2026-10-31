@@ -5,6 +5,7 @@ import time
 from collections.abc import Iterator
 from typing import Any, Protocol
 
+from fcrag import metrics
 from fcrag.config import Settings
 
 log = logging.getLogger(__name__)
@@ -65,18 +66,22 @@ class LiteLLMClient:
                                 started, self.model = True, model
                             yield delta
                     if started:
+                        metrics.LLM_CALLS.inc(model=model, outcome="ok")
                         return
                     raise RuntimeError(f"{model} returned an empty answer")
                 except Exception as exc:
                     if started:
+                        metrics.LLM_CALLS.inc(model=model, outcome="failed")
                         raise
                     last_error = exc
                     retryable = getattr(exc, "status_code", None) in RETRY_STATUS
                     if retryable and attempt < len(self.retry_delays_s):
                         delay = self.retry_delays_s[attempt]
+                        metrics.LLM_CALLS.inc(model=model, outcome="retry")
                         log.warning("LLM %s busy (%s), retrying in %.0f s", model, exc, delay)
                         time.sleep(delay)
                         continue
+                    metrics.LLM_CALLS.inc(model=model, outcome="fallback")
                     log.warning("LLM %s failed, trying the next model: %s", model, exc)
                     break
         raise RuntimeError(f"all LLMs failed; last error: {last_error}") from last_error

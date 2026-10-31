@@ -117,6 +117,11 @@ flowchart LR
 - **Conversations.** A follow-up ("and for System C?") is rewritten into a standalone question
   from the earlier turns before retrieval; if the rewrite fails, the question is used as asked.
   Questions that name a system only retrieve that system's documents and the public reports.
+- **Operations.** Every answer is traced in Langfuse (rewrite, retrieval, generation). The API
+  also serves Prometheus metrics at `/metrics`: requests and latency per route, error rate,
+  time per answer stage, answers without a source, LLM retries and fallbacks, documents per
+  ingestion status and the ingestion queue. `docker compose --profile app --profile monitoring
+  up -d` adds Prometheus (:9090) and Grafana (:3001) with an operations dashboard.
 
 Design decisions: [`docs/decisions/`](docs/decisions/).
 

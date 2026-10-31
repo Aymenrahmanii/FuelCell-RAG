@@ -157,3 +157,22 @@ def test_eval_runs_endpoints(
     assert [r["name"] for r in listing] == ["2026-10-31-ci"] and listing[0]["recall@5"] == 1.0
     assert client.get("/eval/runs/2026-10-31-ci").json()["summary"]["questions"] == 1
     assert client.get("/eval/runs/nope").status_code == 404
+
+
+def test_metrics_are_open_and_count_routes(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    from fcrag import metrics
+
+    before = metrics.ANSWERS.value(outcome="found")
+    assert client.post("/ask", json=QUESTION).status_code == 200
+    secured = Settings(_env_file=None, api_key=SecretStr("s3cret"))
+    monkeypatch.setattr(api, "get_settings", lambda: secured)
+    response = client.get("/metrics")  # no key: Prometheus scrapes without one
+    assert response.status_code == 200 and response.headers["content-type"].startswith("text/plain")
+    text = response.text
+    assert 'fcrag_http_requests_total{method="POST",path="/ask",status="200"}' in text
+    assert 'fcrag_answer_stage_seconds_count{stage="generate"}' in text
+    assert metrics.ANSWERS.value(outcome="found") == before + 1
+    assert 'fcrag_documents{status="indexed"} 1' in text  # read from the registry at scrape
+    assert client.get("/documents").status_code == 401  # every other route still needs the key

@@ -15,6 +15,7 @@ from typing import Any
 import yaml
 from qdrant_client import QdrantClient
 
+from fcrag import metrics
 from fcrag.config import Settings, get_settings
 from fcrag.embedding import Embedder, Embedding
 from fcrag.generation.citations import check_citations, format_locator, normalise_citations
@@ -140,6 +141,13 @@ class AnswerResult:
     search_question: str = ""
     """What retrieval used: the question, or its standalone rewrite for a follow-up."""
     trace_id: str | None = None
+
+
+def _record(timings: Timings, *, found: bool) -> None:
+    metrics.ANSWERS.inc(outcome="found" if found else "not_found")
+    for stage, seconds in asdict(timings).items():
+        if seconds:
+            metrics.STAGE_LATENCY.observe(seconds, stage=stage.removesuffix("_s"))
 
 
 class RagService:
@@ -310,6 +318,7 @@ class RagService:
                     question, language, text, found=False, timings=timings, trace_id=trace_id,
                     search_question=search_question,
                 )  # fmt: skip
+                _record(timings, found=False)
                 trace.update(output=text, metadata={"found": False})
                 yield {"type": "done", "result": asdict(result)}
                 return
@@ -353,6 +362,7 @@ class RagService:
                 trace_id=trace_id,
                 search_question=search_question,
             )
+            _record(timings, found=True)
             trace.update(output=answer, metadata={"found": True, "cited": report.cited,
                                                   "invalid_citations": report.invalid})  # fmt: skip
             yield {"type": "done", "result": asdict(result)}
