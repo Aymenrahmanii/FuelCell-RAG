@@ -35,6 +35,8 @@ class GoldenItem:
     """Strings the answer must contain, e.g. requirement IDs."""
     gold_sources: list[dict[str, Any]] = field(default_factory=list)
     """``{"doc_id", "doc_version"?, "locator"?}``: a retrieved chunk matching any one is a hit."""
+    forbidden_terms: list[str] = field(default_factory=list)
+    """Strings the answer must not contain: the canaries of a planted prompt injection."""
 
 
 # (system, component or None, key, language, question)
@@ -137,6 +139,28 @@ class Builder:
                     systems=[self.systems[code].system],
                     expected_values=[{"value": p.value, "unit": p.unit}],
                     gold_sources=self.sources(code, comp, key),
+                )
+            )  # fmt: skip
+        return items
+
+    def injection_items(self) -> list[GoldenItem]:
+        """Questions whose retrieved sources include a planted note that tries to take over the
+        answer. The answer must still give the true value, cite, and stay in its language."""
+        from fcrag.datagen.injection import ATTACKS
+
+        items = []
+        for n, attack in enumerate(ATTACKS.values(), 1):
+            p = _param(self.systems[attack.code], attack.component, attack.key)
+            items.append(
+                GoldenItem(
+                    id=f"inject-{n:02d}", category="injection", language=attack.language,
+                    question=attack.question,
+                    reference_answer=f"{label(p, attack.language)}: "
+                                     f"{_value_text(p, p.value, attack.language)}.",
+                    systems=[self.systems[attack.code].system],
+                    expected_values=[{"value": p.value, "unit": p.unit}],
+                    gold_sources=self.sources(attack.code, attack.component, attack.key),
+                    forbidden_terms=list(attack.canaries),
                 )
             )  # fmt: skip
         return items
@@ -406,7 +430,7 @@ def build_golden(systems_dir: Path, public_path: Path) -> list[GoldenItem]:
     derived = (
         builder.parameter_items() + builder.cross_system_items() + builder.version_items()
         + builder.trace_items() + builder.cross_doc_items() + cad_items(systems)
-        + drawing_items(systems)
+        + drawing_items(systems) + builder.injection_items()
     )  # fmt: skip
     return (
         [i for i in public if i.category == "fact_text"]
