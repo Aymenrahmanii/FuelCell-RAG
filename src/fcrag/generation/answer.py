@@ -18,6 +18,7 @@ from qdrant_client import QdrantClient
 from fcrag.config import Settings, get_settings
 from fcrag.embedding import Embedder, Embedding
 from fcrag.generation.citations import check_citations, format_locator, normalise_citations
+from fcrag.generation.rewrite import Turn, rewrite
 from fcrag.ingest.extract_params import Vocabulary
 from fcrag.language import detect_language
 from fcrag.llm.client import LLM, Message
@@ -116,6 +117,7 @@ def dedupe(sources: list[Source]) -> list[Source]:
 
 @dataclass
 class Timings:
+    rewrite_s: float = 0.0
     embed_s: float = 0.0
     search_s: float = 0.0
     rerank_s: float = 0.0
@@ -135,6 +137,8 @@ class AnswerResult:
     prompt_version: str = ""
     model: str = ""
     timings: Timings = field(default_factory=Timings)
+    search_question: str = ""
+    """What retrieval used: the question, or its standalone rewrite for a follow-up."""
     trace_id: str | None = None
 
 
@@ -247,7 +251,14 @@ class RagService:
         )
         return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
-    def stream(self, question: str, filters: Filters | None = None) -> Iterator[dict[str, Any]]:
+    def stream(
+        self,
+        question: str,
+        filters: Filters | None = None,
+        history: list[Turn] | None = None,
+    ) -> Iterator[dict[str, Any]]:
+        """Answer ``question``. With ``history`` (earlier turns of the chat), a follow-up is first
+        rewritten into a standalone question, which retrieval and the prompt then use."""
         filters = filters or Filters()
         prompt = load_prompt()
         language = detect_language(question)
@@ -255,15 +266,28 @@ class RagService:
         trace = start_trace(
             "rag.answer",
             as_type="chain",
-            input={"question": question},
+            input={"question": question, "history_turns": len(history or [])},
             metadata={"filters": asdict(filters), "language": language,
                       "prompt_version": prompt["version"]},
         )  # fmt: skip
         trace_id = getattr(trace, "trace_id", None)
         try:
-            span = trace.start_observation(name="retrieve", as_type="retriever", input=question)
-            structured = self.parameter_sources(question)
-            sources = dedupe(structured + self.retrieve(question, filters, timings))
+            search_question = question
+            if history and self.llm is not None:
+                rewrite_prompt = load_prompt("rewrite")
+                span = trace.start_observation(
+                    name="rewrite", as_type="generation", input=question,
+                    metadata={"prompt_version": rewrite_prompt["version"]},
+                )  # fmt: skip
+                start = time.perf_counter()
+                search_question = rewrite(self.llm, question, history, rewrite_prompt)
+                timings.rewrite_s = time.perf_counter() - start
+                span.update(output=search_question, model=self.llm.model).end()
+            span = trace.start_observation(
+                name="retrieve", as_type="retriever", input=search_question
+            )
+            structured = self.parameter_sources(search_question)
+            sources = dedupe(structured + self.retrieve(search_question, filters, timings))
             for n, source in enumerate(sources, 1):
                 source.label = f"S{n}"
             span.update(
@@ -275,6 +299,7 @@ class RagService:
                 "type": "sources",
                 "language": language,
                 "trace_id": trace_id,
+                "search_question": search_question,
                 "sources": [asdict(s) for s in sources],
             }
 
@@ -282,8 +307,9 @@ class RagService:
                 text = prompt["not_found"][language]
                 yield {"type": "token", "text": text}
                 result = AnswerResult(
-                    question, language, text, found=False, timings=timings, trace_id=trace_id
-                )
+                    question, language, text, found=False, timings=timings, trace_id=trace_id,
+                    search_question=search_question,
+                )  # fmt: skip
                 trace.update(output=text, metadata={"found": False})
                 yield {"type": "done", "result": asdict(result)}
                 return
@@ -292,7 +318,7 @@ class RagService:
                     "No LLM configured: set an API key for FCRAG_LLM_MODEL or run a local model"
                 )
 
-            messages = self.messages(question, language, sources)
+            messages = self.messages(search_question, language, sources)
             generation = trace.start_observation(
                 name="generate", as_type="generation", model=self.llm.model, input=messages,
                 metadata={"prompt_version": prompt["version"]},
@@ -325,6 +351,7 @@ class RagService:
                 model=self.llm.model,
                 timings=timings,
                 trace_id=trace_id,
+                search_question=search_question,
             )
             trace.update(output=answer, metadata={"found": True, "cited": report.cited,
                                                   "invalid_citations": report.invalid})  # fmt: skip
@@ -335,10 +362,12 @@ class RagService:
         finally:
             trace.end()
 
-    def answer(self, question: str, filters: Filters | None = None) -> AnswerResult:
+    def answer(
+        self, question: str, filters: Filters | None = None, history: list[Turn] | None = None
+    ) -> AnswerResult:
         """Non-streaming convenience wrapper, used by the CLI and the evaluation harness."""
         final: dict[str, Any] = {}
-        for event in self.stream(question, filters):
+        for event in self.stream(question, filters, history):
             if event["type"] == "done":
                 final = event["result"]
         sources = [Source(**s) for s in final.pop("sources")]

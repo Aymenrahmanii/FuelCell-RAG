@@ -103,6 +103,9 @@ def render(message: dict[str, Any], key: str) -> None:
             return
         if result.get("invalid_citations"):
             st.warning(f"The model cited sources that do not exist: {result['invalid_citations']}")
+        searched = result.get("search_question")
+        if searched and searched != result["question"]:
+            st.caption(f"Searched as: {searched}")
         if not result["found"]:
             st.info("No reliable source found.")
         show_sources(result["sources"], result["cited"], key)
@@ -128,6 +131,9 @@ def main() -> None:
     question = st.chat_input("Ask about stacks, limits, requirements… (English or Deutsch)")
     if not question:
         return
+    # Earlier turns let the API resolve follow-ups ("and for System C?"); errors are left out
+    history = [{"role": m["role"], "content": m["content"]} for m in messages
+               if m["role"] == "user" or m.get("result")]  # fmt: skip
     messages.append({"role": "user", "content": question})
     render(messages[-1], f"m{len(messages) - 1}")
 
@@ -135,7 +141,7 @@ def main() -> None:
         state: dict[str, Any] = {}
 
         def tokens() -> Any:
-            for event in client.ask_stream({"question": question, **filters}):
+            for event in client.ask_stream({"question": question, "history": history, **filters}):
                 if event["type"] == "token":
                     yield event["text"]
                 elif event["type"] == "done":

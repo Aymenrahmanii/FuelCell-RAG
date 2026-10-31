@@ -10,7 +10,7 @@ from collections.abc import Iterator
 from dataclasses import asdict
 from functools import lru_cache
 from pathlib import Path
-from typing import Annotated, Any
+from typing import Annotated, Any, Literal
 
 from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.responses import Response, StreamingResponse
@@ -22,6 +22,7 @@ from fcrag.config import get_settings
 from fcrag.db.models import Document, Feedback
 from fcrag.db.session import get_engine, session_scope
 from fcrag.generation.answer import RagService
+from fcrag.generation.rewrite import Turn
 from fcrag.retrieval.search import Filters
 
 
@@ -63,11 +64,21 @@ Groups = Annotated[list[str] | None, Depends(user_groups)]
 app = FastAPI(title="FuelCell-RAG", version=__version__, dependencies=[Depends(require_key)])
 
 
+class ChatTurn(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str = Field(max_length=4000)
+
+
 class AskRequest(BaseModel):
     question: str = Field(min_length=2, max_length=2000)
     systems: list[str] = Field(default_factory=list)
     doc_types: list[str] = Field(default_factory=list)
     latest_only: bool = False
+    history: list[ChatTurn] = Field(default_factory=list, max_length=20)
+    """Earlier turns of the chat, oldest first; a follow-up question is resolved against them."""
+
+    def turns(self) -> list[Turn]:
+        return [{"role": t.role, "content": t.content} for t in self.history]
 
     def filters(self, groups: list[str] | None) -> Filters:
         return Filters(self.systems, self.doc_types, self.latest_only, groups)
@@ -110,7 +121,7 @@ def search(req: AskRequest, service: Service, groups: Groups) -> list[dict[str, 
 
 @app.post("/ask")
 def ask(req: AskRequest, service: Service, groups: Groups) -> dict[str, Any]:
-    return asdict(service.answer(req.question, req.filters(groups)))
+    return asdict(service.answer(req.question, req.filters(groups), req.turns()))
 
 
 @app.post("/ask/stream")
@@ -119,7 +130,7 @@ def ask_stream(req: AskRequest, service: Service, groups: Groups) -> StreamingRe
 
     def events() -> Iterator[str]:
         try:
-            for event in service.stream(req.question, req.filters(groups)):
+            for event in service.stream(req.question, req.filters(groups), req.turns()):
                 yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
         except Exception as exc:
             error = {"type": "error", "message": f"{type(exc).__name__}: {exc}"}

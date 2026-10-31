@@ -114,6 +114,9 @@ flowchart LR
   of guessing.
 - **Generation.** LiteLLM: any hosted model, or a local model in restricted mode so no
   document text leaves the machine. Versioned prompt, streamed answer, citation check.
+- **Conversations.** A follow-up ("and for System C?") is rewritten into a standalone question
+  from the earlier turns before retrieval; if the rewrite fails, the question is used as asked.
+  Questions that name a system only retrieve that system's documents and the public reports.
 
 Design decisions: [`docs/decisions/`](docs/decisions/).
 
@@ -149,8 +152,9 @@ Everything in containers, the app included: `docker compose --profile app up -d 
 
 ## Applications
 
-- **Chat**: streamed answers, sources with page preview, version labels (latest or
-  superseded), copy with citations, rating and comment linked to the Langfuse trace.
+- **Chat**: streamed answers, follow-up questions (the rewritten question is shown), sources
+  with page preview, version labels (latest or superseded), copy with citations, rating and
+  comment linked to the Langfuse trace.
 - **Documents**: registry with status, counts, errors, quarantine and a re-ingest button.
 - **Parameter comparison**: values per system from the parameters table; disagreements
   between current documents are flagged.
