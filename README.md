@@ -141,6 +141,12 @@ uv run streamlit run src/fcrag/ui/chat.py   # UI on :8501
 ```
 
 Everything in containers, the app included: `docker compose --profile app up -d --build`.
+Released images: pushing a tag `vX.Y.Z` builds `ghcr.io/aymenrahmanii/fuelcell-rag-ml` and
+`-ui` and publishes a GitHub release with the latest evaluation run from `main` attached.
+
+CI on every pull request: lint, format, types, tests, a secret scan (gitleaks), an audit of the
+locked dependencies against known vulnerabilities (pip-audit; accepted exceptions, each with
+its reason, in `.github/pip-audit-ignore.txt`) and the retrieval evaluation gate.
 
 | Command | Purpose |
 |---|---|

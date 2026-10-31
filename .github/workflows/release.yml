@@ -1,0 +1,77 @@
+name: Release
+
+# On a version tag (v1.0.0): build the app images, push them to GitHub Container Registry,
+# and publish a GitHub release with the latest evaluation run from main attached.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write # the GitHub release
+  packages: write # ghcr.io
+  actions: read # the evaluation artifact of an earlier workflow run
+
+jobs:
+  images:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [ml, ui]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Image name
+        # GHCR needs lower case; the account name has capitals
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}-${{ matrix.target }}" >> "$GITHUB_ENV"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/app.Dockerfile
+          target: ${{ matrix.target }}
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:${{ github.ref_name }}
+            ${{ env.IMAGE }}:latest
+          cache-from: type=gha,scope=${{ matrix.target }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.target }}
+
+  release:
+    needs: images
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Latest evaluation run on main
+        # The eval gate uploads its run as the "eval-run" artifact; a missing one is reported,
+        # not fatal, so a release never waits on an expired artifact.
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          run_id=$(gh run list --workflow eval.yml --branch main --status success --limit 1 \
+            --json databaseId --jq '.[0].databaseId')
+          mkdir -p eval-run
+          if [ -n "$run_id" ] && gh run download "$run_id" --name eval-run --dir eval-run; then
+            echo "EVAL_NOTE=Evaluation run attached (eval gate run $run_id on main)." >> "$GITHUB_ENV"
+          else
+            echo "::warning title=release::no evaluation artifact found on main"
+            echo "EVAL_NOTE=No evaluation artifact was available for this release." >> "$GITHUB_ENV"
+          fi
+
+      - name: GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          image="ghcr.io/${GITHUB_REPOSITORY,,}"
+          notes=$(printf 'Images:\n- `%s-ml:%s`\n- `%s-ui:%s`\n\n%s' \
+            "$image" "$GITHUB_REF_NAME" "$image" "$GITHUB_REF_NAME" "$EVAL_NOTE")
+          gh release create "$GITHUB_REF_NAME" --generate-notes --notes "$notes" \
+            $(find eval-run -name '*.json' -print)

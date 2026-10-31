@@ -42,5 +42,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # Later phases add: Qdrant service container, fixture-corpus ingestion and the
-  # 20-question evaluation gate against the main-branch baseline.
+  audit:
+    # Known vulnerabilities in the locked dependencies. Accepted ones are listed, with their
+    # reason, in .github/pip-audit-ignore.txt; anything else fails the build.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+
+      - name: Export the locked dependency set
+        run: uv export --locked --no-hashes --all-extras --format requirements-txt -o requirements.txt
+
+      - name: pip-audit
+        run: |
+          ignores=$(grep -v '^\s*#' .github/pip-audit-ignore.txt | awk 'NF {print "--ignore-vuln " $1}')
+          # --no-deps: the export is already the complete, resolved set
+          uvx pip-audit==2.10.1 -r requirements.txt --no-deps --disable-pip \
+            --progress-spinner off $ignores
