@@ -109,7 +109,10 @@ def _eval_judge(args: argparse.Namespace) -> None:
     run = json.loads(path.read_text(encoding="utf-8"))
     judgements = judge_run(run, litellm_judge(args.model), pause_s=args.pause)
     out = path.with_suffix(".judgements.jsonl")
-    write_judgements(judgements, out)
+    dropped = write_judgements(judgements, out)
+    if dropped:
+        print(f"warning: {dropped} labelled claims no longer match a claim of this run; the "
+              f"previous file was kept as {out.stem}.<timestamp>.bak.jsonl")  # fmt: skip
     summary = faithfulness(judgements) | {"judge_model": args.model, "judge_prompt": PROMPT_VERSION}
     run["summary"].setdefault("answers", {})["faithfulness"] = summary["faithfulness"]
     run["summary"]["judge"] = summary

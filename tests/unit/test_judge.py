@@ -127,3 +127,25 @@ def test_rejudging_keeps_existing_labels(tmp_path: Path) -> None:
     assert rows[0]["human"] is True and rows[1]["claude"] is False
     assert rows[1]["supported"] is False and rows[2]["human"] is None
     assert agreement(path, "claude")["agreement"] == 1.0
+
+
+def test_rejudging_backs_up_labels_that_no_longer_match(tmp_path: Path) -> None:
+    from fcrag.eval.judge import Judgement
+
+    path = tmp_path / "run.judgements.jsonl"
+    old = [Judgement("q1", "A is 85 °C.", ["S1"], True, "ok"),
+           Judgement("q1", "B is 3 kW.", ["S2"], False, "no")]  # fmt: skip
+    assert write_judgements(old, path) == 0
+    rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    rows[0]["claude"], rows[1]["human"] = True, False
+    path.write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
+
+    # the second claim is now split differently: its label cannot be carried over
+    new = [Judgement("q1", "A is 85 °C.", ["S1"], True, "ok"),
+           Judgement("q1", "B is 3 kW at rated power.", ["S2"], False, "no")]  # fmt: skip
+    assert write_judgements(new, path) == 1
+    kept = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+    assert kept[0]["claude"] is True and kept[1]["human"] is None
+    backups = list(tmp_path.glob("run.judgements.*.bak.jsonl"))
+    assert len(backups) == 1
+    assert '"human": false' in backups[0].read_text(encoding="utf-8")
