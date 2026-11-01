@@ -3,8 +3,12 @@
     uvx locust -f tests/load/locustfile.py --host http://localhost:8000 \\
         --users 10 --spawn-rate 2 --run-time 5m --headless --csv eval/runs/load
 
-``/search`` measures retrieval alone (no LLM, no cost); ``/ask/stream`` measures the full answer,
-including time to the first streamed token. Set FCRAG_API_KEY if the API requires a key.
+``/search`` measures retrieval alone (no LLM, no cost). With LOAD_ANSWERS=1, ``/ask/stream`` adds
+two timings of its own: "time to first token" and "full answer" (until the ``done`` event). The
+request row Locust records for ``/ask/stream`` itself only covers the response headers, which a
+streamed answer sends at once, so it is not the answer time. Answers replayed from the response
+cache are reported as "full answer (cached)"; start the API with FCRAG_RESPONSE_CACHE_TTL_S=0 to
+measure every answer computed. Set FCRAG_API_KEY if the API requires a key.
 """
 
 import json
@@ -37,6 +41,7 @@ class Engineer(HttpUser):
             return
         start = time.perf_counter()
         first_token = None
+        cached, failed = False, False
         with self.client.post(
             "/ask/stream",
             json={"question": random.choice(QUESTIONS)},
@@ -49,10 +54,21 @@ class Engineer(HttpUser):
                 is_token = line.startswith(b"data: ") and b'"type": "token"' in line
                 if is_token and first_token is None:
                     first_token = (time.perf_counter() - start) * 1000
+                if b'"type": "done"' in line:
+                    cached = b'"cached": true' in line
                 if b'"type": "error"' in line:
+                    failed = True
                     response.failure(line.decode(errors="replace"))
-            if first_token is not None:
-                events.request.fire(
-                    request_type="SSE", name="time to first token", response_time=first_token,
-                    response_length=0, exception=None, context={},
-                )  # fmt: skip
+        total = (time.perf_counter() - start) * 1000
+        if failed:
+            return
+        if first_token is not None and not cached:
+            _record("time to first token", first_token)
+        _record("full answer (cached)" if cached else "full answer", total)
+
+
+def _record(name: str, ms: float) -> None:
+    events.request.fire(
+        request_type="SSE", name=name, response_time=ms, response_length=0, exception=None,
+        context={},
+    )  # fmt: skip

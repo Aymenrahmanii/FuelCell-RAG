@@ -230,6 +230,16 @@ is also answered a second time with its planted note given as the first source
 found in a document, whatever retrieval does. CI runs the [evaluation gate](.github/workflows/eval.yml) on every pull
 request.
 
+Load test ([`tests/load/locustfile.py`](tests/load/locustfile.py)): simulated engineers ask
+golden-set questions against a running API, three retrievals (`/search`) for each full answer
+(`/ask/stream`, with `LOAD_ANSWERS=1`). A streamed answer sends its headers at once, so the
+locustfile times it itself: "time to first token" and "full answer" until the `done` event.
+Answers replayed from the response cache are reported separately; start the API with
+`FCRAG_RESPONSE_CACHE_TTL_S=0` to time every answer computed. Note that the free tiers of the
+hosted LLMs (Groq: 8,000 tokens per minute) cap answers at a few per minute, well below what
+10 users ask for, so answer latency under load measures the provider's limit unless a paid
+tier or a local model answers.
+
 ## Lessons learned
 
 - **A full GPU slows down instead of failing.** On Windows, parsing and embedding models
