@@ -16,34 +16,36 @@ where each value appears, which gives exact gold labels for evaluation.
 
 ## Results
 
-Measured on the 67-question golden set (24 German) and the 80-document corpus (33 public
-PDFs and 47 generated files: datasheets, component datasheets, parameter sheets,
-requirements, schematics and STEP assemblies), run of 2026-10-30. Answers by
-`openai/gpt-oss-120b` on Groq's free tier (58 answers; 2 from the Gemini fallback, 1 error).
-Rows marked † come from the earlier 60-question run and were not re-measured; ‡ marks the
-answer-v4 run of 2026-10-31 (calibration below).
+Measured on the 70-question golden set (25 German) and the 83-document corpus (33 public
+PDFs and 50 generated files: datasheets, component datasheets, parameter sheets,
+requirements, schematics, STEP assemblies and three planted prompt-injection notes), run
+`2026-11-01-1322-answer-v5` (answer prompt answer-v5). Answers by `openai/gpt-oss-120b` on
+Groq's free tier (63 answers; 1 from the Gemini fallback; 6 answered "not found" before any
+LLM call, 0 errors). Rows marked † come from earlier runs and were not re-measured.
 
 | Metric | Result | Target |
 |---|---|---|
-| Retrieval recall@5 / recall@10 / MRR | **0.917** / 0.950 / 0.847 | ≥ 0.85 |
-| Value accuracy (stated value and unit match the truth, any unit) | **0.946** | ≥ 0.85 |
+| Retrieval recall@5 / recall@10 / MRR | **0.921** / 0.968 / 0.877 | ≥ 0.85 |
+| Value accuracy (stated value and unit match the truth, any unit) | **0.951** | ≥ 0.85 |
 | Term accuracy (requirement IDs, part and drawing tags named in the answer) | **1.00** | – |
-| Correct "not in the documents" answers / false refusals | **7 of 7** / 1 of 59 | ≥ 0.90 |
-| Citation precision (cited source is a gold source) | **0.941** | ≥ 0.90 |
-| Faithfulness, answer-v4, 79 claims (judge / second-opinion labels) ‡ | 0.933 / **0.892** | ≥ 0.90 |
+| Correct "not in the documents" answers / false refusals | **7 of 7** / 1 of 63 | ≥ 0.90 |
+| Citation precision (cited source is a gold source) | **0.940** | ≥ 0.90 |
+| Faithfulness, 75 claims (second-opinion labels / judge) | **0.932** / 0.890 | ≥ 0.90 |
+| Prompt injection resisted (as retrieved / planted note forced in as source 1) | **3 of 3** / 3 of 3 | all |
 | Invalid citations (source numbers that do not exist) | 0 | 0 |
 | Parameter extraction recall / precision (610 facts, through Docling) † | **99.5 % / 99.5 %** | – |
 | Ingestion throughput (laptop RTX 3050, 6 GB) † | ~1,150 PDF pages/h | ≥ 1,000 |
-| Retrieval p50 / p95 · generation p95 | 2.1 s / 2.9 s · 4.8 s † | end-to-end p95 < 6 s |
+| Retrieval p50 / p95 · generation p95 | 1.7 s / 2.7 s · 4.8 s † | end-to-end p95 < 6 s |
 
-Generation p95 in this run was 23.8 s, but that includes waiting out Groq's free-tier limit of
+Generation p95 in this run was 23.5 s, but that includes waiting out Groq's free-tier limit of
 8,000 tokens per minute; the 4.8 s comes from the earlier run without rate limiting.
 
 Recall per category: parameter, cross-system, version conflict, requirement trace and
-drawing/STEP 1.00; public-document facts 0.92; cross-document 0.50 (0.63 before the
-component datasheets were added). Cross-document is measured strictly: a conflict question
-only counts as found when the conflicting requirement is retrieved, which plain ranking
-often misses. The answer pipeline adds the best requirement chunks to such questions.
+drawing/STEP 1.00; public-document facts 0.92; cross-document 0.63. Cross-document is measured
+strictly: a conflict question only counts as found when the conflicting requirement is
+retrieved, which plain ranking often misses. The answer pipeline adds the best requirement
+chunks to such questions. (Injection questions show 0.67: their gold sources are the real
+documents, and one ranks 7th behind them.)
 
 Where it still fails (all visible in `eval/runs/`): a German question about an English slide
 deck (text-11) is refused because the German requirement documents outrank the English deck;
@@ -55,18 +57,22 @@ are exported, and `fcrag judge-label` walks a person through a random sample of 
 judge's verdict hidden; `fcrag judge-agreement` then reports how often judge and human agree.
 The faithfulness figure should be read together with that agreement rate.
 
-Calibration (‡ run `2026-10-31-2113-answer-v4`, prompt answer-v4, judge prompt judge-v2): a
-second LLM (Claude, a third model family) labelled all 79 claims without seeing the judge's
-verdicts, using the same strict standard: every fact in a claim must be in the sources *that
-claim cites*. The judge agreed on 72 of 79 blind (91 %); after review one blind label was
-corrected in the judge's favour (part descriptions absent from the cited STEP tree), giving
-73 of 79 (92 %). The judge was too lenient on 4 claims, all of one kind: a requirement ID or
-source reference that the answer names but whose source it does not cite (for example
-"80 kW [REQ-A-0001]" citing only the datasheet). It was too strict on 2 (kW read as different
-from kW_net; "key factor" judged unsupported where the source says "main challenge"). By the
-second-opinion labels faithfulness is **0.892**, just under the 0.90 target, so the judged
-0.933 is an upper bound. The same judge scored the previous prompt's answers (answer-v3, run
-of 2026-10-27) at 0.851, so answer-v4 is a clear improvement under an unchanged standard.
+Calibration (run `2026-11-01-1322-answer-v5`, judge prompt judge-v2): a second LLM (Claude,
+a third model family) labelled all 75 claims without seeing the judge's verdicts, using the
+same strict standard: every fact in a claim must be in the sources *that claim cites*. The
+judge agreed on 72 of 75 (96 %) and was never more lenient; it was stricter on 3 claims
+($/kW read as different from $/kW_net, "far more expensive" judged unsupported where the cited
+source compares the capital cost with competing technologies, and an assembly summary). The
+two figures, 0.890 and 0.932, bracket the target; the strict judge's is the lower bound. The 7
+claims both count as unsupported are a superlative or comparison citing only one side (3), a
+fact taken from a source the sentence does not cite (2), a "latest value" backed only by
+superseded documents (1), and part descriptions absent from the cited STEP tree (1).
+
+History under the same judge and labels: answer-v4 (run of 2026-10-31) scored 0.933 by the
+judge and 0.892 by second-opinion labels (92 % agreement); the judge was then too lenient on 4
+claims, all naming a requirement ID whose source the sentence does not cite. answer-v5 adds a
+rule against exactly that, and no such claim remains. answer-v3 (2026-10-27) scored 0.851
+under the same judge.
 These are LLM labels, not human ones; a person's labels (`fcrag judge-label`) remain the
 reference.
 
