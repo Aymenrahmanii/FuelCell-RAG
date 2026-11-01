@@ -11,6 +11,8 @@ Sources:
 - OSTI.gov (US DOE Office of Scientific and Technical Information): DOE-funded technical reports
   with full text hosted by OSTI.
 - arXiv: preprints, taken for research use under each author's arXiv licence.
+- DOE Hydrogen Program records (hydrogen.energy.gov): short US government documents with direct PDF
+  links; used when OSTI is unreachable from the current network.
 
 Only documents whose title names fuel cells are kept, and ids or URLs already in
 data/sources.yaml are skipped. The PDFs are never committed.
@@ -25,6 +27,7 @@ import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
 from collections.abc import Callable, Iterator
+from html import unescape
 from pathlib import Path
 from typing import Any
 
@@ -56,6 +59,11 @@ ARXIV_QUERIES = {
     'ti:"fuel cell" AND abs:"hydrogen vehicle"': ["automotive"],
     'ti:"solid oxide fuel cell"': ["sofc"],
 }
+DOE_BASE = "https://www.hydrogen.energy.gov"
+DOE_RECORDS = f"{DOE_BASE}/library/program-records"
+DOE_LINK = re.compile(
+    r'<a href="(/docs/hydrogenprogramlibraries/pdfs/([^"/?]+)\.pdf)[^"]*">([^<]+)</a>'
+)
 ATOM = {"a": "http://www.w3.org/2005/Atom"}
 FUEL_CELL = re.compile(r"fuel[\s-]*cells?|PEMFC|SOFC|Brennstoffzelle", re.IGNORECASE)
 
@@ -79,6 +87,12 @@ def slug(text: str, words: int = 6) -> str:
 def _year(value: Any) -> int | None:
     match = re.match(r"(\d{4})", str(value or ""))
     return int(match.group(1)) if match else None
+
+
+def _pdf_name(url: str) -> str:
+    """File name of a ``.pdf`` URL (without query), or "" for other URLs."""
+    name = urllib.parse.urlparse(url).path.rsplit("/", 1)[-1]
+    return name.lower() if name.endswith(".pdf") else ""
 
 
 def osti_entries(
@@ -111,6 +125,29 @@ def osti_entries(
                 "topics": topics,
             }
         time.sleep(pause_s)
+
+
+def doe_entries(
+    get: Fetch, query: str, topics: list[str], pages: int, pause_s: float
+) -> Iterator[dict[str, Any]]:
+    """DOE Hydrogen Program records about fuel cells; ``query`` is the page URL."""
+    html = get(query).decode("utf-8", errors="replace")
+    for path, name, raw_title in DOE_LINK.findall(html):
+        title = " ".join(unescape(raw_title).split())
+        if not FUEL_CELL.search(title):
+            continue
+        yield {
+            "id": f"doe-record-{slug(name, 8)}",
+            "url": f"{DOE_BASE}{path}",
+            "title": title,
+            "publisher": "US DOE Hydrogen and Fuel Cell Technologies Office",
+            "year": None,
+            "licence": "US government work; public domain",
+            "doc_type": "report",
+            "format": "report",
+            "topics": topics,
+        }
+    time.sleep(pause_s)
 
 
 def arxiv_entries(
@@ -149,8 +186,10 @@ def discover(
     """Up to ``target`` new entries, alternating sources so neither dominates."""
     seen_ids = {e["id"] for e in existing}
     seen_urls = {e["url"] for e in existing}
+    seen_files = {_pdf_name(e["url"]) for e in existing}
     seen_titles = {e["title"].lower() for e in existing}
     streams = [osti_entries(get, q, t, pages, pause_s) for q, t in OSTI_QUERIES.items()]
+    streams += [doe_entries(get, DOE_RECORDS, ["program-records"], pages, pause_s)]
     streams += [arxiv_entries(get, q, t, pages, pause_s) for q, t in ARXIV_QUERIES.items()]
     found: list[dict[str, Any]] = []
     while streams and len(found) < target:
@@ -165,12 +204,16 @@ def discover(
                 streams.remove(stream)
                 continue
             key = entry["title"].lower()
+            name = _pdf_name(entry["url"])
             if entry["id"] in seen_ids or entry["url"] in seen_urls or key in seen_titles:
+                continue
+            if name and name in seen_files:  # same DOE file under another path
                 continue
             if not entry["year"]:
                 entry.pop("year")
             seen_ids.add(entry["id"])
             seen_urls.add(entry["url"])
+            seen_files.add(name)
             seen_titles.add(key)
             found.append(entry)
             if len(found) >= target:
@@ -204,10 +247,11 @@ def main() -> None:
     )
     body = yaml.safe_dump({"sources": previous + found}, sort_keys=False, allow_unicode=True)
     args.out.write_text(header + body, encoding="utf-8")
-    by_source = {"osti": 0, "arxiv": 0}
+    by_source = {"osti": 0, "arxiv": 0, "doe": 0}
     for entry in found:
         by_source[entry["id"].split("-", 1)[0]] += 1
-    print(f"{len(found)} new candidates ({by_source['osti']} OSTI, {by_source['arxiv']} arXiv); "
+    print(f"{len(found)} new candidates ({by_source['osti']} OSTI, {by_source['arxiv']} arXiv, "
+          f"{by_source['doe']} DOE); "
           f"{len(previous) + len(found)} in {args.out}")  # fmt: skip
 
 

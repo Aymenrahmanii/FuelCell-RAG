@@ -21,6 +21,7 @@ from fcrag.embedding import Embedder, Embedding
 from fcrag.generation.cache import ResponseCache
 from fcrag.generation.citations import check_citations, format_locator, normalise_citations
 from fcrag.generation.rewrite import Turn, rewrite
+from fcrag.generation.translate import translate_query
 from fcrag.ingest.extract_params import Vocabulary
 from fcrag.language import detect_language
 from fcrag.llm.client import LLM, Message
@@ -184,6 +185,7 @@ class RagService:
         self.params = params
         self.vocabulary = vocabulary
         self.cache = cache
+        self._translations: dict[str, str | None] = {}
 
     def parameter_sources(self, question: str) -> list[Source]:
         """Exact records from the parameters table when the question names system and parameter."""
@@ -214,29 +216,60 @@ class RagService:
         limit: int | None = None,
     ) -> list[Hit]:
         """All hybrid-search candidates, reranked, best first (no cut-off, no threshold).
-        Search and rerank times add up in ``timings`` across calls."""
+        Search and rerank times add up in ``timings`` across calls.
+
+        With ``cross_lingual`` on, a German question is also searched in English: candidates of
+        both searches are merged and each keeps its better reranker score."""
         t = timings or Timings()
         filters = self.scope(question, filters)
-        if query is None:
+        english = self.english_query(question)
+        queries = [question] + ([english] if english else [])
+        pool: dict[str, Hit] = {}
+        for i, text in enumerate(queries):
+            if i == 0 and query is not None:
+                embedding = query
+            else:
+                start = time.perf_counter()
+                embedding = self.embedder.embed([text], max_tokens=QUERY_MAX_TOKENS)[0]
+                t.embed_s += time.perf_counter() - start
             start = time.perf_counter()
-            query = self.embedder.embed([question], max_tokens=QUERY_MAX_TOKENS)[0]
-            t.embed_s += time.perf_counter() - start
+            hits = hybrid_search(
+                self.client,
+                self.settings.qdrant_collection,
+                embedding,
+                filters,
+                prefetch_limit=limit or self.settings.prefetch_limit,
+                limit=limit or self.settings.prefetch_limit,
+            )
+            t.search_s += time.perf_counter() - start
+            pool.update({h.chunk_id: h for h in hits if h.chunk_id not in pool})
 
         start = time.perf_counter()
-        hits = hybrid_search(
-            self.client,
-            self.settings.qdrant_collection,
-            query,
-            filters,
-            prefetch_limit=limit or self.settings.prefetch_limit,
-            limit=limit or self.settings.prefetch_limit,
-        )
-        t.search_s += time.perf_counter() - start
-
-        start = time.perf_counter()
-        ranked = rerank(self.reranker, question, hits, top_k=len(hits), threshold=0.0)
+        pooled = list(pool.values())
+        best: dict[str, float] = {}
+        asked: dict[str, float] = {}
+        for text in queries:  # rerank scores hits in place, so keep the best score per chunk
+            rerank(self.reranker, text, pooled, top_k=len(pooled), threshold=0.0)
+            for hit in pooled:
+                best[hit.chunk_id] = max(best.get(hit.chunk_id, 0.0), hit.rerank_score or 0.0)
+                asked.setdefault(hit.chunk_id, hit.rerank_score or 0.0)  # first query = asked
+        for hit in pooled:
+            hit.rerank_score = best[hit.chunk_id]
+            hit.question_score = asked[hit.chunk_id] if english else None
         t.rerank_s += time.perf_counter() - start
-        return ranked
+        return sorted(pooled, key=lambda h: h.rerank_score or 0.0, reverse=True)
+
+    def english_query(self, question: str) -> str | None:
+        """English search query for a German question; None when disabled or not needed."""
+        if not self.settings.cross_lingual or self.llm is None:
+            return None
+        if detect_language(question) != "de":
+            return None
+        cached = self._translations.get(question)
+        if question not in self._translations:
+            cached = translate_query(self.llm, question, load_prompt("translate"))
+            self._translations[question] = cached
+        return cached
 
     def retrieve(
         self, question: str, filters: Filters, timings: Timings | None = None
@@ -254,7 +287,10 @@ class RagService:
 
         threshold = self.settings.rerank_threshold
         ranked = self.rank(question, filters, t, query=query)
-        kept = [h for h in ranked if (h.rerank_score or 0.0) >= threshold]
+        # "Not found" is decided on the question as asked: a translation must not turn an
+        # unanswerable question into an answerable one, only find better evidence for one.
+        has_evidence = any(h.evidence_score >= threshold for h in ranked)
+        kept = [h for h in ranked if has_evidence and (h.rerank_score or 0.0) >= threshold]
         kept = kept[: self.settings.rerank_top_k]
         if REQUIREMENT_WORDS.search(question) and "requirements" not in filters.doc_types:
             req_filters = replace(filters, doc_types=["requirements"])

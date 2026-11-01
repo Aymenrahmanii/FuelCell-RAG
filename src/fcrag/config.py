@@ -83,6 +83,8 @@ class Settings(BaseSettings):
     audit_retention_days: int = 90
     """Days an answered question (user, groups, sources, answer) stays in the audit log;
     ``fcrag audit-prune`` removes older rows. 0 turns the audit log off."""
+    cross_lingual: bool = False
+    """Also search with an English translation of a German question (one extra LLM call)."""
     rerank_threshold: float = 0.21
     """Minimum reranker score (0..1) to count as evidence; if none passes, answer 'not found'.
     Calibrated on the golden set (2026-10-25): answerable questions scored >= 0.228, six of

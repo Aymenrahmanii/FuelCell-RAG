@@ -53,7 +53,17 @@ def load_script(repo_root: Path) -> ModuleType:
     return module
 
 
+DOE_PAGE = (
+    '<a href="/docs/hydrogenprogramlibraries/pdfs/11003_fuel_cell_stack_durability.pdf?sfvrsn=1">'
+    "Fuel Cell Stack  Durability</a>"
+    '<a href="/docs/hydrogenprogramlibraries/pdfs/12014_current_us_hydrogen_production.pdf?x=2">'
+    "Current U.S. Hydrogen Production</a>"
+)
+
+
 def fake_get(url: str) -> bytes:
+    if "hydrogen.energy.gov" in url:
+        return DOE_PAGE.encode()
     if url.startswith("https://www.osti.gov/"):
         return json.dumps(OSTI_PAGE if "page=1" in url else []).encode()
     if "start=0" in url:
@@ -118,3 +128,21 @@ def test_ingestion_reads_titles_from_the_discovered_manifest(tmp_path: Path) -> 
     (tmp_path / "sources.discovered.yaml").write_text(yaml.safe_dump({"sources": [entry]}), "utf-8")
     meta = load_metadata(tmp_path / "sources.yaml", [])
     assert meta["osti-1.pdf"]["title"] == "Bus report" and meta["doe-1.pdf"]["title"] == "Record"
+
+
+def test_doe_records_keep_only_fuel_cell_titles(repo_root: Path) -> None:
+    script = load_script(repo_root)
+    found = script.discover(fake_get, [], target=50, pages=1, pause_s=0)
+    doe = [e for e in found if e["id"].startswith("doe-record-")]
+    assert [e["title"] for e in doe] == ["Fuel Cell Stack Durability"]
+    assert doe[0]["url"].startswith("https://www.hydrogen.energy.gov/docs/")
+    assert doe[0]["url"].endswith(".pdf?sfvrsn=1") is False and doe[0]["url"].endswith(".pdf")
+
+
+def test_doe_record_already_in_corpus_under_another_path_is_skipped(repo_root: Path) -> None:
+    script = load_script(repo_root)
+    url = "https://www.hydrogen.energy.gov/pdfs/11003_fuel_cell_stack_durability.pdf"
+    existing = [{"id": "doe-rec-11003-stack-durability", "title": "Program Record 11003",
+                 "url": url}]  # fmt: skip
+    found = script.discover(fake_get, existing, target=50, pages=1, pause_s=0)
+    assert not any(e["id"].startswith("doe-record-") for e in found)
