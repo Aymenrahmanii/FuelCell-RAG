@@ -939,22 +939,6 @@ sources:
   doc_type: report
   format: report
   topics: *id005
-- id: doe-record-17007-fuel-cell-system-cost-2017
-  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/17007_fuel_cell_system_cost_2017.pdf
-  title: Fuel Cell System Cost—2017
-  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
-  licence: US government work; public domain
-  doc_type: report
-  format: report
-  topics: *id005
-- id: doe-record-16020-fuel-cell-system-cost-2016
-  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/16020_fuel_cell_system_cost_2016.pdf
-  title: Fuel Cell System Cost—2016
-  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
-  licence: US government work; public domain
-  doc_type: report
-  format: report
-  topics: *id005
 - id: doe-record-16019-fuel-cell-stack-durability-2016
   url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/16019_fuel_cell_stack_durability_2016.pdf
   title: On-Road Fuel Cell Stack Durability—2016
@@ -963,25 +947,9 @@ sources:
   doc_type: report
   format: report
   topics: *id005
-- id: doe-record-15015-fuel-cell-system-cost-2015
-  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/15015_fuel_cell_system_cost_2015.pdf
-  title: Fuel Cell System Cost—2015
-  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
-  licence: US government work; public domain
-  doc_type: report
-  format: report
-  topics: *id005
 - id: doe-record-15014-fuel-cell-stack-durability
   url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/15014_fuel_cell_stack_durability.pdf
   title: On-Road Fuel Cell Stack Durability—2015
-  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
-  licence: US government work; public domain
-  doc_type: report
-  format: report
-  topics: *id005
-- id: doe-record-14014-fuel-cell-system-cost-2014
-  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/14014_fuel_cell_system_cost_2014.pdf
-  title: Fuel Cell System Cost—2014
   publisher: US DOE Hydrogen and Fuel Cell Technologies Office
   licence: US government work; public domain
   doc_type: report
@@ -1054,14 +1022,6 @@ sources:
 - id: doe-record-11009-portable-fuel-cell-targets
   url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/11009_portable_fuel_cell_targets.pdf
   title: Revised Portable Power Fuel Cell Targets
-  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
-  licence: US government work; public domain
-  doc_type: report
-  format: report
-  topics: *id005
-- id: doe-record-11003-fuel-cell-stack-durability
-  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/11003_fuel_cell_stack_durability.pdf
-  title: Fuel Cell Stack Durability
   publisher: US DOE Hydrogen and Fuel Cell Technologies Office
   licence: US government work; public domain
   doc_type: report

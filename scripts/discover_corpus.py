@@ -89,6 +89,12 @@ def _year(value: Any) -> int | None:
     return int(match.group(1)) if match else None
 
 
+def _pdf_name(url: str) -> str:
+    """File name of a ``.pdf`` URL (without query), or "" for other URLs."""
+    name = urllib.parse.urlparse(url).path.rsplit("/", 1)[-1]
+    return name.lower() if name.endswith(".pdf") else ""
+
+
 def osti_entries(
     get: Fetch, query: str, topics: list[str], pages: int, pause_s: float
 ) -> Iterator[dict[str, Any]]:
@@ -180,6 +186,7 @@ def discover(
     """Up to ``target`` new entries, alternating sources so neither dominates."""
     seen_ids = {e["id"] for e in existing}
     seen_urls = {e["url"] for e in existing}
+    seen_files = {_pdf_name(e["url"]) for e in existing}
     seen_titles = {e["title"].lower() for e in existing}
     streams = [osti_entries(get, q, t, pages, pause_s) for q, t in OSTI_QUERIES.items()]
     streams += [doe_entries(get, DOE_RECORDS, ["program-records"], pages, pause_s)]
@@ -197,12 +204,16 @@ def discover(
                 streams.remove(stream)
                 continue
             key = entry["title"].lower()
+            name = _pdf_name(entry["url"])
             if entry["id"] in seen_ids or entry["url"] in seen_urls or key in seen_titles:
+                continue
+            if name and name in seen_files:  # same DOE file under another path
                 continue
             if not entry["year"]:
                 entry.pop("year")
             seen_ids.add(entry["id"])
             seen_urls.add(entry["url"])
+            seen_files.add(name)
             seen_titles.add(key)
             found.append(entry)
             if len(found) >= target:

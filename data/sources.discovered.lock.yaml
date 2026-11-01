@@ -83,7 +83,6 @@ arxiv-2606.25992-poisoning-effect-of-ammonia: 7d4745540394c8bf517b7c63998aaf02d8
 arxiv-2607.16616-high-entropy-perovskites-architectured: a154f372d7ef2b139429738a9d96bcc30f4dcfdc4ab3c92e6897e80e560b5447
 arxiv-2609.21446-a-fast-physics-based: 6e4ada701773fef223a7a20574fe4179a3bcbe651980c906e54658768e2f9438
 doe-record-10004-fuel-cell-cost: 170b1cabca5a743920f8c8cd4c87f989b47a311208ee6eb4bbc1713a80eacb1b
-doe-record-11003-fuel-cell-stack-durability: ef3dc919a532a0d61efc19b35a07387328636c2b8b9ba5a8d364d7c2faabc522
 doe-record-11009-portable-fuel-cell-targets: 199f972a15c3470cc8b5d3ea6d1f37e48d4f0cf82ffada739eb71e36db3406e0
 doe-record-11012-fuel-cell-system-cost: 3dd752a49ecb3c38fefa0f9632e3d7e10832478d5797df5e7434dd666283f185
 doe-record-11013-platinum-loading-pemfc: 191289c0698739c123967e081caf618781fe3218eecdd81f2dbe4c00585e52d3
@@ -93,15 +92,11 @@ doe-record-11016-micro-chp-target: dcf40273dad0b4ab2ab69773c2f5bdc8d8be076504333
 doe-record-12012-fuel-cell-bus-targets: 9923d25d2367d4767c2217dea4c720e66f5ba1b081118a62d972f2ac67b55cd1
 doe-record-12020-fuel-cell-system-cost-2012: 3edc8864d31529e9a475ac7e758e410f90fdfd28a82b789f6dbed091124ac338
 doe-record-14012-fuel-cell-system-cost-2013: 29caf44ed11282bae927077fca8e8f4961923ebdc72fb97018aaab0005d0ab72
-doe-record-14014-fuel-cell-system-cost-2014: 7ae64b4a22056c8909ce70ee384d53d33bb29281f7b8ae0ebdc9fa022a287834
 doe-record-15014-fuel-cell-stack-durability: 8ed855ac71cabe0693f928070898153a7fe688b2b906850e1f375482f9c87455
-doe-record-15015-fuel-cell-system-cost-2015: a24b31f512df47c243a528dd4c535a4aae4983c5c84c3ec06a1856497c23bd16
 doe-record-16019-fuel-cell-stack-durability-2016: c5bea99aea6a35157e100759804c5f9c54d6f1d4b2c4617616bb455904ef2f79
-doe-record-16020-fuel-cell-system-cost-2016: ca84d66c8ad9262f716fd60d95f0d0e528a981e02a6193ae930e082e1b7ca4f2
 doe-record-16021-ghg-emissions-petroleum-reduction-from-fc: 3be3874d61fed0db159d0bf0a956d521a1d1fe4f312a2bfe0ff8743f3a3c8156
 doe-record-17004-industry-deployed-fc-bup: 792124dd59d44f918fc827c96464039ff01d56d4595e91722362029d648b653e
 doe-record-17006-historical-fuel-cell-h2-budgets: 0a3c89068c15b14c0c56fbd68929a61a9e1058fbe3d3d4737511a02532e72366
-doe-record-17007-fuel-cell-system-cost-2017: 2c4ace3bcbd71ac86171b28d2d1dd17804a2572fd1101dc9a76f6253d44a3d1e
 doe-record-18002-industry-deployed-fc-powered-lift-trucks: e8d6d255af4a5322309906ec2793800a2d7bce6ae174f8bbeeb24ffadf9403a5
 doe-record-20001-reversible-fuel-cell-targets: ceed1c86c41c30e560fb98a169f404f90c6fbc11115eb9aa89781fecb5ba9ae7
 doe-record-20002-early-market-transportation-fuel-cell-cost: 638dfb47a3c11e76404d0bb1bdb8236fa53106d345d264d2dcc9343c61d5ed57
