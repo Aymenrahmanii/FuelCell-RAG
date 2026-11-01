@@ -1,0 +1,1125 @@
+# Candidates from scripts/discover_corpus.py. Review before downloading: remove anything
+# off-topic or with an unsuitable licence. Fetch with
+#   uv run python scripts/download_corpus.py --manifest data/sources.discovered.yaml
+sources:
+- id: arxiv-1108.0609-analysis-of-sulfur-poisoning
+  url: https://arxiv.org/pdf/1108.0609
+  title: Analysis of Sulfur Poisoning on a PEM Fuel Cell Electrode
+  publisher: arXiv
+  year: 2011
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: &id001
+  - pem
+- id: arxiv-1911.00704-simultaneously-parameter-identification-and
+  url: https://arxiv.org/pdf/1911.00704
+  title: Simultaneously Parameter Identification and Measurement-Noise Covariance
+    estimation of a Proton Exchange Membrane Fuel Cell
+  publisher: arXiv
+  year: 2019
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: &id002
+  - pem
+- id: arxiv-2310.13208-online-energy-management-system
+  url: https://arxiv.org/pdf/2310.13208
+  title: Online energy management system for a fuel cell/battery hybrid system with
+    multiple fuel cell stacks
+  publisher: arXiv
+  year: 2023
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: &id003
+  - durability
+- id: arxiv-1909.10611-nanostructured-la0-5ba0-5coo3
+  url: https://arxiv.org/pdf/1909.10611
+  title: Nanostructured La0.5Ba0.5CoO3 as cathode for solid oxide fuel cells
+  publisher: arXiv
+  year: 2019
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: &id004
+  - sofc
+- id: arxiv-2109.14341-a-kernel-for-pem
+  url: https://arxiv.org/pdf/2109.14341
+  title: A kernel for PEM fuel cell distribution of relaxation times
+  publisher: arXiv
+  year: 2021
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2604.11433-air-supply-control-for
+  url: https://arxiv.org/pdf/2604.11433
+  title: Air supply control for proton exchange membrane fuel cells without explicit
+    modeling
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-1401.4286-modeling-of-durability-of
+  url: https://arxiv.org/pdf/1401.4286
+  title: Modeling of durability of polyelectrolyte membrane of O2/H2 fuel cell
+  publisher: arXiv
+  year: 2014
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-1412.1548-heterogeneous-electrocatalysis-in-porous
+  url: https://arxiv.org/pdf/1412.1548
+  title: Heterogeneous electrocatalysis in porous cathodes of solid oxide fuel cells
+  publisher: arXiv
+  year: 2014
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-1811.09811-free-open-reference-implementation
+  url: https://arxiv.org/pdf/1811.09811
+  title: Free open reference implementation of a two-phase PEM fuel cell model
+  publisher: arXiv
+  year: 2018
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2606.25992-poisoning-effect-of-ammonia
+  url: https://arxiv.org/pdf/2606.25992
+  title: Poisoning effect of ammonia on the performance and transport process of proton
+    exchange membrane fuel cells
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-2212.01576-microstructure-evolution-of-solid
+  url: https://arxiv.org/pdf/2212.01576
+  title: Microstructure Evolution of Solid Oxide Fuel Cell Anodes Characterized by
+    Persistent Homology
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-2011.14674-thermal-analysis-of-pem
+  url: https://arxiv.org/pdf/2011.14674
+  title: Thermal Analysis of PEM Fuel Cell and Lithium Ion Battery Pack in Confined
+    Space
+  publisher: arXiv
+  year: 2020
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2009.06434-thermal-neutron-radiography-of
+  url: https://arxiv.org/pdf/2009.06434
+  title: Thermal neutron radiography of a passive proton exchange membrane fuel cell
+    for portable hydrogen energy systems
+  publisher: arXiv
+  year: 2020
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-2008.04770-holistic-multi-scale-imaging
+  url: https://arxiv.org/pdf/2008.04770
+  title: Holistic Multi-scale Imaging of Oxygen Reduction Reaction Catalyst Degradation
+    in Operational Fuel Cells
+  publisher: arXiv
+  year: 2020
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-1502.01878-crack-formation-in-ceramic
+  url: https://arxiv.org/pdf/1502.01878
+  title: Crack Formation in Ceramic Films Used in Solid Oxide Fuel Cells
+  publisher: arXiv
+  year: 2015
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-1811.10091-experimental-parameter-uncertainty-in
+  url: https://arxiv.org/pdf/1811.10091
+  title: 'Experimental parameter uncertainty in PEM fuel cell modeling. Part I: Scatter
+    in material parameterization'
+  publisher: arXiv
+  year: 2018
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2410.13323-a-critical-review-of
+  url: https://arxiv.org/pdf/2410.13323
+  title: A Critical Review of Proton Exchange Membrane Fuel Cells Matter Transports
+    and Voltage Polarisation for Modelling
+  publisher: arXiv
+  year: 2024
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-2604.14994-degradation-aware-predictive-energy
+  url: https://arxiv.org/pdf/2604.14994
+  title: Degradation-aware Predictive Energy Management for Fuel Cell-Battery Ship
+    Power System with Data-driven Load Forecasting
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-2302.12514-operando-analysis-of-a
+  url: https://arxiv.org/pdf/2302.12514
+  title: Operando analysis of a solid oxide fuel cell by environmental transmission
+    electron microscopy
+  publisher: arXiv
+  year: 2023
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2501.08420-nonlinear-modeling-of-a
+  url: https://arxiv.org/pdf/2501.08420
+  title: Nonlinear Modeling of a PEM Fuel Cell System; a Practical Study with Experimental
+    Validation
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2509.16619-topology-optimization-of-cathode
+  url: https://arxiv.org/pdf/2509.16619
+  title: Topology optimization of cathode gas channel layout in advanced proton exchange
+    membrane fuel cells
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-1112.6016-3-d-tracking-and
+  url: https://arxiv.org/pdf/1112.6016
+  title: 3-D Tracking and Visualization of Hundreds of Pt-Co Fuel Cell Nanocatalysts
+    During Electrochemical Aging
+  publisher: arXiv
+  year: 2011
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-2602.15340-a-brief-review-of
+  url: https://arxiv.org/pdf/2602.15340
+  title: A brief review of high-entropy oxides in solid oxide fuel cell applications
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2205.06768-artificial-intelligence-assisted-optimization
+  url: https://arxiv.org/pdf/2205.06768
+  title: Artificial Intelligence-Assisted Optimization and Multiphase Analysis of
+    Polygon PEM Fuel Cells
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2406.01259-aging-modeling-and-lifetime
+  url: https://arxiv.org/pdf/2406.01259
+  title: Aging modeling and lifetime prediction of a proton exchange membrane fuel
+    cell using an extended Kalman filter
+  publisher: arXiv
+  year: 2024
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-2201.09768-study-of-voltage-cycling
+  url: https://arxiv.org/pdf/2201.09768
+  title: Study of voltage cycling conditions on Pt oxidation and dissolution in polymer
+    electrolyte fuel cells
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-2101.08049-evaluating-uncertainties-in-electrochemical
+  url: https://arxiv.org/pdf/2101.08049
+  title: Evaluating uncertainties in electrochemical impedance spectra of solid oxide
+    fuel cells
+  publisher: arXiv
+  year: 2021
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2603.17709-in-phase-current-and
+  url: https://arxiv.org/pdf/2603.17709
+  title: 'In-phase current and temperature oscillations reduce PEM fuel cell resistivity:
+    A modeling study'
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2308.14539-effect-of-fiber-curvature
+  url: https://arxiv.org/pdf/2308.14539
+  title: Effect of fiber curvature on gas diffusion layer two-phase dynamics of a
+    proton exchange membrane fuel cell
+  publisher: arXiv
+  year: 2023
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-1308.4042-importance-of-catalyst-stability
+  url: https://arxiv.org/pdf/1308.4042
+  title: Importance of Catalyst Stability vis-à-vis Hydrogen Peroxide Formation Rates
+    in PEM Fuel Cell Electrodes
+  publisher: arXiv
+  year: 2013
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-2410.05307-topology-informed-machine-learning
+  url: https://arxiv.org/pdf/2410.05307
+  title: Topology-Informed Machine Learning for Efficient Prediction of Solid Oxide
+    Fuel Cell Electrode Polarization
+  publisher: arXiv
+  year: 2024
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2310.08945-performance-of-a-pem
+  url: https://arxiv.org/pdf/2310.08945
+  title: Performance of a PEM fuel cell cathode catalyst layer under oscillating potential
+    and oxygen supply
+  publisher: arXiv
+  year: 2023
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-0909.2947-influence-of-wettability-on
+  url: https://arxiv.org/pdf/0909.2947
+  title: Influence of wettability on liquid water transport in gas diffusion layer
+    of proton exchange membrane fuel cells (PEMFC)
+  publisher: arXiv
+  year: 2009
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-1701.05928-oxygen-reduction-mechanisms-in
+  url: https://arxiv.org/pdf/1701.05928
+  title: Oxygen reduction mechanisms in nanostructured La0.8Sr0.2MnO3 cathodes for
+    Solid Oxide Fuel Cells
+  publisher: arXiv
+  year: 2017
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-1901.05509-mathematical-modelling-of-solid
+  url: https://arxiv.org/pdf/1901.05509
+  title: Mathematical modelling of Solid Oxide Fuel Cells revisited -- a modified
+    formulation of the problem
+  publisher: arXiv
+  year: 2019
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2111.04024-analytical-impedance-of-oxygen
+  url: https://arxiv.org/pdf/2111.04024
+  title: Analytical impedance of oxygen transport in the channel and gas diffusion
+    layer of a PEM fuel cell
+  publisher: arXiv
+  year: 2021
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2512.02382-mass-transfer-and-water
+  url: https://arxiv.org/pdf/2512.02382
+  title: Mass transfer and water management in proton exchange membrane fuel cells
+    with a composite foam-rib flow field
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-2105.13117-route-to-high-performance
+  url: https://arxiv.org/pdf/2105.13117
+  title: Route to High-Performance Micro-solid Oxide Fuel Cells on Metallic Substrates
+  publisher: arXiv
+  year: 2021
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-1306.4575-a-mathematical-model-for
+  url: https://arxiv.org/pdf/1306.4575
+  title: A Mathematical Model for Predicting the Life of PEM Fuel Cell Membranes Subjected
+    to Hydration Cycling
+  publisher: arXiv
+  year: 2013
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2501.08403-study-of-mass-transport
+  url: https://arxiv.org/pdf/2501.08403
+  title: Study of Mass Transport in the Anode of a Proton Exchange Membrane Fuel Cell
+    with a New Hydrogen Flow-Rate Modulation Technique
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-1702.00325-hybrid-fuel-cells-power
+  url: https://arxiv.org/pdf/1702.00325
+  title: Hybrid Fuel Cells Power for Long Duration Robot Missions in Field Environments
+  publisher: arXiv
+  year: 2017
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-1204.6698-homogenization-of-a-catalyst
+  url: https://arxiv.org/pdf/1204.6698
+  title: Homogenization of a catalyst layer model for periodically distributed pore
+    geometries in PEM fuel cells
+  publisher: arXiv
+  year: 2012
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2211.10084-numerical-simulation-of-two
+  url: https://arxiv.org/pdf/2211.10084
+  title: Numerical simulation of two-phase flow in gas diffusion layer and gas channel
+    of proton exchange membrane fuel cells
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-1807.03816-influence-of-particle-size
+  url: https://arxiv.org/pdf/1807.03816
+  title: Influence of particle size and agglomeration in solid oxide fuel cell cathodes
+    using manganite nanoparticles
+  publisher: arXiv
+  year: 2018
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2512.02396-two-phase-flow-in
+  url: https://arxiv.org/pdf/2512.02396
+  title: Two-phase flow in porous metal foam flow fields of PEM fuel cells
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2007.15571-modelling-the-effects-of
+  url: https://arxiv.org/pdf/2007.15571
+  title: Modelling the Effects of using Gas Diffusion Layers with Patterned Wettability
+    for Advanced Water Management in Proton Exchange Membrane Fuel Cells
+  publisher: arXiv
+  year: 2020
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-1201.1567-ni-coarsening-in-the
+  url: https://arxiv.org/pdf/1201.1567
+  title: Ni coarsening in the three-phase solid oxide fuel cell anode - a phase-field
+    simulation study
+  publisher: arXiv
+  year: 2012
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-1712.04036-three-dimensional-printed-yttria
+  url: https://arxiv.org/pdf/1712.04036
+  title: Three-dimensional printed Yttria-stabilized Zirconia self-supported electrolytes
+    for Solid Oxide Fuel Cell applications
+  publisher: arXiv
+  year: 2017
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-1811.10093-experimental-parameter-uncertainty-in
+  url: https://arxiv.org/pdf/1811.10093
+  title: 'Experimental parameter uncertainty in PEM fuel cell modeling. Part II: Sensitivity
+    analysis and importance ranking'
+  publisher: arXiv
+  year: 2018
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2604.00461-bipolar-plates-for-the
+  url: https://arxiv.org/pdf/2604.00461
+  title: 'Bipolar plates for the next generation of proton exchange membrane fuel
+    cells (PEMFCs): A review of the latest processing methods for unconventional flow
+    channels'
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-1603.07275-performance-and-degradation-of
+  url: https://arxiv.org/pdf/1603.07275
+  title: Performance and Degradation of A Lithium-Bromine Rechargeable Fuel Cell Using
+    Highly Concentrated Catholytes
+  publisher: arXiv
+  year: 2016
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-1412.0878-coupling-thermal-integration-of
+  url: https://arxiv.org/pdf/1412.0878
+  title: Coupling Thermal Integration of a Solid Oxide Fuel Cell with a Magnesium
+    Metal Hydride Tank
+  publisher: arXiv
+  year: 2014
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2407.12373-alphapem-an-open-source
+  url: https://arxiv.org/pdf/2407.12373
+  title: 'AlphaPEM: an open-source dynamic 1D physics-based PEM fuel cell model for
+    embedded applications'
+  publisher: arXiv
+  year: 2024
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-1410.1914-nanoscale-study-of-reactive
+  url: https://arxiv.org/pdf/1410.1914
+  title: Nanoscale study of reactive transport in catalyst layer of proton exchange
+    membrane fuel cells with precious and non-precious catalysts using lattice Boltzmann
+    method
+  publisher: arXiv
+  year: 2014
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-1910.11947-interdiffusion-between-gadolinia-doped
+  url: https://arxiv.org/pdf/1910.11947
+  title: 'Interdiffusion between gadolinia doped ceria and yttria stabilized zirconia
+    in solid oxide fuel cells: experimental investigation and kinetic modeling'
+  publisher: arXiv
+  year: 2019
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-2111.14648-doped-graphene-carbon-black
+  url: https://arxiv.org/pdf/2111.14648
+  title: Doped graphene/carbon black hybrid catalyst giving enhanced oxygen reduction
+    reaction activity with high resistance to corrosion in proton exchange membrane
+    fuel cells
+  publisher: arXiv
+  year: 2021
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id002
+- id: arxiv-1712.01589-micro-solid-oxide-fuel
+  url: https://arxiv.org/pdf/1712.01589
+  title: 'Micro solid oxide fuel cells: a new generation of micro-power sources for
+    portable applications'
+  publisher: arXiv
+  year: 2017
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2404.11959-segmented-model-based-hydrogen
+  url: https://arxiv.org/pdf/2404.11959
+  title: 'Segmented Model-Based Hydrogen Delivery Control for PEM Fuel Cells: a Port-Hamiltonian
+    Approach'
+  publisher: arXiv
+  year: 2024
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-1610.09617-on-static-dielectric-response
+  url: https://arxiv.org/pdf/1610.09617
+  title: On Static Dielectric Response of Microcomposites of the Type Ferrolastics-Dielectrics
+    For Application in Solid Oxide Fuel Cells (SOFC)
+  publisher: arXiv
+  year: 2016
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-1904.03155-the-effect-of-nafion
+  url: https://arxiv.org/pdf/1904.03155
+  title: The effect of Nafion film on the cathode catalyst layer performance in a
+    low-Pt PEM fuel cell
+  publisher: arXiv
+  year: 2019
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2605.14951-effect-of-startup-modes
+  url: https://arxiv.org/pdf/2605.14951
+  title: Effect of startup modes on cold start performance of PEM fuel cells with
+    different cathode flow fields
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-2511.00535-electrochemical-properties-of-solid
+  url: https://arxiv.org/pdf/2511.00535
+  title: Electrochemical properties of solid oxide fuel cells under the coupling effect
+    of airflow pattern and airflow velocity
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2206.03355-molecular-dynamics-simulation-of
+  url: https://arxiv.org/pdf/2206.03355
+  title: Molecular dynamics simulation of ion dynamics within SPEEK polymer electrolyte
+    of PEM Fuel Cells
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-1705.10785-the-design-of-long
+  url: https://arxiv.org/pdf/1705.10785
+  title: The Design of Long-Life, High-Efficiency PEM Fuel Cell Power Supplies for
+    Low Power Sensor Networks
+  publisher: arXiv
+  year: 2017
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-2606.23163-toward-in-situ-operando
+  url: https://arxiv.org/pdf/2606.23163
+  title: Toward in-situ/operando X-ray absorption spectroscopy and electrochemical
+    characterization of solid oxide fuel cells
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2606.12999-the-effect-of-in
+  url: https://arxiv.org/pdf/2606.12999
+  title: The effect of in-phase current and temperature oscillations on the impedance
+    of the cathode catalyst layer in a PEM fuel cell
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2209.14374-functional-thin-films-as
+  url: https://arxiv.org/pdf/2209.14374
+  title: 'Functional thin films as cathode/electrolyte interlayers: a strategy to
+    enhance the performance and durability of solid oxide fuel cells'
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-1801.06109-material-discovery-and-design
+  url: https://arxiv.org/pdf/1801.06109
+  title: Material Discovery and Design Principles for Stable, High Activity Perovskite
+    Cathodes for Solid Oxide Fuel Cells
+  publisher: arXiv
+  year: 2018
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2302.10771-data-driven-prognostics-based
+  url: https://arxiv.org/pdf/2302.10771
+  title: Data-driven prognostics based on time-frequency analysis and symbolic recurrent
+    neural network for fuel cells under dynamic load
+  publisher: arXiv
+  year: 2023
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-1910.08754-investigation-of-structural-electrical
+  url: https://arxiv.org/pdf/1910.08754
+  title: Investigation of structural, electrical and electrochemical properties of
+    La0.6Sr0.4Fe0.8Mn0.2O3-δ as an intermediate temperature solid oxide fuel cell
+    cathode
+  publisher: arXiv
+  year: 2019
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2411.15259-comparing-the-3d-morphology
+  url: https://arxiv.org/pdf/2411.15259
+  title: Comparing the 3D morphology of solid-oxide fuel cell anodes for different
+    manufacturing processes, annealing times, and operating temperatures
+  publisher: arXiv
+  year: 2024
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-2402.04270-ionomer-structure-and-component
+  url: https://arxiv.org/pdf/2402.04270
+  title: 'Ionomer structure and component transport in the cathode catalyst layer
+    of PEM fuel cells: A molecular dynamics study'
+  publisher: arXiv
+  year: 2024
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2212.13661-cost-minimization-predictive-energy
+  url: https://arxiv.org/pdf/2212.13661
+  title: Cost-minimization predictive energy management of a postal-delivery fuel
+    cell electric vehicle with intelligent battery State-of-Charge Planner
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id003
+- id: arxiv-2607.16616-high-entropy-perovskites-architectured
+  url: https://arxiv.org/pdf/2607.16616
+  title: High-entropy perovskites, architectured by s0/d0/d10 cations, as novel electrolytes
+    for solid oxide fuel cells
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2605.11941-poisoning-mechanism-of-ammonia
+  url: https://arxiv.org/pdf/2605.11941
+  title: Poisoning mechanism of ammonia on proton transport and ionomer structure
+    in cathode catalyst layer of PEM fuel cells
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2604.01788-effects-of-gas-diffusion
+  url: https://arxiv.org/pdf/2604.01788
+  title: Effects of gas diffusion layer thickness on PEM fuel cells with composite
+    foam-rib flow fields
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2203.04473-revealing-timescale-dependent-oxygen
+  url: https://arxiv.org/pdf/2203.04473
+  title: Revealing timescale-dependent oxygen vacancy distributions in solid oxide
+    fuel cell electrodes using frequency-resolved X-ray absorption (FR-XAS)
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2008.07101-performance-of-a-pem
+  url: https://arxiv.org/pdf/2008.07101
+  title: 'Performance of a PEM fuel cell with oscillating air flow velocity: A modeling
+    study based on cell impedance'
+  publisher: arXiv
+  year: 2020
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-1809.01600-a-combined-approach-of
+  url: https://arxiv.org/pdf/1809.01600
+  title: A combined approach of Lattice Boltzmann Method and Maxwell-Stefan equation
+    for modeling multi-component diffusion in solid oxide fuel cell
+  publisher: arXiv
+  year: 2018
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2103.01444-simulation-of-coupled-heat
+  url: https://arxiv.org/pdf/2103.01444
+  title: Simulation of Coupled Heat and Mass Transport With Reaction in PEM Fuel Cell
+    Cathode using Lattice Boltzmann Method
+  publisher: arXiv
+  year: 2021
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-1910.01715-temperature-programmed-reduction-and
+  url: https://arxiv.org/pdf/1910.01715
+  title: Temperature-programmed reduction and dispersive X-ray absorption spectroscopy
+    studies of CeO2-based nanopowders for intermediate-temperature Solid-Oxide Fuel
+    Cell anodes
+  publisher: arXiv
+  year: 2019
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2601.09915-a-model-for-water
+  url: https://arxiv.org/pdf/2601.09915
+  title: A model for water transport in the membrane and an impedance spectroscopy
+    study of the effect of relative humidity on PEM fuel cell parameters
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-2602.23399-a-high-performance-cobalt
+  url: https://arxiv.org/pdf/2602.23399
+  title: A high-performance cobalt-free cathode for proton-conducting solid oxide
+    fuel cells via multi-element doping in Sr2Fe2O6
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id004
+- id: arxiv-2609.21446-a-fast-physics-based
+  url: https://arxiv.org/pdf/2609.21446
+  title: 'A fast physics-based matrix model for the impedance of a PEM fuel cell:
+    Incorporating functionally graded catalyst layer and channel impedances'
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: arxiv-1303.5387-adaptive-high-order-sliding
+  url: https://arxiv.org/pdf/1303.5387
+  title: 'Adaptive High Order Sliding Mode Observer Based Fault Reconstruction for
+    a Class of Nonlinear Uncertain Systems: Application to PEM Fuel Cell System'
+  publisher: arXiv
+  year: 2013
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id001
+- id: doe-record-17006-historical-fuel-cell-h2-budgets
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/17006_historical_fuel_cell_h2_budgets.pdf
+  title: Historical Fuel Cell and Hydrogen Budgets
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: &id005
+  - program-records
+- id: doe-record-18002-industry-deployed-fc-powered-lift-trucks
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/18002_industry_deployed_fc_powered_lift_trucks.pdf
+  title: Industry Deployed Fuel Cell Powered Lift Trucks
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-17004-industry-deployed-fc-bup
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/17004_industry_deployed_fc_bup.pdf
+  title: Industry Deployed Fuel Cell Backup Power (BuP)
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-16021-ghg-emissions-petroleum-reduction-from-fc
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/16021_ghg_emissions_petroleum_reduction_from_fc.pdf
+  title: GHG Emissions and Petroleum Use Reduction from Fuel Cell Deployments
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-8020-reduction-in-fuel-consumption-with-fuel-cell
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/8020_reduction_in_fuel_consumption_with_fuel_cell_vehicles.pdf
+  title: Reduction in Fuel Consumption with Fuel Cell Vehicles
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-5008-hydrogen-demand-2040
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/5008_hydrogen_demand_2040.pdf
+  title: Hydrogen Demand in 2040 for Fuel Cell Vehicles
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-20008-fuel-cell-bus-durability
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/20008-fuel-cell-bus-durability.pdf
+  title: On-Road Transit Bus Fuel Cell Stack Durability
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-21001-durability-adjusted-fcs-cost
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/21001-durability-adjusted-fcs-cost.pdf
+  title: Durability-Adjusted Fuel Cell System Cost
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-20005-automotive-fuel-cell-targets-status
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/20005-automotive-fuel-cell-targets-status.pdf
+  title: Automotive Fuel Cell Targets and Status
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-20002-early-market-transportation-fuel-cell-cost
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/20002-early-market-transportation-fuel-cell-cost.pdf
+  title: Early Market Transportation Fuel Cell Cost
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-20001-reversible-fuel-cell-targets
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/20001-reversible-fuel-cell-targets.pdf
+  title: Reversible Fuel Cell Targets
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-17007-fuel-cell-system-cost-2017
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/17007_fuel_cell_system_cost_2017.pdf
+  title: Fuel Cell System Cost—2017
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-16020-fuel-cell-system-cost-2016
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/16020_fuel_cell_system_cost_2016.pdf
+  title: Fuel Cell System Cost—2016
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-16019-fuel-cell-stack-durability-2016
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/16019_fuel_cell_stack_durability_2016.pdf
+  title: On-Road Fuel Cell Stack Durability—2016
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-15015-fuel-cell-system-cost-2015
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/15015_fuel_cell_system_cost_2015.pdf
+  title: Fuel Cell System Cost—2015
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-15014-fuel-cell-stack-durability
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/15014_fuel_cell_stack_durability.pdf
+  title: On-Road Fuel Cell Stack Durability—2015
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-14014-fuel-cell-system-cost-2014
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/14014_fuel_cell_system_cost_2014.pdf
+  title: Fuel Cell System Cost—2014
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-14012-fuel-cell-system-cost-2013
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/14012_fuel_cell_system_cost_2013.pdf
+  title: Fuel Cell System Cost—2013
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-12020-fuel-cell-system-cost-2012
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/12020_fuel_cell_system_cost_2012.pdf
+  title: Fuel Cell System Cost—2012
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-12012-fuel-cell-bus-targets
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/12012_fuel_cell_bus_targets.pdf
+  title: Fuel Cell Bus Targets
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-11016-micro-chp-target
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/11016_micro_chp_target.pdf
+  title: Micro CHP Fuel Cell System Targets
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-11015-pfcs-associated-with-fuel-cells
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/11015_pfcs_associated_with_fuel_cells.pdf
+  title: Assessment of Perfluorinated Pollutants Associated with Fuel Cells
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-11014-medium-scale-chp-target
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/11014_medium_scale_chp_target.pdf
+  title: Medium-scale CHP Fuel Cell System Targets
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-11012-fuel-cell-system-cost
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/11012_fuel_cell_system_cost.pdf
+  title: Fuel Cell System Cost—2011
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-11013-platinum-loading-pemfc
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/11013_platinum_loading_pemfc.pdf
+  title: Platinum Group Metal Loading in PEMFC Stacks
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-11009-portable-fuel-cell-targets
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/11009_portable_fuel_cell_targets.pdf
+  title: Revised Portable Power Fuel Cell Targets
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-11003-fuel-cell-stack-durability
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/11003_fuel_cell_stack_durability.pdf
+  title: Fuel Cell Stack Durability
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-10004-fuel-cell-cost
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/10004_fuel_cell_cost.pdf
+  title: Fuel Cell System Cost—2010
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-9010-fuel-cell-apu-trucks
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/9010_fuel_cell_apu_trucks.pdf
+  title: Benefits of Fuel Cell APU on Trucks
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-9012-fuel-cell-system-cost
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/9012_fuel_cell_system_cost.pdf
+  title: Fuel Cell System Cost—2009
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-8019-fuel-cell-system-cost
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/8019_fuel_cell_system_cost.pdf
+  title: Fuel Cell System Cost—2008
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-8002-fuel-cell-system-cost
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/8002_fuel_cell_system_cost.pdf
+  title: Fuel Cell System Cost—2007
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-5036a-backup-fuel-cell-stack
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/5036a_backup_fuel_cell_stack.pdf
+  title: Backup Reference for Fuel Cell Stack Durability
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
+- id: doe-record-5005-fuel-cell-cost
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/5005_fuel_cell_cost.pdf
+  title: Fuel Cell System Cost—2005
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics: *id005
