@@ -16,28 +16,29 @@ where each value appears, which gives exact gold labels for evaluation.
 
 ## Results
 
-Measured on the 70-question golden set (25 German) and the 83-document corpus (33 public
+Measured on the 70-question golden set (25 German) and the 196-document corpus (146 public
 PDFs and 50 generated files: datasheets, component datasheets, parameter sheets,
 requirements, schematics, STEP assemblies and three planted prompt-injection notes), run
-`2026-11-01-1322-answer-v5` (answer prompt answer-v5). Answers by `openai/gpt-oss-120b` on
-Groq's free tier (63 answers; 1 from the Gemini fallback; 6 answered "not found" before any
-LLM call, 0 errors). Rows marked † come from earlier runs and were not re-measured.
+`2026-11-01-2214-answer-v5-corpus196` (answer prompt answer-v5). Answers by
+`openai/gpt-oss-120b` on Groq (64 answers, none from the fallback; 6 answered "not found" before
+any LLM call, 0 errors). Retrieval did not degrade when the corpus grew from 83 to 196 documents
+(recall@5 0.921 and MRR 0.877 in both). Rows marked † come from earlier runs and were not re-measured.
 
 | Metric | Result | Target |
 |---|---|---|
-| Retrieval recall@5 / recall@10 / MRR | **0.921** / 0.968 / 0.877 | ≥ 0.85 |
-| Value accuracy (stated value and unit match the truth, any unit) | **0.951** | ≥ 0.85 |
+| Retrieval recall@5 / recall@10 / MRR | **0.921** / 0.984 / 0.877 | ≥ 0.85 |
+| Value accuracy (stated value and unit match the truth, any unit) | **0.927** | ≥ 0.85 |
 | Term accuracy (requirement IDs, part and drawing tags named in the answer) | **1.00** | – |
 | Correct "not in the documents" answers / false refusals | **7 of 7** / 1 of 63 | ≥ 0.90 |
-| Citation precision (cited source is a gold source) | **0.940** | ≥ 0.90 |
-| Faithfulness, 75 claims (second-opinion labels / judge) | **0.932** / 0.890 | ≥ 0.90 |
+| Citation precision (cited source is a gold source) | **0.956** | ≥ 0.90 |
+| Faithfulness, 77 claims (judge `qwen3.8-27b`, judge-v2) | **0.918** (69 supported) | ≥ 0.90 |
 | Prompt injection resisted (as retrieved / planted note forced in as source 1) | **3 of 3** / 3 of 3 | all |
 | Invalid citations (source numbers that do not exist) | 0 | 0 |
 | Parameter extraction recall / precision (610 facts, through Docling) † | **99.5 % / 99.5 %** | – |
 | Ingestion throughput (laptop RTX 3050, 6 GB) † | ~1,150 PDF pages/h | ≥ 1,000 |
-| Retrieval p50 / p95 · generation p95 | 1.7 s / 2.7 s · 4.8 s † | end-to-end p95 < 6 s |
+| Retrieval p50 / p95 · generation p95 | 1.8 s / 2.6 s · 4.8 s † | end-to-end p95 < 6 s |
 
-Generation p95 in this run was 23.5 s, but that includes waiting out Groq's free-tier limit of
+Generation p95 in this run was 23.8 s, but that includes waiting out Groq's free-tier limit of
 8,000 tokens per minute; the 4.8 s comes from the earlier run without rate limiting.
 
 Recall per category: parameter, cross-system, version conflict, requirement trace and
@@ -49,7 +50,15 @@ documents, and one ranks 7th behind them.)
 
 Where it still fails (all visible in `eval/runs/`): a German question about an English slide
 deck (text-11) is refused because the German requirement documents outrank the English deck;
-a three-system comparison picks up an unrelated current-density value from a public report.
+a three-system comparison (cross-sys-06) and a cross-document conflict question (cross-doc-01)
+state a wrong value. The blind second-opinion faithfulness labels (0.932 on the earlier run) were
+not repeated for this run.
+
+Cross-lingual search (`FCRAG_CROSS_LINGUAL=1`, off by default) also searches a German question
+with its English translation. Retrieval only, 196 documents: text-11 moves from rank 10 to
+rank 1 and recall@5 rises from 0.921 to 0.937, correct refusals stay 6 of 7, but MRR falls from
+0.877 to 0.867, recall@10 from 0.984 to 0.968, and retrieval p95 doubles (one extra LLM call).
+The answer eval was not run with the flag on.
 
 How the answers are judged: `qwen/qwen3.8-27b` (a different model family from the answering
 `openai/gpt-oss-120b`) checks every cited sentence against the sources it cites. Its verdicts
