@@ -20,7 +20,8 @@ Measured on the 67-question golden set (24 German) and the 80-document corpus (3
 PDFs and 47 generated files: datasheets, component datasheets, parameter sheets,
 requirements, schematics and STEP assemblies), run of 2026-10-30. Answers by
 `openai/gpt-oss-120b` on Groq's free tier (58 answers; 2 from the Gemini fallback, 1 error).
-Rows marked † come from the earlier 60-question run and were not re-measured.
+Rows marked † come from the earlier 60-question run and were not re-measured; ‡ marks the
+answer-v4 run of 2026-10-31 (calibration below).
 
 | Metric | Result | Target |
 |---|---|---|
@@ -29,7 +30,7 @@ Rows marked † come from the earlier 60-question run and were not re-measured.
 | Term accuracy (requirement IDs, part and drawing tags named in the answer) | **1.00** | – |
 | Correct "not in the documents" answers / false refusals | **7 of 7** / 1 of 59 | ≥ 0.90 |
 | Citation precision (cited source is a gold source) | **0.941** | ≥ 0.90 |
-| Faithfulness, 67 claims (judge / second-opinion labels) † | 0.931 / **0.877** | ≥ 0.90 |
+| Faithfulness, answer-v4, 79 claims (judge / second-opinion labels) ‡ | 0.933 / **0.892** | ≥ 0.90 |
 | Invalid citations (source numbers that do not exist) | 0 | 0 |
 | Parameter extraction recall / precision (610 facts, through Docling) † | **99.5 % / 99.5 %** | – |
 | Ingestion throughput (laptop RTX 3050, 6 GB) † | ~1,150 PDF pages/h | ≥ 1,000 |
@@ -54,14 +55,20 @@ are exported, and `fcrag judge-label` walks a person through a random sample of 
 judge's verdict hidden; `fcrag judge-agreement` then reports how often judge and human agree.
 The faithfulness figure should be read together with that agreement rate.
 
-Calibration so far: a second LLM (Claude, a third model family) labelled all 67 claims without
-seeing the judge's verdicts, using the same strict standard: every fact in a claim must be in
-the sources *that claim cites*. The judge agreed on 63 of 67 (94 %) and was never stricter; it
-passed 4 claims whose cited sources lack part of the claim (a superlative needing a source
-that was not cited, a "latest value" backed only by superseded documents, part descriptions
-missing from the cited STEP tree). With those corrected, faithfulness is **0.877**, slightly
-under the 0.90 target, so the judged 0.931 is an upper bound. These are LLM labels, not human
-ones; a person's labels (`fcrag judge-label`) remain the reference.
+Calibration (‡ run `2026-10-31-2113-answer-v4`, prompt answer-v4, judge prompt judge-v2): a
+second LLM (Claude, a third model family) labelled all 79 claims without seeing the judge's
+verdicts, using the same strict standard: every fact in a claim must be in the sources *that
+claim cites*. The judge agreed on 72 of 79 blind (91 %); after review one blind label was
+corrected in the judge's favour (part descriptions absent from the cited STEP tree), giving
+73 of 79 (92 %). The judge was too lenient on 4 claims, all of one kind: a requirement ID or
+source reference that the answer names but whose source it does not cite (for example
+"80 kW [REQ-A-0001]" citing only the datasheet). It was too strict on 2 (kW read as different
+from kW_net; "key factor" judged unsupported where the source says "main challenge"). By the
+second-opinion labels faithfulness is **0.892**, just under the 0.90 target, so the judged
+0.933 is an upper bound. The same judge scored the previous prompt's answers (answer-v3, run
+of 2026-10-27) at 0.851, so answer-v4 is a clear improvement under an unchanged standard.
+These are LLM labels, not human ones; a person's labels (`fcrag judge-label`) remain the
+reference.
 
 Answer metrics can be recomputed from a saved run without any LLM call
 (`fcrag eval-rescore`), so metric fixes cost no API quota. Free tiers allow roughly one full

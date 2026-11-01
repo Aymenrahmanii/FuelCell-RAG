@@ -7,6 +7,7 @@ by hand and run ``fcrag judge-agreement`` before trusting the judged metrics.
 
 import json
 import re
+import shutil
 import time
 from collections.abc import Callable
 from dataclasses import asdict, dataclass
@@ -148,10 +149,15 @@ def faithfulness(judgements: list[Judgement]) -> dict[str, Any]:
     }
 
 
-def write_judgements(judgements: list[Judgement], path: Path) -> None:
+def write_judgements(judgements: list[Judgement], path: Path) -> int:
     """Write the judge's verdicts. Labels already in the file (``human``, or another labeller
     such as ``claude``) are kept for every claim that is still there, so re-judging a run with
-    a new judge prompt can be checked against the same labels."""
+    a new judge prompt can be checked against the same labels.
+
+    Claims are matched on question and statement text. If a labelled claim has no match (the
+    answer or the claim splitting changed), the old file is first copied to
+    ``<name>.<timestamp>.bak.jsonl`` so no label is ever lost; returns how many labelled
+    claims were not carried over."""
     labels: dict[tuple[str, str], dict[str, Any]] = {}
     if path.exists():
         for line in path.open(encoding="utf-8"):
@@ -159,12 +165,22 @@ def write_judgements(judgements: list[Judgement], path: Path) -> None:
                 row = json.loads(line)
                 extra = {k: v for k, v in row.items() if k not in JUDGEMENT_FIELDS}
                 labels[(row["question_id"], row["statement"])] = extra
+    current = {(j.question_id, j.statement) for j in judgements}
+    dropped = sum(
+        1 for key, extra in labels.items()
+        if key not in current and any(v is not None for v in extra.values())
+    )  # fmt: skip
+    if dropped:
+        stamp = time.strftime("%Y%m%d-%H%M%S")
+        backup = path.with_name(f"{path.name.removesuffix('.jsonl')}.{stamp}.bak.jsonl")
+        shutil.copyfile(path, backup)
     with path.open("w", encoding="utf-8") as f:
         for j in judgements:
             row = asdict(j)
             kept = labels.get((j.question_id, j.statement), {})
             row.update({k: v for k, v in kept.items() if v is not None or k not in row})
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
+    return dropped
 
 
 def agreement(path: Path, field: str = "human") -> dict[str, Any]:
