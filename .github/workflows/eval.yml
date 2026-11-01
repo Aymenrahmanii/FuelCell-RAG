@@ -45,6 +45,10 @@ jobs:
       # CI time and grows with candidate text. On the 40 gate questions (2026-10-30) recall@5
       # 1.00 and MRR 0.951 were identical at 50, 30 and 20. Production keeps 50.
       FCRAG_PREFETCH_LIMIT: "20"
+      # The cross-encoder reads at most 512 tokens of question + chunk instead of 1024: on CPU
+      # its cost grows with the tokens read, and most chunks are shorter than 512 anyway (median
+      # candidate ~1,000 characters). Production keeps 1024 (FCRAG_RERANK_MAX_LENGTH).
+      FCRAG_RERANK_MAX_LENGTH: "512"
       HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
     steps:
       - uses: actions/checkout@v4
