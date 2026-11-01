@@ -59,3 +59,16 @@ def test_bare_labels_in_a_reference_parenthesis_are_citations() -> None:
         "Sensor S2 reads 80 °C (S2 is the outlet)."
     )
     assert normalise_citations("It is 80 °C (see [S1], S3).") == "It is 80 °C (see [S1], [S3])."
+
+
+def test_grouped_citations_are_split() -> None:
+    from fcrag.generation.citations import normalise_citations
+
+    answer = (
+        "It is 275 kWnet [S1, S5, S6]; Argonne specified 390 kW [S4; S8] and 2.5 kW/g 【S2, S3】."
+    )
+    assert normalise_citations(answer) == (
+        "It is 275 kWnet [S1][S5][S6]; Argonne specified 390 kW [S4][S8] and 2.5 kW/g [S2][S3]."
+    )
+    assert check_citations(answer, n_sources=8).cited == [1, 5, 6, 4, 8, 2, 3]
+    assert normalise_citations("Table [1, 2] and [S1]") == "Table [1, 2] and [S1]"  # not labels
