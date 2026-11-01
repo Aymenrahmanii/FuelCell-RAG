@@ -29,10 +29,15 @@ def sha256_file(path: Path) -> str:
 
 
 def load_metadata(sources_manifest: Path, source_dirs: list[Path]) -> dict[str, dict[str, Any]]:
-    """Metadata keyed by file name: public sources by ``<id>.pdf``, generated files as listed."""
+    """Metadata keyed by file name: public sources by ``<id>.pdf``, generated files as listed.
+
+    Public sources come from the manifest and, if present, the candidates found by
+    scripts/discover_corpus.py next to it (``sources.discovered.yaml``)."""
     meta: dict[str, dict[str, Any]] = {}
-    if sources_manifest.exists():
-        data = yaml.safe_load(sources_manifest.read_text(encoding="utf-8")) or {}
+    for manifest_path in (sources_manifest, sources_manifest.with_suffix(".discovered.yaml")):
+        if not manifest_path.exists():
+            continue
+        data = yaml.safe_load(manifest_path.read_text(encoding="utf-8")) or {}
         for src in data.get("sources") or []:
             meta[f"{src['id']}.pdf"] = {
                 "doc_id": src["id"],

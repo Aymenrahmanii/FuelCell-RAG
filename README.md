@@ -158,6 +158,9 @@ docker compose up -d          # Qdrant, Postgres, Redis, MinIO, Langfuse
 uv run fcrag db-upgrade       # create the tables
 
 uv run python scripts/download_corpus.py   # 33 public PDFs, licences in data/sources.yaml
+# optional, more public reports (OSTI, arXiv): find, review data/sources.discovered.yaml, fetch
+# uv run python scripts/discover_corpus.py --target 230
+# uv run python scripts/download_corpus.py --manifest data/sources.discovered.yaml
 uv run fcrag generate         # system and component datasheets, parameter sheets, requirements, schematics, STEP
 uv run fcrag ingest           # parse, extract, chunk, embed, index (new or changed files only)
 
