@@ -99,7 +99,7 @@ def evaluate_item(
     if item.gold_sources:
         result.rank = metrics.first_hit_rank(relevance)
         result.ndcg10 = metrics.ndcg_at_k(relevance, 10)
-    result.top_score = round(max((h.rerank_score or 0.0 for h in ranked), default=0.0), 4)
+    result.top_score = round(max((h.evidence_score for h in ranked), default=0.0), 4)
     result.evidence = result.top_score >= settings.rerank_threshold
     result.top = [_label(h.payload) for h in ranked[:5]]
 

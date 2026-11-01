@@ -28,6 +28,14 @@ class Hit:
     score: float
     payload: dict[str, Any]
     rerank_score: float | None = None
+    question_score: float | None = None
+    """Reranker score against the question as asked, when ``rerank_score`` is the better of
+    several queries (cross-lingual search). The not-found decision uses this one."""
+
+    @property
+    def evidence_score(self) -> float:
+        score = self.question_score if self.question_score is not None else self.rerank_score
+        return score or 0.0
 
     @property
     def text(self) -> str:
