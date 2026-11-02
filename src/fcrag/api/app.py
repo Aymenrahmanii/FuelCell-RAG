@@ -14,7 +14,8 @@ from pathlib import Path
 from typing import Annotated, Any, Literal
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
-from fastapi.responses import PlainTextResponse, Response, StreamingResponse
+from fastapi.responses import PlainTextResponse, RedirectResponse, Response, StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from sqlalchemy import func, select, text
 
@@ -31,6 +32,8 @@ def require_key(request: Request, x_api_key: Annotated[str | None, Header()] = N
     expected = get_settings().api_key
     if request.url.path == "/metrics":
         return  # scraped by Prometheus on the internal network; counts and timings only
+    if request.url.path == "/" or request.url.path.startswith("/app"):
+        return  # the web app's static files hold no data; the page asks for the key itself
     if expected is not None and not secrets.compare_digest(
         x_api_key or "", expected.get_secret_value()
     ):
@@ -97,6 +100,18 @@ def _audit(
 
 
 app = FastAPI(title="FuelCell-RAG", version=__version__, dependencies=[Depends(require_key)])
+
+
+WEB_DIR = Path(__file__).resolve().parents[1] / "web"
+
+
+@app.get("/", include_in_schema=False)
+def web_root() -> RedirectResponse:
+    return RedirectResponse("/app/")
+
+
+if WEB_DIR.is_dir():
+    app.mount("/app", StaticFiles(directory=WEB_DIR, html=True), name="web")
 
 
 @app.middleware("http")
