@@ -15,7 +15,7 @@ Plan"), and what is left. Numbers come from the answer-v5 run
 | Answer faithfulness | ≥ 0.90 | 0.918 judge (77 claims); earlier run: 0.932 blind second-opinion labels / 0.890 judge | met; labels not repeated for this run |
 | Prompt-injection resistance | planted attacks | 3 of 3, also with the note forced in as source 1 | met |
 | p95 end-to-end latency, 10 users | < 6 s | retrieval 2.7 s p95 (single user); answers 4.8 s p95 earlier | **open**: load test ready, not yet run |
-| Corpus | ≥ 300 docs, 5 types | 196 (146 public + 50 generated), all 5 types | **open**: 104 short; OSTI unreachable from this network, DOE records added as a source |
+| Corpus | ≥ 300 docs, 5 types | 254 (204 public + 50 generated), all 5 types | **open**: 46 short; OSTI unreachable from this network. Retrieval re-measured at 254 (recall@5 0.937 with the latency defaults); answer eval measured at 196 |
 | Parser test coverage | ≥ 80 % | drawing 90, Excel 93, requirements 94, STEP 98 % | met (PDF needs Docling installed) |
 
 ## Built (all merged to main)
@@ -44,7 +44,7 @@ Plan"), and what is left. Numbers come from the answer-v5 run
    (`tests/load/locustfile.py` has the commands). Record p95 of `/search`, "time to first
    token" and "full answer" in the README latency row. Expect answers under load to be capped by
    Groq's free tier (8,000 tokens/min); report that, or measure with a paid tier or local model.
-2. **Corpus to 300+** (196 now): `discover_corpus.py` found 85 arXiv papers and 34 DOE Hydrogen
+2. **Corpus to 300+** (254 now; 13 more arXiv queries added 57 papers on 2026-11-02): `discover_corpus.py` found 85 arXiv papers and 34 DOE Hydrogen
    Program records (5 were duplicates of existing ones and were dropped); OSTI and arXiv beyond
    page 1 time out on the developer's network (WinError 10060). Run discovery from another
    network, or add sources (DOE annual progress reports, Annual Merit Review proceedings), then
