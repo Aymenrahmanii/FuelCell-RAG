@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FuelCell-RAG</title>
+    <meta name="description" content="Answers from fuel cell engineering documents. Every claim cites its source." />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="fonts/barlow-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="shell">
+      <nav class="rail" aria-label="Main">
+        <a class="brand" href="#/chat" aria-label="FuelCell-RAG, home">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <circle cx="11" cy="11" r="8.5" stroke="#fff" stroke-width="1.6" />
+            <path d="M5.4 5.4 11 11" stroke="#fff" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M17.4 17.4 25 25" stroke="#fff" stroke-width="1.6" stroke-linecap="round" />
+            <path d="M8 11h6M11 8v6" stroke="#9db0c6" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+          <span>FuelCell-RAG</span>
+        </a>
+        <ul class="nav" id="nav"></ul>
+        <div class="rail-foot">
+          <div class="health" id="health" data-state="wait"><i></i><span>Checking API</span></div>
+          <button type="button" id="key-btn" hidden>API key</button>
+        </div>
+      </nav>
+      <div class="main">
+        <header class="topbar">
+          <div>
+            <h1 id="page-title"></h1>
+            <p class="sub" id="page-sub"></p>
+          </div>
+          <div class="tools" id="page-tools"></div>
+        </header>
+        <main id="main" tabindex="-1"></main>
+      </div>
+    </div>
+
+    <dialog id="key-dialog" aria-labelledby="key-title">
+      <form method="dialog" id="key-form">
+        <h2 id="key-title">API key required</h2>
+        <p>This server needs an API key. It is kept for this browser tab only.</p>
+        <div class="field">
+          <label class="label" for="key-input">API key</label>
+          <input class="input" id="key-input" type="password" autocomplete="off" spellcheck="false" />
+        </div>
+        <div class="row">
+          <button class="btn" type="button" id="key-cancel">Cancel</button>
+          <button class="btn primary" type="submit">Use key</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

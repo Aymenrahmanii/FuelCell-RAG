@@ -1,0 +1,118 @@
+/* Design tokens. Drawing Sheet: navy rail, pale desk, white sheets, hairline rules.
+   Colours carry state: blue = selection and citations, green = current, red = superseded or
+   conflicting. Nothing else is coloured. */
+
+@font-face {
+  font-family: "Barlow";
+  src: url("../fonts/barlow-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url("../fonts/barlow-latin-400-italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url("../fonts/barlow-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow";
+  src: url("../fonts/barlow-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("../fonts/barlow-semi-condensed-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Semi Condensed";
+  src: url("../fonts/barlow-semi-condensed-latin-600-normal.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../fonts/jetbrains-mono-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Surfaces */
+  --navy: #14263f;
+  --navy-hover: #1d3556;
+  --rail-ink: #e3eaf3;
+  --rail-dim: #9db0c6;
+  --desk: #edf0ee;
+  --sheet: #ffffff;
+  --sheet-alt: #f6f8f9;
+
+  /* Ink */
+  --ink: #1a1d21;
+  --graphite: #4a5560;
+  --faint: #66717c;
+
+  /* Rules */
+  --hair: #cfd4d9;
+  --hair-strong: #8d97a1;
+
+  /* State */
+  --blue: #1f4e8c;
+  --blue-hover: #173d70;
+  --blue-tint: #e5edf7;
+  --red: #b42d1c;
+  --red-tint: #fbebe8;
+  --green: #1b724a;
+  --green-tint: #e2f2ea;
+
+  /* Type */
+  --font-text: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-label: "Barlow Semi Condensed", "Barlow", system-ui, sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  --step--1: 0.78rem;
+  --step-0: 0.875rem;
+  --step-1: 0.97rem;
+  --step-2: 1.125rem;
+  --step-3: 1.5rem;
+
+  /* Space (4px base) */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+
+  --radius: 3px;
+  --rail-w: 232px;
+  --register-w: 392px;
+
+  --shadow-sheet: 0 1px 0 rgb(20 38 63 / 0.05), 0 8px 18px -12px rgb(20 38 63 / 0.35);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: light;
+}

@@ -278,3 +278,19 @@ def test_audit_log_can_be_turned_off(
     client.post("/ask", json=QUESTION)
     with Session(engine) as session:
         assert session.scalar(select(func.count()).select_from(AuditRecord)) == 0
+
+
+def test_web_app_is_served_without_a_key_but_the_data_is_not(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The page loads first and then asks for the key; only the data endpoints need it."""
+    secured = Settings(_env_file=None, api_key=SecretStr("s3cret"))
+    monkeypatch.setattr("fcrag.api.app.get_settings", lambda: secured)
+
+    page = client.get("/app/")
+    assert page.status_code == 200 and "<title>FuelCell-RAG</title>" in page.text
+    assert client.get("/app/css/app.css").status_code == 200
+    assert client.get("/app/js/app.js").status_code == 200
+    assert client.get("/documents").status_code == 401
+    root = client.get("/", follow_redirects=False)
+    assert root.status_code in (302, 307) and root.headers["location"] == "/app/"

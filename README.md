@@ -183,7 +183,7 @@ uv run fcrag ingest           # parse, extract, chunk, embed, index (new or chan
 
 uv run fcrag search "maximum coolant outlet temperature of System B"
 uv run fcrag ask "Welche Auslegungslebensdauer gilt aktuell für System B?"
-uv run fcrag serve            # API on :8000, docs at /docs
+uv run fcrag serve            # API on :8000, docs at /docs, web app at /app/
 uv run streamlit run src/fcrag/ui/chat.py   # UI on :8501
 ```
 
@@ -204,6 +204,13 @@ its reason, in `.github/pip-audit-ignore.txt`) and the retrieval evaluation gate
 | `fcrag worker` | Background ingestion worker (Redis queue) |
 
 ## Applications
+
+The web app lives in [`src/fcrag/web/`](src/fcrag/web/): plain HTML, CSS and JavaScript (no build
+step) served by the API at `/app/`, in the visual language of an engineering drawing: citations are
+numbered balloons that match a parts list of sources, superseded versions are struck through in
+red, and a title block records how each answer was made. Fonts are self-hosted (SIL OFL, see
+`src/fcrag/web/fonts/LICENSES.md`). The page loads without an API key and asks for one when the
+server requires it. The Streamlit apps in `src/fcrag/ui/` cover the same five screens.
 
 - **Chat**: streamed answers, follow-up questions (the rewritten question is shown), sources
   with page preview, version labels (latest or superseded), copy with citations, rating and

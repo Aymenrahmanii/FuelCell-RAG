@@ -33,3 +33,9 @@ eval/runs/*
 Thumbs.db
 .idea/
 .vscode/
+
+# Impeccable working files (screenshots, question pages, hook cache)
+.impeccable/review/
+.impeccable/questions/
+.impeccable/mocks/
+.impeccable/hook.cache.json

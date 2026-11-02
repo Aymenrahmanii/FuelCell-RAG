@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-02T12:00:00Z",
+  "title": "Design System: FuelCell-RAG",
+  "extensions": {
+    "colorMeta": {
+      "navy": { "role": "primary", "displayName": "Drafting Navy", "canonical": "#14263f", "tonalRamp": ["#0a1424", "#14263f", "#1d3556", "#3c5273", "#5f7594", "#9db0c6", "#e3eaf3", "#f3f6fa"] },
+      "blue": { "role": "secondary", "displayName": "Citation Blue", "canonical": "#1f4e8c", "tonalRamp": ["#0f2646", "#173d70", "#1f4e8c", "#3f6ea8", "#6b92c4", "#9ab6dc", "#c9dcf3", "#e5edf7"] },
+      "green": { "role": "secondary", "displayName": "Current Green", "canonical": "#1b724a", "tonalRamp": ["#0d3a25", "#14573a", "#1b724a", "#3f9068", "#6cb08a", "#9ecdb4", "#c6e4d4", "#e2f2ea"] },
+      "red": { "role": "secondary", "displayName": "Redline Red", "canonical": "#b42d1c", "tonalRamp": ["#5a150c", "#7d1f13", "#b42d1c", "#cf5a49", "#df8a7d", "#ebb2a9", "#f6d6d1", "#fbebe8"] },
+      "desk": { "role": "neutral", "displayName": "Pale Desk", "canonical": "#edf0ee", "tonalRamp": ["#4a5560", "#66717c", "#8d97a1", "#b3bcc6", "#cfd4d9", "#e1e5e3", "#edf0ee", "#f6f8f9"] },
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#1a1d21", "tonalRamp": ["#1a1d21", "#2d3238", "#4a5560", "#66717c", "#8d97a1", "#b3bcc6", "#cfd4d9", "#f6f8f9"] }
+    },
+    "typographyMeta": {
+      "headline": { "displayName": "Headline", "purpose": "Page title in the top bar and empty-state heading. Barlow Semi Condensed 600." },
+      "title": { "displayName": "Title", "purpose": "Sheet headers, dialogs, error states." },
+      "body": { "displayName": "Body", "purpose": "Answer prose and general reading, 74ch cap." },
+      "body-small": { "displayName": "Body small", "purpose": "Table cells, notes, metadata and controls." },
+      "label": { "displayName": "Label", "purpose": "Title-block cell captions and table heads only, uppercase." },
+      "data": { "displayName": "Data", "purpose": "IDs, scores, values with units, in JetBrains Mono." }
+    },
+    "shadows": [
+      { "name": "shadow-sheet", "value": "0 1px 0 rgb(20 38 63 / 0.05), 0 8px 18px -12px rgb(20 38 63 / 0.35)", "purpose": "Faint navy-tinted lift under sheets." },
+      { "name": "shadow-dialog", "value": "0 6px 14px -6px rgb(20 38 63 / 0.4)", "purpose": "Dialogs over the navy 45% backdrop." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "All state transitions (120ms), row reveal (500ms), live sweep (1.4s)." }
+    ],
+    "breakpoints": [
+      { "name": "narrow", "value": "1180px" },
+      { "name": "mobile", "value": "860px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Navy action button; one per context.",
+      "html": "<button class=\"ds-btn-primary\">Ask</button>",
+      "css": ".ds-btn-primary { height: 36px; padding: 0 14px; border-radius: 3px; border: 1px solid #14263f; background: #14263f; color: #fff; font-weight: 600; cursor: pointer; transition: background-color .12s cubic-bezier(.22,1,.36,1); } .ds-btn-primary:hover { background: #1d3556; } .ds-btn-primary:focus-visible { outline: 2px solid #1f4e8c; outline-offset: 2px; }"
+    },
+    {
+      "name": "Default Button",
+      "kind": "button",
+      "refersTo": "button-default",
+      "description": "White button with strong hairline border.",
+      "html": "<button class=\"ds-btn\">Export</button>",
+      "css": ".ds-btn { height: 36px; padding: 0 14px; border-radius: 3px; border: 1px solid #8d97a1; background: #fff; color: #1a1d21; font-weight: 500; cursor: pointer; } .ds-btn:hover { background: #f6f8f9; border-color: #4a5560; } .ds-btn:focus-visible { outline: 2px solid #1f4e8c; outline-offset: 2px; }"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Filter or scope toggle; selected state is blue-tint.",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"true\">Current</button>",
+      "css": ".ds-chip { height: 30px; padding: 0 11px; border-radius: 3px; border: 1px solid #8d97a1; background: #fff; font-size: .875rem; cursor: pointer; } .ds-chip:hover { border-color: #4a5560; } .ds-chip[aria-pressed=\"true\"] { background: #e5edf7; border-color: #1f4e8c; color: #1f4e8c; font-weight: 600; } .ds-chip:focus-visible { outline: 2px solid #1f4e8c; outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Ruled field with strong hairline border.",
+      "html": "<input class=\"ds-input\" placeholder=\"Search documents\">",
+      "css": ".ds-input { width: 100%; min-height: 36px; padding: 0 10px; background: #fff; border: 1px solid #8d97a1; border-radius: 3px; font: inherit; } .ds-input::placeholder { color: #66717c; } .ds-input:hover { border-color: #4a5560; } .ds-input:focus-visible { outline: 2px solid #1f4e8c; outline-offset: 2px; }"
+    },
+    {
+      "name": "Rail Navigation Item",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Navy rail link; current page is cut out in desk colour.",
+      "html": "<div style=\"background:#14263f;padding:12px 0 12px 12px;display:grid;gap:2px\"><a class=\"ds-nav\" href=\"#\">Ask</a><a class=\"ds-nav\" aria-current=\"page\" href=\"#\">Documents</a></div>",
+      "css": ".ds-nav { display: flex; align-items: center; height: 40px; padding: 0 12px; color: #e3eaf3; text-decoration: none; font-weight: 500; border-radius: 3px 0 0 3px; } .ds-nav:hover { background: #1d3556; } .ds-nav[aria-current=\"page\"] { background: #edf0ee; color: #14263f; font-weight: 600; } .ds-nav:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }"
+    },
+    {
+      "name": "Sheet with Title Block",
+      "kind": "card",
+      "refersTo": "sheet",
+      "description": "White ruled sheet; the title block is a row of captioned cells.",
+      "html": "<div class=\"ds-sheet\"><div class=\"ds-head\"><h2>Answer</h2><span>3 sources</span></div><p class=\"ds-body\">Operating pressure is 1.5 bar <span class=\"ds-bln\">2</span>.</p><dl class=\"ds-cells\"><div class=\"ds-cell\"><dt>Model</dt><dd>qwen3</dd></div><div class=\"ds-cell\"><dt>Latency</dt><dd class=\"ds-data\">2.4 s</dd></div></dl></div>",
+      "css": ".ds-sheet { background: #fff; border: 1px solid #cfd4d9; border-radius: 2px; box-shadow: 0 1px 0 rgb(20 38 63 / .05), 0 8px 18px -12px rgb(20 38 63 / .35); font-family: Barlow, system-ui, sans-serif; color: #1a1d21; } .ds-head { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 16px; border-bottom: 1px solid #cfd4d9; } .ds-head h2 { margin: 0; font-family: 'Barlow Semi Condensed', Barlow, sans-serif; font-weight: 600; font-size: 1.125rem; } .ds-head span { color: #4a5560; font-size: .875rem; } .ds-body { margin: 0; padding: 16px 24px; } .ds-bln { display: inline-grid; place-items: center; min-width: 1.5em; height: 1.5em; padding: 0 .3em; border: 1.25px solid #1f4e8c; border-radius: 999px; background: #fff; color: #1f4e8c; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: .78rem; line-height: 1; vertical-align: .1em; } .ds-cells { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; margin: 0; border-top: 1px solid #cfd4d9; } .ds-cell { padding: 8px 12px; } .ds-cell + .ds-cell { border-left: 1px solid #cfd4d9; } .ds-cell dt { font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 500; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; color: #66717c; } .ds-cell dd { margin: 1px 0 0; font-size: .875rem; } .ds-data { font-family: 'JetBrains Mono', monospace; font-size: .8rem; }"
+    },
+    {
+      "name": "Item Balloon",
+      "kind": "custom",
+      "refersTo": "balloon",
+      "description": "Signature mark: numbered circle in a claim that points to a parts-list row.",
+      "html": "<p style=\"font-family:Barlow,sans-serif\">Stack voltage drops with load <button class=\"ds-bln\">1</button> and with age <button class=\"ds-bln\">3</button> <button class=\"ds-bln ghost\">?</button></p>",
+      "css": ".ds-bln { display: inline-grid; place-items: center; min-width: 1.5em; height: 1.5em; padding: 0 .3em; margin: 0 .1em; border: 1.25px solid #1f4e8c; border-radius: 999px; background: #fff; color: #1f4e8c; font-family: 'Barlow Semi Condensed', Barlow, sans-serif; font-weight: 600; font-size: .78rem; line-height: 1; vertical-align: .1em; cursor: pointer; transition: background-color .12s cubic-bezier(.22,1,.36,1), color .12s; } .ds-bln:hover { background: #1f4e8c; color: #fff; } .ds-bln:focus-visible { outline: 2px solid #1f4e8c; outline-offset: 2px; } .ds-bln.ghost { border-style: dashed; color: #66717c; border-color: #8d97a1; }"
+    },
+    {
+      "name": "Parts-List Row",
+      "kind": "custom",
+      "refersTo": "sheet",
+      "description": "Source register row: index, title, revision mark; superseded titles are struck in redline.",
+      "html": "<ul class=\"ds-parts\"><li class=\"ds-part\" data-on><span class=\"ds-bln\">1</span><div><div class=\"ds-title\">Stack Manual</div><div class=\"ds-meta\">Rev C - p. 14</div></div><span class=\"ds-rev\">Current</span></li><li class=\"ds-part old\"><span class=\"ds-bln\">2</span><div><div class=\"ds-title\">Stack Manual</div><div class=\"ds-meta\">Rev B - p. 12</div></div><span class=\"ds-rev old\">Superseded</span></li></ul>",
+      "css": ".ds-parts { list-style: none; margin: 0; padding: 0; background: #fff; border: 1px solid #cfd4d9; font-family: Barlow, sans-serif; } .ds-part { display: grid; grid-template-columns: 30px 1fr auto; gap: 8px 12px; padding: 12px 16px; border-bottom: 1px solid #cfd4d9; } .ds-part[data-on] { background: #e5edf7; } .ds-title { font-weight: 500; line-height: 1.3; } .ds-part.old .ds-title { text-decoration: line-through; text-decoration-color: #b42d1c; text-decoration-thickness: 1.5px; color: #4a5560; } .ds-meta { margin-top: 3px; color: #4a5560; font-size: .875rem; } .ds-rev { font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: .8rem; color: #1b724a; } .ds-rev.old { color: #b42d1c; } .ds-bln { display: inline-grid; place-items: center; width: 1.5em; height: 1.5em; border: 1.25px solid #1f4e8c; border-radius: 999px; background: #fff; color: #1f4e8c; font-weight: 600; font-size: .78rem; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Drawing Sheet",
+    "overview": "Every answer is treated as an engineering drawing sheet: a white sheet on a pale desk, ruled with hairlines, annotated rather than decorated. Claims in the prose carry item balloons, which are numbered circles, and each balloon points to a row in a parts-list register of sources. A title block under the answer records how it was made. Provenance is the visual subject.\n\nDensity is calm and technical. Surfaces are flat, bordered by 1px hairlines, and square-cornered (2-3px). A deep navy rail anchors the left edge. Colour is reserved for state: blue means selection and citation, green means current, red means superseded or conflicting. State is never colour alone.\n\nThe system refuses the chat-over-documents default: no message bubbles, no avatars, no gradient send button.",
+    "keyCharacteristics": [
+      "White sheets on a pale grey-green desk, separated by hairlines rather than shadows.",
+      "Navy rail with the current page cut out in desk colour.",
+      "Item balloons as the single signature mark, matched one-to-one to parts-list rows.",
+      "Revision triangles and redline strike-through carry version state.",
+      "Barlow for reading, Barlow Semi Condensed for labels and headings, JetBrains Mono for IDs, scores and values."
+    ],
+    "rules": [
+      { "name": "The State-Only Colour Rule", "body": "Blue, green and red appear only to encode selection, currency, or conflict. Decoration, emphasis and branding stay in navy and neutrals.", "section": "colors" },
+      { "name": "The Shape-Plus-Colour Rule", "body": "Every coloured state also changes shape: ok is a filled circle, superseded or failed is a triangle, warning is a small square, unknown is a hollow ring.", "section": "colors" },
+      { "name": "The Mono-For-Identifiers Rule", "body": "Anything a person might copy or compare (document ID, score, parameter value) is monospace; prose never is.", "section": "typography" },
+      { "name": "The Caption-Not-Eyebrow Rule", "body": "Uppercase condensed labels are cell captions inside a title block or table head, attached to the value they describe. They are never set above a heading as an introduction.", "section": "typography" },
+      { "name": "The Hairline-First Rule", "body": "Separate regions with a 1px rule before reaching for a shadow; shadow is reserved for sheets and dialogs.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do answer in a sheet: prose with inline balloons, a register of sources, then a title block of cells.",
+      "Do match every balloon to a parts-list row, and show superseded versions with the red strike and a red triangle.",
+      "Do pair every state colour with a shape or strike (blue selection, green current, red conflict).",
+      "Do use hairlines (1px hair or hair-strong) to divide regions; keep radii at 2px (sheets) and 3px (controls).",
+      "Do set IDs, scores and values in JetBrains Mono, and let long IDs wrap rather than overflow.",
+      "Do keep table overflow inside a scroll wrapper and keep the composer pinned to the thread bottom.",
+      "Do honour reduced motion; animations are limited to the live sweep, the row reveal and 120ms state transitions."
+    ],
+    "donts": [
+      "Don't use chat bubbles, avatars, or a gradient or glowing send button.",
+      "Don't introduce another accent hue; blue, green and red already cover selection, currency and conflict.",
+      "Don't use colour alone to signal state.",
+      "Don't round surfaces beyond 3px; the balloon is the only circle in the layout.",
+      "Don't put uppercase condensed labels above headings as introductions; they are captions inside title-block cells and table heads.",
+      "Don't use shadows to separate adjacent regions; use a hairline."
+    ]
+  }
+}
