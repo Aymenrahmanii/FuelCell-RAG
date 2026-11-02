@@ -47,6 +47,9 @@ const ICONS = {
   chevron: '<path d="M6 9l6 6 6-6"/>',
   warn: '<path d="M12 4l9 15.5H3z"/><path d="M12 10v4.5M12 17v.01"/>',
   info: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.01"/>',
+  close: '<path d="M6 6l12 12M18 6L6 18"/>',
+  panelClose: '<path d="M4 5h16v14H4z"/><path d="M14.5 5v14M8 9.5l2.5 2.5L8 14.5"/>',
+  panelOpen: '<path d="M4 5h16v14H4z"/><path d="M14.5 5v14M10.5 9.5L8 12l2.5 2.5"/>',
   sortUp: '<path d="M7 14l5-5 5 5"/>',
   sortDown: '<path d="M7 10l5 5 5-5"/>',
 };
