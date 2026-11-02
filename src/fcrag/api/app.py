@@ -5,6 +5,7 @@ Models load on first use, so ``/health`` answers immediately after start-up.
 
 import io
 import json
+import logging
 import secrets
 import time
 from collections.abc import Iterator
@@ -98,6 +99,8 @@ def _audit(
         audit.record(question, result, user_id=user, groups=groups, endpoint=endpoint,
                      error=error)  # fmt: skip
 
+
+log = logging.getLogger(__name__)
 
 app = FastAPI(title="FuelCell-RAG", version=__version__, dependencies=[Depends(require_key)])
 
@@ -222,6 +225,7 @@ def ask(req: AskRequest, service: Service, groups: Groups, user: UserId) -> dict
     try:
         result = asdict(service.answer(req.question, req.filters(groups), req.turns()))
     except Exception as exc:
+        log.exception("ask failed")
         _audit("ask", req.question, None, user, groups, f"{type(exc).__name__}: {exc}")
         raise
     _audit("ask", req.question, result, user, groups)
@@ -241,6 +245,7 @@ def ask_stream(
                     _audit("ask/stream", req.question, event["result"], user, groups)
                 yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
         except Exception as exc:
+            log.exception("ask/stream failed")
             message = f"{type(exc).__name__}: {exc}"
             _audit("ask/stream", req.question, None, user, groups, message)
             yield f"data: {json.dumps({'type': 'error', 'message': message})}\n\n"

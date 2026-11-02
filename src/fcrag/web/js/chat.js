@@ -27,6 +27,7 @@ const state = {
   controller: null,
   corpus: null,
   draft: "",
+  registerOpen: true,
 };
 
 export function mount({ main, tools }) {
@@ -303,15 +304,37 @@ export function mount({ main, tools }) {
 
   // ----- Register (parts list) -----
 
+  function toggleRegister() {
+    state.registerOpen = !state.registerOpen;
+    drawRegister();
+  }
+
+  function collapseButton() {
+    return h("button", { class: "btn small icon", type: "button", "aria-label": "Hide sources", title: "Hide sources", onclick: toggleRegister }, icon("panelClose", 16));
+  }
+
   function drawRegister() {
     const msg = state.messages[state.selected];
     clear(registerHost);
+    root.classList.toggle("register-collapsed", !state.registerOpen);
+    if (!state.registerOpen) {
+      const n = msg?.role === "assistant" ? msg.sources.length : 0;
+      registerHost.append(
+        h(
+          "button",
+          { class: "register-tab", type: "button", "aria-label": "Show sources", title: "Show sources", "aria-expanded": "false", onclick: toggleRegister },
+          icon("panelOpen", 18),
+          h("span", null, n ? `Sources · ${n}` : "Sources"),
+        ),
+      );
+      return;
+    }
     if (!state.messages.length) {
       registerHost.append(
         h(
           "aside",
           { class: "sheet register register-empty", "aria-label": "Sources" },
-          h("div", { class: "sheet-head" }, h("h2", null, "Sources")),
+          h("div", { class: "sheet-head" }, h("h2", null, "Sources"), collapseButton()),
           h("div", { class: "sheet-body" }, h("p", { class: "muted" }, "The sources of each answer are listed here, numbered like the balloons in the text. Superseded versions are struck through.")),
         ),
       );
@@ -341,14 +364,19 @@ export function mount({ main, tools }) {
             cited && !cited.has(n) ? h("span", null, "not cited") : null,
           ),
         ),
-        h("span", { class: "part-side" }, revision(s.doc_version, s.is_latest), h("span", { class: "part-score", title: "Relevance score from the reranker, 0 to 1" }, s.score.toFixed(2))),
+        h("span", { class: "part-side" }, revision(s.doc_version, s.is_latest), h("span", { class: "part-score", title: "Relevance score from the reranker, 0 to 1" }, s.score.toFixed(2)), h("span", { class: "part-chev" }, icon("chevron", 16))),
       );
       row.addEventListener("click", () => {
         const open = row.getAttribute("aria-expanded") === "true";
         row.setAttribute("aria-expanded", String(!open));
         detail.hidden = open;
-        if (!open && !detail.firstChild) fillDetail(detail, s);
+        if (!open && !detail.firstChild) fillDetail(detail, s, fold);
       });
+      const fold = () => {
+        row.setAttribute("aria-expanded", "false");
+        detail.hidden = true;
+        row.scrollIntoView({ block: "nearest" });
+      };
       row.addEventListener("mouseenter", () => light([n], false));
       row.addEventListener("mouseleave", () => light([], false));
       list.append(
@@ -369,13 +397,14 @@ export function mount({ main, tools }) {
           { class: "sheet-head" },
           h("h2", null, "Sources"),
           h("span", { class: "note" }, cited ? `${cited.size} of ${msg.sources.length} cited` : `${msg.sources.length} retrieved`),
+          collapseButton(),
         ),
         list,
       ),
     );
   }
 
-  function fillDetail(detail, s) {
+  function fillDetail(detail, s, fold) {
     append(detail, [h("pre", null, s.text)]);
     const page = s.locator?.page;
     if (page) {
@@ -386,7 +415,14 @@ export function mount({ main, tools }) {
         btn.textContent = "Loading page…";
         const url = await api.pageImage(s.doc_id, s.doc_version, page);
         if (url) {
-          clear(slot).append(h("img", { src: url, alt: `${s.title}, page ${page}` }));
+          const alt = `${s.title}, page ${page}`;
+          clear(slot).append(
+            h(
+              "button",
+              { class: "page-thumb", type: "button", title: "Click to enlarge", "aria-label": `Enlarge ${alt}`, onclick: () => enlarge(url, alt) },
+              h("img", { src: url, alt }),
+            ),
+          );
           btn.remove();
         } else {
           btn.textContent = "No page preview for this source";
@@ -394,6 +430,22 @@ export function mount({ main, tools }) {
       });
       detail.append(btn, slot);
     }
+    detail.append(h("button", { class: "btn small fold", type: "button", onclick: fold }, icon("chevron", 14), "Fold source"));
+  }
+
+  function enlarge(url, alt) {
+    const dlg = h(
+      "dialog",
+      { class: "lightbox", "aria-label": alt },
+      h("button", { class: "btn icon lightbox-close", type: "button", "aria-label": "Close", title: "Close (Esc)", onclick: () => dlg.close() }, icon("close", 18)),
+      h("div", { class: "lightbox-scroll" }, h("img", { src: url, alt })),
+    );
+    dlg.addEventListener("close", () => dlg.remove());
+    dlg.addEventListener("click", (e) => {
+      if (e.target === dlg || e.target.classList.contains("lightbox-scroll")) dlg.close();
+    });
+    document.body.append(dlg);
+    dlg.showModal();
   }
 
   // ----- Composer -----
