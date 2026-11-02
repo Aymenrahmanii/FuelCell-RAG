@@ -38,7 +38,7 @@ jobs:
         run: uv run pytest --cov --cov-report=term --cov-report=xml -m "not integration"
 
       - name: Secret scan
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
