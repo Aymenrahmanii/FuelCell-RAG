@@ -45,7 +45,7 @@ jobs:
       # Settings.prefetch_limit), so the gate measures what ships and runs faster on CPU.
       HF_HUB_DISABLE_SYMLINKS_WARNING: "1"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: astral-sh/setup-uv@v7
         with:

@@ -18,7 +18,7 @@ jobs:
       matrix:
         target: [ml, ui]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Image name
         # GHCR needs lower case; the account name has capitals
@@ -56,7 +56,7 @@ jobs:
     needs: images
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Latest evaluation run on main
         # The eval gate uploads its run as the "eval-run" artifact; a missing one is reported,
