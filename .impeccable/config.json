@@ -1,0 +1,20 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "computer modern serif",
+        "createdAt": "2026-11-02T20:48:08.455Z",
+        "reason": "Print report in LaTeX style, not the web app; typeface is the intended look (assistant decision, user asked for a LaTeX-style PDF)"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "computer modern typewriter",
+        "createdAt": "2026-11-02T20:48:09.076Z",
+        "reason": "Monospace of the same LaTeX-style print report (assistant decision, user asked for a LaTeX-style PDF)"
+      }
+    ]
+  }
+}

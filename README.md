@@ -1,5 +1,10 @@
 # FuelCell-RAG
 
+[![CI](https://github.com/Aymenrahmanii/FuelCell-RAG/actions/workflows/ci.yml/badge.svg)](https://github.com/Aymenrahmanii/FuelCell-RAG/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Aymenrahmanii/FuelCell-RAG?include_prereleases)](https://github.com/Aymenrahmanii/FuelCell-RAG/releases)
+![Python 3.12](https://img.shields.io/badge/python-3.12-blue)
+[![Licence: MIT](https://img.shields.io/badge/licence-MIT-green)](LICENSE)
+
 Retrieval-augmented question answering over fuel cell engineering documents: datasheets, parameter
 sheets, requirement specifications, STEP assemblies and public technical reports, in German and
 English. Every claim in an answer cites a page, table cell, requirement ID or CAD part.
@@ -13,6 +18,22 @@ where each value appears, which gives exact gold labels for evaluation.
 | A | Passenger car | 80 kW |
 | B | Heavy-duty truck | 2 × 150 kW |
 | C | Stationary CHP | 100 kW |
+
+![The chat screen: a German question, a cited answer, and the sources with a page preview](docs/images/web-chat.png)
+
+<details>
+<summary>More screens</summary>
+
+| | |
+|---|---|
+| ![Documents](docs/images/web-documents.png) | ![Parameter comparison](docs/images/web-parameters.png) |
+| Document registry and re-ingestion | Parameters per system, disagreements flagged |
+| ![Evaluation](docs/images/web-evaluation.png) | |
+| Every saved evaluation run | |
+
+</details>
+
+The full write-up, with method, results and limits: [**technical report (PDF)**](docs/report/report.pdf).
 
 ## Results
 
@@ -125,7 +146,7 @@ flowchart LR
     T --> G
     G --> V[Check citations] --> A[Streamed answer]
   end
-  A --> UI[Streamlit: chat, documents, compare, requirement checker]
+  A --> UI[Web app at /app: chat, documents, compare, requirement checker, evaluation]
   Ingestion -. traces .-> L[Langfuse]
   Answering -. traces .-> L
 ```
@@ -311,7 +332,7 @@ src/fcrag/
   retrieval/     hybrid search, rerank, parameter routing
   generation/    answer service, prompts, citation checks
   apps/          parameter comparison, requirement checker
-  api/ ui/       FastAPI service, Streamlit pages
+  api/ web/ ui/  FastAPI service, web app (HTML/CSS/JS), Streamlit pages (older UI)
   datagen/       synthetic corpus generators
   eval/          golden set, metrics, runner, gate, report
 data_gen/        system truths and synonyms
