@@ -14,6 +14,24 @@
         "value": "computer modern typewriter",
         "createdAt": "2026-11-02T20:48:09.076Z",
         "reason": "Monospace of the same LaTeX-style print report (assistant decision, user asked for a LaTeX-style PDF)"
+      },
+      {
+        "rule": "oversized-h1",
+        "value": "*",
+        "files": [
+          "docs/report/report.html"
+        ],
+        "createdAt": "2026-11-02T20:52:58.487Z",
+        "reason": "Print title of an A4 report (20pt), not a web hero; assistant decision"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "docs/report/report.html"
+        ],
+        "createdAt": "2026-11-02T20:53:04.706Z",
+        "reason": "Remaining hit is the standard sup/sub line-height:0 idiom in print CSS; body is 1.38; assistant decision"
       }
     ]
   }
