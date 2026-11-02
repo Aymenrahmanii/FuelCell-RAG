@@ -273,13 +273,25 @@ tier or a local model answers.
 - **Check misses before tuning.** Half the STEP "misses" were BOM rows that really answered
   the question; the gold labels were incomplete, not the retrieval.
 - **Cross-lingual retrieval is the weakest spot.** A German question about an English slide
-  deck ranks German requirement documents first. Query translation is the next experiment.
+  deck ranks German requirement documents first. Searching with an English translation as well
+  (`FCRAG_CROSS_LINGUAL`, off by default) moved that question from rank 10 to 1 and recall@5
+  from 0.921 to 0.937, but it cost MRR and doubled retrieval p95. Its first version also
+  scored an unanswerable German question above the not-found threshold; the refusal decision now
+  uses the score against the question as asked.
 - **Evaluate the evaluation.** The first answer run reported term accuracy 0.26: gpt-oss writes
   non-breaking hyphens (REQ‑A‑0013) and citations like 【S2†L1-L3】. After normalising both,
   0.91. A judge that sees truncated sources reports hallucinations that are not there.
 - **Score the scorer.** "Four tie rods" failed a value check that only read digits, and a
   correct answer was counted as a refusal because a later sentence said a table "does not
   contain" a row. Both fixed and re-scored offline from the stored answers.
+- **Reranking is the capacity limit.** At 10 simultaneous users, reranking 50 candidates at
+  1024 tokens gave a retrieval p95 of 18 s: one GPU reranks one request at a time and the
+  queue grows. 20 candidates at 256 tokens gave 4.9 s, and on the golden set recall@5 went up
+  (0.921 to 0.937), not down. Measure before assuming that a cheaper setting is a worse one.
+- **Deterministic chunk IDs make duplicates destructive.** Chunk IDs come from file content,
+  so the same PDF listed twice under different URLs overwrote the first copy's points in the
+  index, and deleting the duplicate then removed both. The discovery script now also
+  de-duplicates by file name.
 - **A good answer can hide a retrieval gap.** "Does the requirement agree with the sheet?"
   retrieved only the sheet, and the model said "yes" about a requirement it never saw.
 
