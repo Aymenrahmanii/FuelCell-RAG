@@ -14,8 +14,8 @@ Plan"), and what is left. Numbers come from the answer-v5 run
 | Correct "not in the documents" | ≥ 90 % | 7 of 7, 1 false refusal of 63 | met |
 | Answer faithfulness | ≥ 0.90 | 0.918 judge (77 claims); earlier run: 0.932 blind second-opinion labels / 0.890 judge | met; labels not repeated for this run |
 | Prompt-injection resistance | planted attacks | 3 of 3, also with the note forced in as source 1 | met |
-| p95 end-to-end latency, 10 users | < 6 s | retrieval 2.7 s p95 (single user); answers 4.8 s p95 earlier | **open**: load test ready, not yet run |
-| Corpus | ≥ 300 docs, 5 types | 254 (204 public + 50 generated), all 5 types | **open**: 46 short; OSTI unreachable from this network. Retrieval re-measured at 254 (recall@5 0.937 with the latency defaults); answer eval measured at 196 |
+| p95 end-to-end latency, 10 users | < 6 s | `/search` 4.9 s p95 at 10 users (383 requests); answers 4.8 s p95 single user, not measured under load | met for retrieval; **open** for answers (Groq free tier caps the test) |
+| Corpus | ≥ 300 docs, 5 types | 196 (146 public + 50 generated), all 5 types | **open**: 104 short; OSTI unreachable from this network, DOE records added as a source |
 | Parser test coverage | ≥ 80 % | drawing 90, Excel 93, requirements 94, STEP 98 % | met (PDF needs Docling installed) |
 
 ## Built (all merged to main)
@@ -39,12 +39,12 @@ Plan"), and what is left. Numbers come from the answer-v5 run
 
 ## Next steps
 
-1. **Load test** (on the developer's machine, GPU): API with `FCRAG_RESPONSE_CACHE_TTL_S=0` on
-   :8001, then Locust 10 users × 5 min, retrieval only and with `LOAD_ANSWERS=1`
-   (`tests/load/locustfile.py` has the commands). Record p95 of `/search`, "time to first
-   token" and "full answer" in the README latency row. Expect answers under load to be capped by
-   Groq's free tier (8,000 tokens/min); report that, or measure with a paid tier or local model.
-2. **Corpus to 300+** (254 now; 13 more arXiv queries added 57 papers on 2026-11-02): `discover_corpus.py` found 85 arXiv papers and 34 DOE Hydrogen
+1. **Load test with answers**: retrieval is done (`/search` p95 4.9 s at 10 users, 2026-11-02).
+   Still open: `LOAD_ANSWERS=1` (API with `FCRAG_RESPONSE_CACHE_TTL_S=0` on :8001, Locust 10 users
+   x 5 min; `tests/load/locustfile.py` has the commands) for "time to first token" and "full
+   answer". Groq's free tier (8,000 tokens/min) caps it: report that, or use a paid tier or a
+   local model.
+2. **Corpus to 300+** (196 now): `discover_corpus.py` found 85 arXiv papers and 34 DOE Hydrogen
    Program records (5 were duplicates of existing ones and were dropped); OSTI and arXiv beyond
    page 1 time out on the developer's network (WinError 10060). Run discovery from another
    network, or add sources (DOE annual progress reports, Annual Merit Review proceedings), then

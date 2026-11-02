@@ -37,6 +37,14 @@ any LLM call, 0 errors). Retrieval did not degrade when the corpus grew from 83 
 | Parameter extraction recall / precision (610 facts, through Docling) † | **99.5 % / 99.5 %** | – |
 | Ingestion throughput (laptop RTX 3050, 6 GB) † | ~1,150 PDF pages/h | ≥ 1,000 |
 | Retrieval p50 / p95 · generation p95 | 1.8 s / 2.6 s · 4.8 s † | end-to-end p95 < 6 s |
+| `/search` under load: 10 users, 5 min, 383 requests, GPU laptop (20 candidates, 256 rerank tokens) | p50 2.6 s, **p95 4.9 s**, 1 aborted connection (likely the end of the test), 1.3 req/s | < 6 s |
+
+The answer eval above ran with the earlier retrieval settings (50 candidates, 1024 rerank
+tokens); the new defaults (20 and 256) were measured separately, retrieval only: recall@5 0.937,
+MRR 0.890, 6 of 7 refusals. With the old settings the same load test gave p95 18 s: reranking is
+almost all of the time and one GPU reranks one request at a time. The load figure covers
+retrieval only. Answers add the LLM time, which Groq's free tier (8,000 tokens per minute)
+prevents measuring under load.
 
 Generation p95 in this run was 23.8 s, but that includes waiting out Groq's free-tier limit of
 8,000 tokens per minute; the 4.8 s comes from the earlier run without rate limiting.
