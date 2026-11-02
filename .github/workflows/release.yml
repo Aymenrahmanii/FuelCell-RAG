@@ -32,15 +32,23 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Image tags
+        # A release candidate (v0.1.0-rc1) must not take over :latest
+        run: |
+          {
+            echo "TAGS<<EOF"
+            echo "$IMAGE:$GITHUB_REF_NAME"
+            case "$GITHUB_REF_NAME" in *-*) ;; *) echo "$IMAGE:latest" ;; esac
+            echo "EOF"
+          } >> "$GITHUB_ENV"
+
       - uses: docker/build-push-action@v6
         with:
           context: .
           file: docker/app.Dockerfile
           target: ${{ matrix.target }}
           push: true
-          tags: |
-            ${{ env.IMAGE }}:${{ github.ref_name }}
-            ${{ env.IMAGE }}:latest
+          tags: ${{ env.TAGS }}
           cache-from: type=gha,scope=${{ matrix.target }}
           cache-to: type=gha,mode=max,scope=${{ matrix.target }}
 
@@ -73,5 +81,7 @@ jobs:
           image="ghcr.io/${GITHUB_REPOSITORY,,}"
           notes=$(printf 'Images:\n- `%s-ml:%s`\n- `%s-ui:%s`\n\n%s' \
             "$image" "$GITHUB_REF_NAME" "$image" "$GITHUB_REF_NAME" "$EVAL_NOTE")
-          gh release create "$GITHUB_REF_NAME" --generate-notes --notes "$notes" \
+          # tags with a hyphen (v0.1.0-rc1) are published as pre-releases
+          case "$GITHUB_REF_NAME" in *-*) pre="--prerelease" ;; *) pre="" ;; esac
+          gh release create "$GITHUB_REF_NAME" $pre --generate-notes --notes "$notes" \
             $(find eval-run -name '*.json' -print)
