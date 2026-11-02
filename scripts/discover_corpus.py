@@ -58,6 +58,19 @@ ARXIV_QUERIES = {
     'ti:"fuel cell" AND abs:degradation': ["durability"],
     'ti:"fuel cell" AND abs:"hydrogen vehicle"': ["automotive"],
     'ti:"solid oxide fuel cell"': ["sofc"],
+    'ti:"fuel cell" AND abs:"water management"': ["water"],
+    'ti:"fuel cell" AND abs:"gas diffusion layer"': ["materials"],
+    'ti:"fuel cell" AND abs:membrane': ["membrane", "materials"],
+    'ti:"fuel cell" AND abs:catalyst': ["catalyst", "materials"],
+    'ti:"fuel cell" AND abs:"cold start"': ["cold-start"],
+    'ti:"fuel cell" AND abs:"air compressor"': ["balance-of-plant"],
+    'ti:"fuel cell" AND abs:"thermal management"': ["thermal"],
+    'ti:"fuel cell" AND abs:"hydrogen recirculation"': ["balance-of-plant"],
+    'ti:"fuel cell" AND abs:"fault diagnosis"': ["diagnostics"],
+    'ti:"fuel cell" AND abs:"energy management"': ["control", "automotive"],
+    'ti:"fuel cell" AND abs:"remaining useful life"': ["durability", "prognostics"],
+    'ti:"fuel cell" AND abs:"heavy-duty"': ["heavy-duty"],
+    'ti:"fuel cell" AND abs:stack': ["stack"],
 }
 DOE_BASE = "https://www.hydrogen.energy.gov"
 DOE_RECORDS = f"{DOE_BASE}/library/program-records"

@@ -719,16 +719,6 @@ sources:
   doc_type: report
   format: paper
   topics: *id001
-- id: arxiv-2212.13661-cost-minimization-predictive-energy
-  url: https://arxiv.org/pdf/2212.13661
-  title: Cost-minimization predictive energy management of a postal-delivery fuel
-    cell electric vehicle with intelligent battery State-of-Charge Planner
-  publisher: arXiv
-  year: 2022
-  licence: arXiv preprint, author's licence; research use, not redistributed
-  doc_type: report
-  format: paper
-  topics: *id003
 - id: arxiv-2607.16616-high-entropy-perovskites-architectured
   url: https://arxiv.org/pdf/2607.16616
   title: High-entropy perovskites, architectured by s0/d0/d10 cations, as novel electrolytes
@@ -1083,3 +1073,579 @@ sources:
   doc_type: report
   format: report
   topics: *id005
+- id: arxiv-nlin-0306028-steady-state-multiplicity-in
+  url: https://arxiv.org/pdf/nlin/0306028
+  title: Steady State Multiplicity in a Polymer Electrolyte Membrane Fuel Cell
+  publisher: arXiv
+  year: 2003
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics:
+  - water
+- id: arxiv-1308.4590-parameter-estimates-for-a
+  url: https://arxiv.org/pdf/1308.4590
+  title: Parameter Estimates for a Polymer Electrolyte Membrane Fuel Cell Cathode
+  publisher: arXiv
+  year: 2013
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: &id006
+  - materials
+- id: arxiv-physics-0310037-the-stirred-tank-reactor
+  url: https://arxiv.org/pdf/physics/0310037
+  title: The Stirred Tank Reactor Polymer Electrolyte Membrane Fuel Cell
+  publisher: arXiv
+  year: 2003
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: &id007
+  - membrane
+  - materials
+- id: arxiv-2507.07499-extracting-orr-catalyst-information
+  url: https://arxiv.org/pdf/2507.07499
+  title: Extracting ORR Catalyst Information for Fuel Cell from Scientific Literature
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: &id008
+  - catalyst
+  - materials
+- id: arxiv-0905.2871-detailed-analysis-of-an
+  url: https://arxiv.org/pdf/0905.2871
+  title: 'Detailed analysis of an endoreversible fuel cell : Maximum power and optimal
+    operating temperature determination'
+  publisher: arXiv
+  year: 2009
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: &id009
+  - thermal
+- id: arxiv-2109.13833-convex-optimization-of-speed
+  url: https://arxiv.org/pdf/2109.13833
+  title: Convex Optimization of Speed and Energy Management System for Fuel Cell Hybrid
+    Trains
+  publisher: arXiv
+  year: 2021
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: &id010
+  - control
+  - automotive
+- id: arxiv-1605.03897-fuel-cell-electrodes-from
+  url: https://arxiv.org/pdf/1605.03897
+  title: 'Fuel cell electrodes from organometallic Pt precursors: an easy atmospheric
+    plasma approach'
+  publisher: arXiv
+  year: 2016
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id006
+- id: arxiv-nlin-0606061-ignition-and-front-propagation
+  url: https://arxiv.org/pdf/nlin/0606061
+  title: Ignition and Front Propagation in Polymer Electrolyte Membrane Fuel Cells
+  publisher: arXiv
+  year: 2006
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-1001.1923-modeling-of-the-anode
+  url: https://arxiv.org/pdf/1001.1923
+  title: Modeling of the anode side of a direct methanol fuel cell with analytical
+    solutions
+  publisher: arXiv
+  year: 2010
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-2111.09238-convex-optimization-for-fuel
+  url: https://arxiv.org/pdf/2111.09238
+  title: 'Convex Optimization for Fuel Cell Hybrid Trains: Speed, Energy Management
+    System, and Battery Thermals'
+  publisher: arXiv
+  year: 2021
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id009
+- id: arxiv-1610.05716-design-mining-microbial-fuel
+  url: https://arxiv.org/pdf/1610.05716
+  title: Design Mining Microbial Fuel Cell Cascades
+  publisher: arXiv
+  year: 2016
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: &id011
+  - stack
+- id: arxiv-1610.05169-highly-efficient-fuel-cell
+  url: https://arxiv.org/pdf/1610.05169
+  title: Highly Efficient Fuel Cell Electrodes from Few-Layer Graphene Sheets and
+    Electrochemically Deposited Palladium Nanoparticles
+  publisher: arXiv
+  year: 2016
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-1804.02878-energy-management-of-a
+  url: https://arxiv.org/pdf/1804.02878
+  title: Energy Management of a Hybrid Photovoltaic-Fuel Cell Grid-Connected Power
+    Plant with Low Voltage Ride-Through Control
+  publisher: arXiv
+  year: 2018
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id010
+- id: arxiv-2302.06236-a-lifetime-extended-energy
+  url: https://arxiv.org/pdf/2302.06236
+  title: A Lifetime Extended Energy Management Strategy for Fuel Cell Hybrid Electric
+    Vehicles via Self-Learning Fuzzy Reinforcement Learning
+  publisher: arXiv
+  year: 2023
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics:
+  - durability
+  - prognostics
+- id: arxiv-1601.07275-optimal-power-distribution-control
+  url: https://arxiv.org/pdf/1601.07275
+  title: Optimal Power Distribution Control for a Network of Fuel Cell Stacks
+  publisher: arXiv
+  year: 2016
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id011
+- id: arxiv-physics-0306125-the-autohumidification-polymer-electrolyte
+  url: https://arxiv.org/pdf/physics/0306125
+  title: The Autohumidification Polymer Electrolyte Membrane Fuel Cell
+  publisher: arXiv
+  year: 2003
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-1710.08812-post-prognostics-decision-for
+  url: https://arxiv.org/pdf/1710.08812
+  title: Post-Prognostics Decision for Optimizing the Commitment of Fuel Cell Systems
+  publisher: arXiv
+  year: 2017
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id011
+- id: arxiv-0804.2098-a-microfluidic-pore-network
+  url: https://arxiv.org/pdf/0804.2098
+  title: A Microfluidic Pore Network Approach to Investigate Water Transport in Fuel
+    Cell Porous Transport Layers
+  publisher: arXiv
+  year: 2008
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id006
+- id: arxiv-2402.09019-nmr-contributions-to-the
+  url: https://arxiv.org/pdf/2402.09019
+  title: NMR contributions to the study of water transfer in proton exchange membranes
+    for fuel cells
+  publisher: arXiv
+  year: 2024
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-2603.27755-computational-facilitation-of-large
+  url: https://arxiv.org/pdf/2603.27755
+  title: Computational Facilitation of Large Scale Microfluidic Fuel Cell Architectures
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id011
+- id: arxiv-2212.13198-informatics-driven-selection-of
+  url: https://arxiv.org/pdf/2212.13198
+  title: Informatics-Driven Selection of Polymers for Fuel-Cell Applications
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-2409.03201-model-predictive-online-trajectory
+  url: https://arxiv.org/pdf/2409.03201
+  title: Model Predictive Online Trajectory Planning for Adaptive Battery Discharging
+    in Fuel Cell Vehicle
+  publisher: arXiv
+  year: 2024
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id010
+- id: arxiv-2204.04509-graphene-coating-of-nafion
+  url: https://arxiv.org/pdf/2204.04509
+  title: Graphene coating of Nafion$^{(R)}$ membranes for enhanced fuel cell performance
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-2209.04995-a-novel-learning-based
+  url: https://arxiv.org/pdf/2209.04995
+  title: A novel learning-based robust model predictive control energy management
+    strategy for fuel cell electric vehicles
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id010
+- id: arxiv-2301.12325-data-driven-load-current
+  url: https://arxiv.org/pdf/2301.12325
+  title: Data-Driven Load-Current Sharing Control for Multi-Stack Fuel Cell System
+    with Circulating Current Mitigation
+  publisher: arXiv
+  year: 2023
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id011
+- id: arxiv-physics-0310029-a-comparison-of-physical
+  url: https://arxiv.org/pdf/physics/0310029
+  title: A Comparison of Physical Properties and Fuel Cell Performance of Nafion and
+    Zirconium Phosphate/Nafion Composite Membranes
+  publisher: arXiv
+  year: 2003
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-2006.12607-pore-scale-transport-and
+  url: https://arxiv.org/pdf/2006.12607
+  title: 'Pore-Scale Transport and Two-Phase Fluid Structures in Fibrous Porous Layers:
+    Application to Fuel Cells and Beyond'
+  publisher: arXiv
+  year: 2020
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id006
+- id: arxiv-2212.12503-on-the-wellposedness-for
+  url: https://arxiv.org/pdf/2212.12503
+  title: On the wellposedness for a fuel cell problem
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-2111.01434-valorization-of-biodigestor-plant
+  url: https://arxiv.org/pdf/2111.01434
+  title: Valorization of biodigestor plant waste in electrodes for supercapacitors
+    and microbial fuel cells
+  publisher: arXiv
+  year: 2021
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id010
+- id: arxiv-2510.17214-diagnosis-of-fuel-cell
+  url: https://arxiv.org/pdf/2510.17214
+  title: Diagnosis of Fuel Cell Health Status with Deep Sparse Auto-Encoder Neural
+    Network
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id011
+- id: arxiv-1802.01934-synthesis-of-membrane-electrode
+  url: https://arxiv.org/pdf/1802.01934
+  title: Synthesis of Membrane-Electrode Assembly for Fuel Cells by Means of (Sub)-Atmospheric
+    Plasma Processes
+  publisher: arXiv
+  year: 2018
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-physics-0609025-carbon-supported-polyaniline-as
+  url: https://arxiv.org/pdf/physics/0609025
+  title: 'Carbon Supported Polyaniline as Anode Catalyst: Pathway to Platinum-Free
+    Fuel Cells'
+  publisher: arXiv
+  year: 2006
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-2009.06159-distributed-peer-to-peer
+  url: https://arxiv.org/pdf/2009.06159
+  title: Distributed Peer-to-Peer Energy Trading for Residential Fuel Cell Combined
+    Heat and Power Systems
+  publisher: arXiv
+  year: 2020
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id010
+- id: arxiv-2212.11733-time-to-market-reduction
+  url: https://arxiv.org/pdf/2212.11733
+  title: Time to Market Reduction for Hydrogen Fuel Cell Stacks using Generative Adversarial
+    Networks
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id011
+- id: arxiv-2504.18835-machine-learning-accelerates-fuel
+  url: https://arxiv.org/pdf/2504.18835
+  title: Machine learning accelerates fuel cell life testing
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-2302.13142-hierarchical-fuel-cell-airpath
+  url: https://arxiv.org/pdf/2302.13142
+  title: 'Hierarchical Fuel-Cell Airpath Control: an Efficiency-Aware MIMO Control
+    Approach Combined with a Novel Constraint-Enforcing Reference Governor'
+  publisher: arXiv
+  year: 2023
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id011
+- id: arxiv-0711.3298-recent-developments-in-mems
+  url: https://arxiv.org/pdf/0711.3298
+  title: Recent Developments in Mems-Based Micro Fuel Cells
+  publisher: arXiv
+  year: 2007
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-2012.02879-revealing-the-nanostructure-of
+  url: https://arxiv.org/pdf/2012.02879
+  title: Revealing the Nanostructure of Mesoporous Fuel Cell Catalyst Supports for
+    Durable, High-Power Performance
+  publisher: arXiv
+  year: 2020
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-2510.15250-comprehensive-dynamic-modeling-and
+  url: https://arxiv.org/pdf/2510.15250
+  title: Comprehensive Dynamic Modeling and Constraint-Aware Air Supply Control for
+    Localized Water Management in Automotive Polymer Electrolyte Membrane Fuel Cells
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id011
+- id: arxiv-1611.02735-low-ph-high-salinity
+  url: https://arxiv.org/pdf/1611.02735
+  title: 'Low pH, high salinity: too much for Microbial Fuel Cells?'
+  publisher: arXiv
+  year: 2016
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-2103.13640-synthesis-of-metallic-nanoparticles
+  url: https://arxiv.org/pdf/2103.13640
+  title: 'Synthesis of metallic nanoparticles for heterogeneous catalysis: Application
+    to the Direct Borohydride Fuel Cell'
+  publisher: arXiv
+  year: 2021
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-1111.6697-atomic-resolution-spectroscopic-imaging
+  url: https://arxiv.org/pdf/1111.6697
+  title: Atomic-resolution spectroscopic imaging of ensembles of nanocatalyst particles
+    across the life of a fuel cell
+  publisher: arXiv
+  year: 2011
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-2308.16112-giant-proton-transmembrane-transport
+  url: https://arxiv.org/pdf/2308.16112
+  title: Giant proton transmembrane transport through sulfophenylated graphene in
+    a direct methanol fuel cell
+  publisher: arXiv
+  year: 2023
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-2505.01963-development-of-machine-learned
+  url: https://arxiv.org/pdf/2505.01963
+  title: Development of machine-learned interatomic potentials to predict structure,
+    transport, and reactivity in platinum-based fuel cells
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-1208.2574-using-a-dual-plasma
+  url: https://arxiv.org/pdf/1208.2574
+  title: 'Using a dual plasma process to produce cobalt--polypyrrole catalysts for
+    the oxygen reduction reaction in fuel cells -- part I: characterisation of the
+    catalytic activity and surface structure'
+  publisher: arXiv
+  year: 2012
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-2212.02589-simultaneous-mapping-of-temperature
+  url: https://arxiv.org/pdf/2212.02589
+  title: Simultaneous mapping of temperature and hydration in proton exchange membrane
+    of fuel cells using magnetic resonance imaging
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-2202.07361-deep-learning-based-anomaly
+  url: https://arxiv.org/pdf/2202.07361
+  title: Deep Learning-based Anomaly Detection on X-ray Images of Fuel Cell Electrodes
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-2302.08697-output-voltage-regulation-of
+  url: https://arxiv.org/pdf/2302.08697
+  title: 'Output Voltage Regulation of a Fuel Cell/Boost Converter System: A PI-PBC
+    Approach'
+  publisher: arXiv
+  year: 2023
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-1711.09403-manganese-oxide-nano-flakes
+  url: https://arxiv.org/pdf/1711.09403
+  title: Manganese oxide nano flakes onto simultaneously activated defective CNTs
+    for the creation of CNTs-graphene supported oxygen reduction composite catalysts
+    applied in air fuel cell
+  publisher: arXiv
+  year: 2017
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-2510.17808-machine-learning-based-performance
+  url: https://arxiv.org/pdf/2510.17808
+  title: Machine Learning-Based Performance Evaluation of a Solar-Powered Hydrogen
+    Fuel Cell Hybrid in a Radio-Controlled Electric Vehicle
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: doe-record-5036-fuel-cell-stack-durability
+  url: https://www.hydrogen.energy.gov/docs/hydrogenprogramlibraries/pdfs/5036_fuel_cell_stack_durability.pdf
+  title: Fuel Cell Stack Durability
+  publisher: US DOE Hydrogen and Fuel Cell Technologies Office
+  licence: US government work; public domain
+  doc_type: report
+  format: report
+  topics:
+  - program-records
+- id: arxiv-2207.10819-a-non-intrusive-approach
+  url: https://arxiv.org/pdf/2207.10819
+  title: A Non-intrusive Approach for Physics-constrained Learning with Application
+    to Fuel Cell Modeling
+  publisher: arXiv
+  year: 2022
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-1401.4285-a-carbon-corrosion-model
+  url: https://arxiv.org/pdf/1401.4285
+  title: A Carbon Corrosion Model to Evaluate the Effect of Steady State and Transient
+    Operation of a Polymer Electrolyte Membrane Fuel Cell
+  publisher: arXiv
+  year: 2014
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-2604.07206-fe3o4-nano-octahedra-and
+  url: https://arxiv.org/pdf/2604.07206
+  title: Fe3O4 nano-octahedra and SnO2 nanorods modifying low-Pd amount electrocatalysts
+    for alkaline direct ethanol fuel cells
+  publisher: arXiv
+  year: 2026
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id008
+- id: arxiv-2504.08803-a-temporal-scale-transformer
+  url: https://arxiv.org/pdf/2504.08803
+  title: A temporal scale transformer framework for precise remaining useful life
+    prediction in fuel cells
+  publisher: arXiv
+  year: 2025
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-1206.2883-a-high-power-density
+  url: https://arxiv.org/pdf/1206.2883
+  title: A High Power Density, High Efficiency Hydrogen-Chlorine Regenerative Fuel
+    Cell with a Low Precious Metal Content Catalyst
+  publisher: arXiv
+  year: 2012
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-2308.06588-on-line-parameter-estimation
+  url: https://arxiv.org/pdf/2308.06588
+  title: 'On-line Parameter Estimation of the Polarization Curve of a Fuel Cell with
+    Guaranteed Convergence Properties: Theoretical and Experimental Results'
+  publisher: arXiv
+  year: 2023
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
+- id: arxiv-1805.03119-towards-pt-free-anion
+  url: https://arxiv.org/pdf/1805.03119
+  title: 'Towards ''Pt-free'' Anion-Exchange Membrane Fuel Cells: Fe-Sn Carbon Nitride-Graphene
+    ''Core-Shell'' Electrocatalysts for the Oxygen Reduction Reaction'
+  publisher: arXiv
+  year: 2018
+  licence: arXiv preprint, author's licence; research use, not redistributed
+  doc_type: report
+  format: paper
+  topics: *id007
