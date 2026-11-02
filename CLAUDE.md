@@ -36,8 +36,8 @@ uv run fcrag judge-agreement <run>.judgements.jsonl --field claude
 - Small, focused PRs to `main`, merged with a merge commit (not squash). Commit messages explain
   why. Check: ruff, ruff format, mypy strict and tests pass before pushing.
 - CI: `ci.yml` (lint, types, tests, pip-audit) and `eval.yml` (retrieval gate, 40 questions,
-  30-50 min on CPU; thresholds in `eval/gate.yaml`). The gate reranks 20 candidates at 512 tokens
-  (`FCRAG_PREFETCH_LIMIT`, `FCRAG_RERANK_MAX_LENGTH`); production uses 50 and 1024.
+  30-50 min on CPU; thresholds in `eval/gate.yaml`). The gate uses the production defaults:
+  20 candidates, 256 rerank tokens (`FCRAG_PREFETCH_LIMIT`, `FCRAG_RERANK_MAX_LENGTH`).
 - `uv.lock` cannot be regenerated without the PyTorch index; do not add dependencies casually.
   Known, accepted pip-audit findings are listed with reasons in `.github/pip-audit-ignore.txt`.
 - Prompts are versioned (`prompts/*.yaml`, `version:`); bump the version on any change. The

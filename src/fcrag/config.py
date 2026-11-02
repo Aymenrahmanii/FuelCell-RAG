@@ -72,11 +72,15 @@ class Settings(BaseSettings):
     eval_runs_dir: Path = Path("eval/runs")
     """Saved evaluation runs, shown by the dashboard (GET /eval/runs)."""
     golden_path: Path = Path("eval/golden_set.jsonl")
-    prefetch_limit: int = 50
+    prefetch_limit: int = 20
+    """Hybrid-search candidates that get reranked. Reranking is almost all of retrieval time, so
+    this and ``rerank_max_length`` set how many users one GPU serves (2026-11-02, 196 documents,
+    10 users: 50 / 1024 gave p95 18 s, 20 / 256 gave 4.9 s). On the golden set recall@5 was
+    0.921 at 50 / 1024, 0.937 at 20 / 256 and 0.952 at 15 / 256."""
     rerank_top_k: int = 8
-    rerank_max_length: int = 1024
+    rerank_max_length: int = 256
     """Tokens of question plus chunk the cross-encoder reads; longer chunks are truncated.
-    Reranking cost on CPU grows with it (CI uses 512, see .github/workflows/eval.yml)."""
+    Cost grows with it, on GPU and CPU alike. See ``prefetch_limit`` for the measurements."""
     response_cache_ttl_s: int = 86_400
     """How long a computed answer is replayed for the same question; 0 turns the cache off.
     Any ingestion changes the cache key, so answers never outlive the documents they cite."""
@@ -88,7 +92,8 @@ class Settings(BaseSettings):
     rerank_threshold: float = 0.21
     """Minimum reranker score (0..1) to count as evidence; if none passes, answer 'not found'.
     Calibrated on the golden set (2026-10-25): answerable questions scored >= 0.228, six of
-    seven unanswerable ones <= 0.201. Recheck with ``fcrag eval`` when the set grows."""
+    seven unanswerable ones <= 0.201. Recheck with ``fcrag eval`` when the set grows. Still
+    6 of 7 refused with 20 / 256 (2026-11-02)."""
 
     # API and UI
     api_key: SecretStr | None = None
