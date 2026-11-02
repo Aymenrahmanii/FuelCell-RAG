@@ -39,3 +39,6 @@ Thumbs.db
 .impeccable/questions/
 .impeccable/mocks/
 .impeccable/hook.cache.json
+
+# videos and screenshots from scripts/record_demo.py
+demo/

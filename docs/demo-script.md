@@ -23,6 +23,22 @@ truth). Answers are written by an LLM, so wording differs slightly on each take.
    10 s between questions; two long answers in a row can stall for 20 s or more.
 6. Screen: browser at 125 % zoom, window 1920×1080, notifications off.
 
+## Recording it automatically
+
+`scripts/record_demo.py` drives the web app (`/app`) through this script in a browser and records
+it, with the narration as captions, so no take depends on typing or timing by hand. The answers
+are the real ones from the running API.
+
+```bash
+uv run --with playwright playwright install chromium        # once
+uv run --with playwright python scripts/record_demo.py --screenshots
+```
+
+Run it once to warm the response cache, then again for the final take: the video lands in
+`demo/fuelcell-rag-demo.webm` (with `--screenshots`, one PNG per step for checking). Options:
+`--api-key` if the API needs one, `--hold` seconds per result, `--pause` seconds between
+questions, `--show` to watch the browser. Add a voice-over afterwards if you like.
+
 ## Script
 
 **0:00 Opening (15 s).** Chat page.
