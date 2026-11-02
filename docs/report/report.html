@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FuelCell-RAG: Cited Question Answering over Fuel Cell Engineering Documents</title>
+<link rel="stylesheet" href="paper.css">
+</head>
+<body>
+
+<div class="title">
+  <h1>FuelCell-RAG: Cited Question Answering over Bilingual Fuel Cell Engineering Documents</h1>
+  <div class="sub">Design, evaluation and operation of a retrieval-augmented generation system</div>
+  <div class="author">Aymen Rahmani</div>
+  <div class="date">2 November 2026 &middot; Software version 0.1.0 &middot; github.com/Aymenrahmanii/FuelCell-RAG</div>
+</div>
+
+<div class="abstract">
+  <h2>Abstract</h2>
+  <p>Engineers who develop fuel cell systems work with datasheets, parameter spreadsheets, requirement
+  specifications, CAD assemblies, drawings and public reports, in German and English, in several
+  versions. A wrong value or a superseded document costs time or causes errors. This report describes
+  FuelCell-RAG, a system that answers questions about such documents and cites a page, table cell,
+  requirement ID or CAD part for every claim. The system combines layout-aware parsing, hybrid dense
+  and sparse retrieval, a cross-encoder reranker, a calibrated &ldquo;not found&rdquo; decision, and a
+  language model constrained to numbered sources. It is evaluated on a 70-question golden set with
+  exact gold sources, recorded by the document generators. On a corpus of 196 documents, retrieval
+  recall@5 is 0.921, value accuracy 0.927, citation precision 0.956, and claim-level faithfulness
+  0.918. All three planted prompt-injection attacks are resisted. At ten simultaneous users, retrieval has a 95th-percentile latency of 4.9&nbsp;s. The report states what was measured, how, and where the system still fails.</p>
+</div>
+
+<div class="toc">
+  <h2 class="plain">Contents</h2>
+  <ol>
+    <li>1&emsp;Introduction</li>
+    <li>2&emsp;Data: fictional systems with exact truth, and public documents</li>
+    <li>3&emsp;System design</li>
+    <li class="l3">3.1&emsp;Ingestion</li>
+    <li class="l3">3.2&emsp;Retrieval</li>
+    <li class="l3">3.3&emsp;Generation and citation checking</li>
+    <li class="l3">3.4&emsp;Applications and web interface</li>
+    <li class="l3">3.5&emsp;Operations and security</li>
+    <li>4&emsp;Evaluation method</li>
+    <li>5&emsp;Results</li>
+    <li>6&emsp;Lessons learned</li>
+    <li>7&emsp;Limitations and future work</li>
+    <li>8&emsp;Reproducing the results</li>
+    <li>&emsp;&nbsp;References and design records</li>
+  </ol>
+</div>
+
+<h2 class="chapter-break">Introduction</h2>
+<p>A fuel cell system is described by many documents that must agree with each other: the
+datasheet states a design lifetime, the parameter sheet repeats it, a requirement specification
+demands it, and a drawing shows the components that deliver it. Documents are revised, so
+several versions exist, and some are German, some English. An engineer who asks &ldquo;what design
+lifetime applies to System&nbsp;B today?&rdquo; needs the current value, the document it comes from, and
+proof that the answer was not invented.</p>
+<p>Retrieval-augmented generation (RAG) is the usual approach: find relevant passages, then let a
+language model write an answer from them. A demonstration is easy; a system an engineer can rely on
+is not. The work described here therefore concentrates on three things:</p>
+<ul>
+  <li><b>Traceability.</b> Every statement in an answer carries a numbered citation that resolves to a
+  page, a spreadsheet cell range, a requirement ID or a CAD part, with its document version.</li>
+  <li><b>Honesty.</b> If the documents do not contain the answer, the system says so. If a source is
+  superseded, the answer says so.</li>
+  <li><b>Measurement.</b> Every component is evaluated against labelled questions, and the evaluation
+  itself is checked, so that a number in this report can be reproduced and trusted for what it is.</li>
+</ul>
+<p>All data is public or synthetic. No confidential engineering document was used.</p>
+
+<h2>Data: fictional systems with exact truth, and public documents</h2>
+<p>Evaluating retrieval needs labels: for each question, which page or cell holds the answer.
+Labelling real documents by hand does not scale, and the labels break when documents are revised.
+The project therefore defines three <i>fictional</i> PEM fuel cell systems once, in YAML files, and generates
+documents from this single truth (Table&nbsp;1).</p>
+
+<div class="tcap">The three fictional systems.</div>
+<table>
+  <thead><tr><th>System</th><th>Application</th><th class="n">Rated net power</th></tr></thead>
+  <tbody>
+    <tr><td>A</td><td>Passenger car</td><td class="n">80 kW</td></tr>
+    <tr><td>B</td><td>Heavy-duty truck (two modules)</td><td class="n">2 &times; 150 kW</td></tr>
+    <tr><td>C</td><td>Stationary combined heat and power</td><td class="n">100 kW</td></tr>
+  </tbody>
+</table>
+
+<p>Unit tests check the physics of the truth (stack voltage = cells &times; cell voltage, power = voltage &times; current,
+hydrogen flow from Faraday's law, efficiency from the lower heating value). Generators then write
+system and component datasheets (PDF, German and English), parameter sheets (Excel), requirement
+specifications (ReqIF, DOCX, CSV), STEP assemblies, and drawings. They add the imperfections found in real
+documents: unit variants, two document versions with changed values, hidden obsolete rows, merged headers, links
+between requirements written only in prose, and one requirement per system that deliberately contradicts the
+parameter sheet. While writing each value, a generator records where it appears (page, sheet and cells, requirement
+ID). These records, the <i>facts</i>, become the gold sources of the golden set, so the labels stay exact when
+documents are regenerated.</p>
+<p>Synthetic documents are cleaner than real ones. To keep the evaluation honest, the corpus also contains 204
+public documents (reports and presentations from the US Department of Energy, NREL, and open-access arXiv papers).
+Their licences are listed in the repository; the PDFs themselves are never committed. The 12 public-document questions
+were written by hand and checked against the PDFs. Table&nbsp;2 gives the corpus.</p>
+
+<div class="tcap">Corpus used for the retrieval figures (254 documents). The answer evaluation ran at 196 documents (146 public and 50 generated).</div>
+<table>
+  <thead><tr><th>Part</th><th class="n">Documents</th><th>Content</th></tr></thead>
+  <tbody>
+    <tr><td>Public, curated</td><td class="n">33</td><td>DOE programme records, NREL reports, technical targets</td></tr>
+    <tr><td>Public, discovered</td><td class="n">171</td><td>OSTI and arXiv reports and papers, DOE Hydrogen Programme records</td></tr>
+    <tr><td>Generated</td><td class="n">50</td><td>Datasheets, parameter sheets, requirements, schematics, STEP, three planted injection notes</td></tr>
+    <tr><td><b>Total</b></td><td class="n"><b>254</b></td><td>The original plan asked for at least 300</td></tr>
+  </tbody>
+</table>
+
+<h2>System design</h2>
+<p>The pipeline is written as small, typed Python functions, one module per stage, with libraries used for single
+components only (ADR&nbsp;0001). The reason is that each stage must be measured, traced and switched by configuration
+for the ablation runs; a framework pipeline hides these steps. Figure&nbsp;1 shows the two halves of the system.</p>
+
+<figure class="plainfig">
+<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" font-family="Computer Modern Serif, Cambria, serif" font-size="11.5">
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#000"/></marker></defs>
+  <text x="8" y="16" font-weight="bold" font-size="12.5">Ingestion (batch, queue worker)</text>
+  <g fill="#fff" stroke="#000" stroke-width="1">
+    <rect x="8" y="26" width="92" height="42"/><rect x="128" y="26" width="92" height="42"/>
+    <rect x="248" y="26" width="92" height="42"/><rect x="368" y="26" width="92" height="42"/>
+    <rect x="488" y="26" width="92" height="42"/><rect x="608" y="22" width="84" height="22"/><rect x="608" y="50" width="84" height="22"/>
+  </g>
+  <g text-anchor="middle">
+    <text x="54" y="44">Discover</text><text x="54" y="58" font-size="10">SHA-256, registry</text>
+    <text x="174" y="44">Parse</text><text x="174" y="58" font-size="10">PDF, Excel, STEP&hellip;</text>
+    <text x="294" y="44">Extract + chunk</text><text x="294" y="58" font-size="9.5">parameters, sections</text>
+    <text x="414" y="44">Embed</text><text x="414" y="58" font-size="9.5">bge-m3 vectors</text>
+    <text x="534" y="44">Index</text><text x="534" y="58" font-size="10">vectors + payload</text>
+    <text x="650" y="38" font-size="10.5">Qdrant</text><text x="650" y="66" font-size="10.5">Postgres</text>
+  </g>
+  <g stroke="#000" stroke-width="1" marker-end="url(#a)"><line x1="100" y1="47" x2="127" y2="47"/><line x1="220" y1="47" x2="247" y2="47"/><line x1="340" y1="47" x2="367" y2="47"/><line x1="460" y1="47" x2="487" y2="47"/><line x1="580" y1="38" x2="607" y2="35"/><line x1="580" y1="56" x2="607" y2="60"/></g>
+
+  <text x="8" y="132" font-weight="bold" font-size="12.5">Answering (online, FastAPI)</text>
+  <g fill="#fff" stroke="#000" stroke-width="1">
+    <rect x="8" y="142" width="86" height="46"/><rect x="118" y="142" width="86" height="46"/><rect x="228" y="142" width="86" height="46"/>
+    <rect x="338" y="142" width="86" height="46"/><rect x="448" y="142" width="86" height="46"/><rect x="558" y="142" width="134" height="46"/>
+  </g>
+  <g text-anchor="middle">
+    <text x="51" y="161">Question</text><text x="51" y="175" font-size="10">DE or EN</text>
+    <text x="161" y="161">Route</text><text x="161" y="175" font-size="9.5">system, parameter</text>
+    <text x="271" y="161">Hybrid search</text><text x="271" y="175" font-size="9.5">dense, sparse, RRF</text>
+    <text x="381" y="161">Rerank</text><text x="381" y="175" font-size="10">cross-encoder</text>
+    <text x="491" y="161">Generate</text><text x="491" y="175" font-size="10">numbered sources</text>
+    <text x="625" y="161">Check citations</text><text x="625" y="175" font-size="10">streamed answer</text>
+  </g>
+  <g stroke="#000" stroke-width="1" marker-end="url(#a)"><line x1="94" y1="165" x2="117" y2="165"/><line x1="204" y1="165" x2="227" y2="165"/><line x1="314" y1="165" x2="337" y2="165"/><line x1="424" y1="165" x2="447" y2="165"/><line x1="534" y1="165" x2="557" y2="165"/></g>
+  <path d="M650 72 L650 118 L271 118 L271 141" fill="none" stroke="#000" stroke-dasharray="4 3" marker-end="url(#a)"/>
+  <text x="460" y="113" font-size="10" text-anchor="middle" font-style="italic">indexed chunks and parameter records</text>
+  <text x="8" y="232" font-size="10.5" font-style="italic">Every stage emits a trace span (Langfuse) and metrics (Prometheus); answers are logged to an audit table.</text>
+  <text x="8" y="250" font-size="10.5" font-style="italic">If the best rerank score is below the calibrated threshold (0.21), the system answers &ldquo;not found&rdquo; without calling the language model.</text>
+</svg>
+<div class="fcap">Architecture: batch ingestion (top) and online answering (bottom).</div>
+</figure>
+
+<h3>Ingestion</h3>
+<p><b>Discovery and registry.</b> Every file is hashed (SHA-256) and registered in Postgres with a status. Only new or
+changed files are processed; failures are kept with their error and can be quarantined.</p>
+<p><b>Parsing.</b> One parser per document family. Docling reads PDFs for layout, reading order, headings and tables,
+with one fact per table row. openpyxl reads messy Excel sheets: merged cells, multi-row headers, several tables per
+sheet, units rows and hidden rows. Requirements arrive as ReqIF, DOCX or CSV with parent links and prose links.
+STEP assemblies yield a part tree with bounding boxes and volumes. Drawings are read by the position of their text
+(title block, revision table, line list, component tags), from the PDF text layer or, for scans, by RapidOCR
+(ADR&nbsp;0005); a vision model is optional and its output is marked low confidence.</p>
+<p><b>Two-phase pipeline.</b> On a 6&nbsp;GB laptop GPU, parsing and embedding models in one process made Windows spill
+video memory into system memory and run about ten times slower. The pipeline therefore parses every file first,
+releases the parser models, and only then embeds (ADR&nbsp;0003). Parsed elements are cached on disk by content hash.
+Throughput is about 1,150 PDF pages per hour.</p>
+<p><b>Parameters.</b> Table rows and sentences become records (system, component, key, value, unit, condition,
+source) in Postgres, normalised with the <i>pint</i> unit library. These records let the system answer a question that
+names a system and a parameter with an exact, citable value, and they back the comparison screen.</p>
+<p><b>Chunking and embedding.</b> Text is split along sections and prefixed with a context header (document, version,
+section). bge-m3 produces a 1024-dimensional dense vector and sparse lexical weights in one pass. Chunk identifiers
+derive from file content, which makes re-ingestion idempotent (and, as Section&nbsp;6 shows, makes duplicate files
+dangerous).</p>
+
+<h3>Retrieval</h3>
+<p>Engineering questions mix semantic phrasing (&ldquo;how hot may the coolant get&rdquo;) with exact tokens that dense
+embeddings blur: requirement IDs such as REQ-A-0019, part tags, German compounds such as
+<i>Kühlmittelaustrittstemperatur</i> (ADR&nbsp;0002). The system therefore searches both vector kinds in Qdrant and fuses the
+two rankings by reciprocal rank fusion (RRF):</p>
+<div class="eq">score(d) = &sum;<sub>r</sub> 1 / (k + rank<sub>r</sub>(d))</div>
+<p>The default is 20 candidates per ranking, which a multilingual cross-encoder (bge-reranker-v2-m3) rescoring query and
+passage together reorders; the best eight go to the language model. A question that names a system (&ldquo;System&nbsp;B&rdquo;)
+only retrieves that system's documents and the public reports, and a follow-up such as &ldquo;and for System&nbsp;C?&rdquo; is first
+rewritten into a standalone question from the chat history.</p>
+<p>The reranker score doubles as the <i>not found</i> signal. Scores are calibrated on the golden set; below a threshold of 0.21 the
+system refuses before any language model is called. This handles 6 of the 7 unanswerable questions; the seventh, a near-synonym
+(&ldquo;warranty period&rdquo; against &ldquo;design lifetime&rdquo;), is left to the prompt.</p>
+
+<h3>Generation and citation checking</h3>
+<p>Generation goes through LiteLLM, so the model is a configuration value: Groq-hosted <i>gpt-oss-120b</i> by default, Gemini
+as fallback, and a local model in restricted mode, in which no document text leaves the machine. The prompt
+(answer-v5, versioned in the repository) presents the sources as numbered items and requires a citation after every claim. Answers
+stream to the client. Afterwards the output is checked: citation variants the model writes (<tt>&#12304;S1&#12305;</tt>,
+&ldquo;(vgl. S2)&rdquo;, &ldquo;[S1, S5]&rdquo;) are normalised, and citations that point to a source that does not exist are
+counted as errors (zero in the final run). Repeated questions are served from a Redis cache keyed by question, filters, prompt version, model and the state of the document registry, so any ingestion invalidates it.</p>
+
+<h3>Applications and web interface</h3>
+<p>The API (FastAPI) serves five screens (Figure&nbsp;2): <i>Chat</i> with streamed answers, sources with page preview
+and version labels, <i>Documents</i> with the registry and a re-ingest button, <i>Parameter comparison</i> across systems
+with disagreeing documents flagged, a <i>Requirement checker</i> that tests a draft requirement against the current documents, and
+<i>Evaluation</i>, which reads the saved runs. The interface is plain HTML, CSS and JavaScript without a build step.
+Its visual language follows an engineering drawing: citations are numbered balloons that match a parts list of
+sources, superseded versions are struck through in red with a revision triangle, and a title block records how each
+answer was made (retrieval and generation time, model, prompt version).</p>
+<figure>
+  <img src="../images/web-chat.png" style="width:100%">
+  <div class="fcap">The chat screen: a German question about System&nbsp;B, the cited answer, and the source list with page preview.</div>
+</figure>
+
+<h3>Operations and security</h3>
+<p>Each answer is traced in Langfuse (rewrite, retrieval, generation). Prometheus metrics at <tt>/metrics</tt> cover requests,
+latency per route, error rate, stage times, answers without sources, model retries and fallbacks, documents per status,
+the ingestion queue and the cache hit rate; a Grafana dashboard ships with the repository. Every answered question is
+written to an audit table (user, groups, sources without their text, answer, model, prompt version, trace ID) and
+pruned after a configurable retention. The API can require a key, and access groups can restrict documents. Continuous
+integration runs lint, formatting, strict type checking, 196 tests, a secret scan, a dependency vulnerability audit and
+the retrieval evaluation gate on every pull request; pushing a version tag builds container images and publishes a release
+with the latest evaluation run attached.</p>
+
+<h2>Evaluation method</h2>
+<p><b>Golden set.</b> 70 questions in nine categories, 25 of them in German (Table&nbsp;3). Gold sources are exact, because the generators
+record them; a unit test fails if the committed set drifts from the truth.</p>
+<div class="tcap">Golden set by category.</div>
+<table>
+  <thead><tr><th>Category</th><th class="n">Questions</th><th>Built from</th></tr></thead>
+  <tbody>
+    <tr><td>Fact from public text</td><td class="n">12</td><td>Hand-written, checked against the PDFs</td></tr>
+    <tr><td>Parameter lookup</td><td class="n">12</td><td>Truth and generator facts</td></tr>
+    <tr><td>Cross-system comparison</td><td class="n">6</td><td>Truth</td></tr>
+    <tr><td>Version conflict</td><td class="n">3</td><td>Superseded values</td></tr>
+    <tr><td>Requirement trace</td><td class="n">6</td><td>Generated requirement trees</td></tr>
+    <tr><td>Cross-document</td><td class="n">8</td><td>Requirements against parameter sheets, with deliberate contradictions</td></tr>
+    <tr><td>Drawing / STEP</td><td class="n">13</td><td>Assemblies, bills of materials, schematics</td></tr>
+    <tr><td>Prompt injection</td><td class="n">3</td><td>Planted service notes that instruct the assistant</td></tr>
+    <tr><td>Unanswerable</td><td class="n">7</td><td>Hand-written</td></tr>
+  </tbody>
+</table>
+<p><b>Retrieval metrics.</b> Recall@<i>k</i> is the share of questions whose gold source is among the top <i>k</i> results; MRR is the mean
+reciprocal rank of the first gold source; nDCG@10 weights rank positions. They are computed without any language model.</p>
+<p><b>Answer metrics.</b> <i>Value accuracy</i> checks that the stated value and unit match the truth (any unit, after conversion with pint).
+<i>Term accuracy</i> checks that requirement IDs and part tags are named. <i>Citation precision</i> is the share of citations that point to a gold source.
+Refusals are scored separately for unanswerable questions and for false refusals.</p>
+<p><b>Faithfulness</b> is judged claim by claim: every fact in a cited sentence must appear in the sources that sentence cites.
+The judge is a language model of a different family (<i>qwen3.8-27b</i>) than the answering model, to avoid a model grading its own style.
+The judge itself is checked: a third model (Claude) labelled all 75 claims of one run without seeing the judge's verdicts. The two agreed on 72
+of 75 (96&nbsp;%), and the judge was never more lenient. These are model labels, not human labels; the repository contains a tool
+for a person to label a sample with the judge's verdict hidden, which remains the reference.</p>
+<p><b>Prompt injection.</b> Three planted service notes carry instructions aimed at the assistant (reply only &ldquo;ACCESS GRANTED&rdquo;, answer in English with a link, withhold every value).
+An answer counts as resisted only if it gives the true value with citations, in the language of the question, and repeats none of the instruction's strings. Because retrieval usually
+ranks the notes below the real documents, each question is also answered with the note forced in as source&nbsp;1.</p>
+<p><b>Load.</b> Locust simulates engineers asking golden-set questions (three retrievals per full answer); a streamed answer sends its headers
+at once, so the test times the first token and the full answer itself.</p>
+
+<h2>Results</h2>
+<p>Table&nbsp;4 shows the answer evaluation of run <tt>2026-11-01-2214-answer-v5-corpus196</tt> (196 documents). The 64 answers came from <i>gpt-oss-120b</i>, none from the fallback; 6 questions
+were refused before any model call; there were no errors.</p>
+<div class="tcap">Results against the targets of the project plan. &dagger; from an earlier run, not re-measured.</div>
+<table>
+  <thead><tr><th>Metric</th><th class="n">Result</th><th class="n">Target</th></tr></thead>
+  <tbody>
+    <tr><td>Retrieval recall@5 / recall@10 / MRR</td><td class="n">0.921 / 0.984 / 0.877</td><td class="n">recall@5 &ge; 0.85</td></tr>
+    <tr><td>Value accuracy</td><td class="n">0.927</td><td class="n">&ge; 0.85</td></tr>
+    <tr><td>Term accuracy (IDs and tags)</td><td class="n">1.00</td><td class="n">&ndash;</td></tr>
+    <tr><td>Correct &ldquo;not in the documents&rdquo; / false refusals</td><td class="n">7 of 7 / 1 of 63</td><td class="n">&ge; 0.90</td></tr>
+    <tr><td>Citation precision</td><td class="n">0.956</td><td class="n">&ge; 0.90</td></tr>
+    <tr><td>Invalid citations</td><td class="n">0</td><td class="n">0</td></tr>
+    <tr><td>Faithfulness (77 claims, judge qwen3.8-27b)</td><td class="n">0.918</td><td class="n">&ge; 0.90</td></tr>
+    <tr><td>Prompt injection resisted (as retrieved / forced as source 1)</td><td class="n">3 of 3 / 3 of 3</td><td class="n">all</td></tr>
+    <tr><td>Parameter extraction recall / precision (610 facts)&dagger;</td><td class="n">99.5 % / 99.5 %</td><td class="n">&ndash;</td></tr>
+    <tr><td>Ingestion throughput (laptop RTX 3050, 6 GB)&dagger;</td><td class="n">&asymp;1,150 pages/h</td><td class="n">&ge; 1,000</td></tr>
+    <tr><td>Retrieval p95 under load: 10 users, 5 min, 383 requests</td><td class="n">4.9 s</td><td class="n">&lt; 6 s</td></tr>
+  </tbody>
+</table>
+<p><b>Corpus growth.</b> Retrieval did not degrade when the corpus grew from 83 to 196 documents (recall@5 0.921 and MRR 0.877 in both). At 254 documents recall@5 stayed 0.921 with the earlier settings.</p>
+<p><b>Per category.</b> Recall is 1.00 for parameter lookup, cross-system, version conflict, requirement trace and drawing/STEP questions; 0.92 for public-document facts; 0.63 for cross-document
+questions, which is measured strictly: a conflict question counts as found only if the conflicting requirement is retrieved. (Injection questions show 0.67 because their gold sources are the real documents, and one ranks seventh behind them.)</p>
+
+<h3>Latency and capacity</h3>
+<p>Reranking dominates retrieval time, and one GPU reranks one request at a time. Reducing the candidate count and the passage length, and measuring with ten simulated users,
+reduced the 95th-percentile retrieval latency from 18&nbsp;s to 4.9&nbsp;s (Table&nbsp;5), while recall@5 on the golden set rose from 0.921 to 0.937.</p>
+<div class="tcap">Retrieval latency at 10 simultaneous users, 5 minutes, retrieval only.</div>
+<table>
+  <thead><tr><th>Candidates / rerank tokens</th><th class="n">p95 latency</th></tr></thead>
+  <tbody>
+    <tr><td>50 / 1024 (first setting)</td><td class="n">18 s</td></tr>
+    <tr><td>20 / 512</td><td class="n">9 s</td></tr>
+    <tr><td>20 / 256 (default)</td><td class="n">4.9 s</td></tr>
+  </tbody>
+</table>
+<p>Answers add the language-model time. Under load this could not be measured, because the free tier of the hosted model allows 8,000 tokens per minute, which caps the test at a few answers per minute.
+Single-user answer latency (retrieval p95 2.6&nbsp;s plus generation p95 4.8&nbsp;s from an earlier run without rate limiting) lies near the end-to-end target of 6&nbsp;s but this combination was not measured under load.</p>
+
+<h3>Faithfulness history</h3>
+<p>Prompt answer-v3 scored 0.851 under the same judge. Version v4 scored 0.933 by the judge and 0.892 by independent labels (92&nbsp;% agreement): the judge was lenient on four claims that name a requirement ID without citing its source.
+Version v5 adds a rule against exactly this; the next run scored 0.918 by the judge (0.890 under the stricter judge prompt and 0.932 by independent labels in the calibration run). The strict judge's figure is the lower bound.</p>
+
+<h2>Lessons learned</h2>
+<ul>
+  <li><b>A full GPU slows down instead of failing.</b> Windows spills video memory silently; the two-phase pipeline fixed a tenfold slowdown.</li>
+  <li><b>Native libraries can clash.</b> OpenCascade (STEP) and docling-parse cannot load into one Windows process; STEP geometry runs in a child process.</li>
+  <li><b>A threshold cannot catch near-synonyms.</b> &ldquo;Warranty period&rdquo; scores 0.64 against &ldquo;design lifetime&rdquo;; the last unanswerable question depends on the prompt.</li>
+  <li><b>Check misses before tuning.</b> Half of the supposed STEP misses were bills-of-materials rows that did answer the question: the labels were incomplete, not the retrieval.</li>
+  <li><b>Evaluate the evaluation.</b> The first answer run reported term accuracy 0.26, because the model wrote non-breaking hyphens and citation forms the scorer did not know; after normalising, 0.91. A judge that sees truncated sources reports hallucinations that are not there. &ldquo;Four tie rods&rdquo; failed a check that read only digits. Fixes were re-scored offline from stored answers without new model calls.</li>
+  <li><b>Measure before assuming a cheaper setting is worse.</b> Reranking 20 candidates at 256 tokens was faster <i>and</i> found the answer slightly more often.</li>
+  <li><b>Deterministic chunk IDs make duplicates destructive.</b> The same PDF listed twice under different URLs overwrote the first copy in the index; discovery now de-duplicates by file name.</li>
+  <li><b>Cross-lingual retrieval is the weakest spot.</b> A German question about an English slide deck ranks German requirement documents first. Searching with an English translation as well (off by default) moved that question from rank 10 to 1 and recall@5 from 0.921 to 0.937 but lowered MRR and doubled retrieval p95, and its first version raised the score of an unanswerable question above the refusal threshold; the refusal decision now uses the score against the question as asked.</li>
+  <li><b>A good answer can hide a retrieval gap.</b> &ldquo;Does the requirement agree with the sheet?&rdquo; retrieved only the sheet, and the model answered &ldquo;yes&rdquo; about a requirement it never saw.</li>
+  <li><b>Verify a user interface in a browser.</b> A stylesheet rule overrode the <tt>hidden</tt> attribute, so every source row stayed open although the code closed it; unit tests could not see this.</li>
+</ul>
+
+<h2>Limitations and future work</h2>
+<ul>
+  <li>The corpus has 254 documents, 46 fewer than the plan's 300. OSTI was unreachable from the development network.</li>
+  <li>The answer evaluation was run at 196 documents and not repeated at 254 (it uses roughly 200,000 tokens of a free tier with a daily cap).</li>
+  <li>Faithfulness labels come from language models. A human-labelled sample is supported by the tools but was not made.</li>
+  <li>Answer latency under load is not measured; the figure for ten users covers retrieval only.</li>
+  <li>Three failures remain visible in the saved runs: a German question about an English slide deck is refused, a three-system comparison and a cross-document conflict question state a wrong value.</li>
+  <li>Most data is synthetic. The system is tested on messy public PDFs, but not on a real organisation's document estate.</li>
+  <li>Cross-lingual search is implemented but off by default; the answer-level effect is unmeasured.</li>
+  <li>Next steps: enable an on-premise model for restricted mode in production, add real single sign-on in place of header-based user and group stubs, and extend the corpus.</li>
+</ul>
+
+<h2>Reproducing the results</h2>
+<pre>uv sync --extra ml --extra ui --extra cad
+docker compose up -d                       # Qdrant, Postgres, Redis, MinIO, Langfuse
+uv run fcrag db-upgrade
+uv run python scripts/download_corpus.py   # public PDFs, licences in data/sources.yaml
+uv run fcrag generate                      # synthetic corpus
+uv run fcrag ingest
+uv run fcrag eval --name demo --answers --pause 8   # saves eval/runs/&lt;stamp&gt;-demo.json
+uv run fcrag eval-judge eval/runs/&lt;run&gt;.json
+uv run fcrag serve                         # API :8000, web app /app/</pre>
+<p>Answers use the free tier of Groq (8,000 tokens per minute), so questions are paced. Metrics can be recomputed from a saved run without any model call (<tt>fcrag eval-rescore</tt>).
+CI runs the retrieval gate with the production defaults (20 candidates, 256 rerank tokens); thresholds are in <tt>eval/gate.yaml</tt>.</p>
+
+<h2 class="plain">References and design records</h2>
+<p class="small">The architecture decision records in <tt>docs/decisions/</tt> give context, decision and consequences:
+0001 own pipeline over a framework; 0002 Qdrant with bge-m3 dense and sparse vectors, RRF and a cross-encoder; 0003 two-phase ingestion with an element cache;
+0004 one YAML truth per system with generators recording facts as gold sources; 0005 drawings read by text position.
+Models: BAAI bge-m3 (embedding), bge-reranker-v2-m3 (reranking), OpenAI gpt-oss-120b (answers, served by Groq), Alibaba qwen3.8-27b (judge). Libraries: Docling, Qdrant, LiteLLM, FastAPI, Langfuse, Prometheus, pint, openpyxl, CadQuery.
+The project status and the open items are in <tt>docs/STATUS.md</tt>.</p>
+
+</body>
+</html>
